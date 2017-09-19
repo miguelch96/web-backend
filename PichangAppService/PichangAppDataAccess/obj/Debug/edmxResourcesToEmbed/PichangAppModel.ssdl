@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PichangAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Deporte">
+    <Key>
+      <PropertyRef Name="DeporteId" />
+    </Key>
+    <Property Name="DeporteId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Codigo" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Equipo">
+    <Key>
+      <PropertyRef Name="EquipoId" />
+    </Key>
+    <Property Name="EquipoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="50" />
+    <Property Name="DeporteId" Type="tinyint" />
+    <Property Name="UsuarioCapitanId" Type="int" />
+  </EntityType>
+  <EntityType Name="EquipoUsuario">
+    <Key>
+      <PropertyRef Name="EquipoId" />
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="EquipoId" Type="int" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="FechaUnion" Type="datetime" />
+    <Property Name="Estado" Type="varchar" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="EspacioDeportivo">
+    <Key>
+      <PropertyRef Name="EspacioDeportivoId" />
+    </Key>
+    <Property Name="EspacioDeportivoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Precio" Type="decimal" Precision="6" Scale="2" />
+    <Property Name="EstablecimientoId" Type="int" />
+    <Property Name="DeporteId" Type="tinyint" />
+    <Property Name="TipoSuperficieId" Type="tinyint" />
+    <Property Name="Estado" Type="varchar" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="Establecimiento">
+    <Key>
+      <PropertyRef Name="EstablecimientoId" />
+    </Key>
+    <Property Name="EstablecimientoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Direccion" Type="varchar" MaxLength="200" />
+    <Property Name="DistritoId" Type="tinyint" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+    <Property Name="UsuarioPropietarioId" Type="int" />
+  </EntityType>
+  <EntityType Name="EstablecimientoServicio">
+    <Key>
+      <PropertyRef Name="EstablecimientoId" />
+      <PropertyRef Name="ServicioId" />
+    </Key>
+    <Property Name="EstablecimientoId" Type="int" Nullable="false" />
+    <Property Name="ServicioId" Type="smallint" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="Horario">
+    <Key>
+      <PropertyRef Name="HorarioId" />
+    </Key>
+    <Property Name="HorarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="HoraInicio" Type="datetime" Nullable="false" />
+    <Property Name="HoraFin" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HorarioEspacioDeportivo">
+    <Key>
+      <PropertyRef Name="HorarioId" />
+      <PropertyRef Name="EspacioDeportivoId" />
+    </Key>
+    <Property Name="HorarioId" Type="int" Nullable="false" />
+    <Property Name="EspacioDeportivoId" Type="int" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="3" />
+    <Property Name="ReservaId" Type="int" />
+  </EntityType>
+  <EntityType Name="Permiso">
+    <Key>
+      <PropertyRef Name="PermisoId" />
+    </Key>
+    <Property Name="PermisoId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Codigo" Type="varchar" MaxLength="50" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="100" />
+    <Property Name="Estado" Type="varchar" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="Reserva">
+    <Key>
+      <PropertyRef Name="ReservaId" />
+    </Key>
+    <Property Name="ReservaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" />
+    <Property Name="FechaSolicitud" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Rol">
+    <Key>
+      <PropertyRef Name="RolId" />
+    </Key>
+    <Property Name="RolId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="RolPermiso">
+    <Key>
+      <PropertyRef Name="RolId" />
+      <PropertyRef Name="PermisoId" />
+    </Key>
+    <Property Name="RolId" Type="tinyint" Nullable="false" />
+    <Property Name="PermisoId" Type="smallint" Nullable="false" />
+    <Property Name="Estado" Type="varchar" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="Servicio">
+    <Key>
+      <PropertyRef Name="ServicioId" />
+    </Key>
+    <Property Name="ServicioId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="TipoSuperficie">
+    <Key>
+      <PropertyRef Name="TipoSuperficieId" />
+    </Key>
+    <Property Name="TipoSuperficieId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="100" />
+    <Property Name="Passwd" Type="varchar" MaxLength="100" />
+    <Property Name="Nombre" Type="varchar" MaxLength="100" />
+    <Property Name="Apellido" Type="varchar" MaxLength="100" />
+    <Property Name="RolId" Type="tinyint" />
+  </EntityType>
+  <Association Name="FK_Equipo_Deporte">
+    <End Role="Deporte" Type="Self.Deporte" Multiplicity="0..1" />
+    <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deporte">
+        <PropertyRef Name="DeporteId" />
+      </Principal>
+      <Dependent Role="Equipo">
+        <PropertyRef Name="DeporteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipoUsuario_Equipo">
+    <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+    <End Role="EquipoUsuario" Type="Self.EquipoUsuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipo">
+        <PropertyRef Name="EquipoId" />
+      </Principal>
+      <Dependent Role="EquipoUsuario">
+        <PropertyRef Name="EquipoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EquipoUsuario_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="EquipoUsuario" Type="Self.EquipoUsuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="EquipoUsuario">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EspacioDeportivo_Deporte">
+    <End Role="Deporte" Type="Self.Deporte" Multiplicity="0..1" />
+    <End Role="EspacioDeportivo" Type="Self.EspacioDeportivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Deporte">
+        <PropertyRef Name="DeporteId" />
+      </Principal>
+      <Dependent Role="EspacioDeportivo">
+        <PropertyRef Name="DeporteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EspacioDeportivo_Establecimiento">
+    <End Role="Establecimiento" Type="Self.Establecimiento" Multiplicity="0..1" />
+    <End Role="EspacioDeportivo" Type="Self.EspacioDeportivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Establecimiento">
+        <PropertyRef Name="EstablecimientoId" />
+      </Principal>
+      <Dependent Role="EspacioDeportivo">
+        <PropertyRef Name="EstablecimientoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EspacioDeportivo_TipoSuperficie">
+    <End Role="TipoSuperficie" Type="Self.TipoSuperficie" Multiplicity="0..1" />
+    <End Role="EspacioDeportivo" Type="Self.EspacioDeportivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TipoSuperficie">
+        <PropertyRef Name="TipoSuperficieId" />
+      </Principal>
+      <Dependent Role="EspacioDeportivo">
+        <PropertyRef Name="TipoSuperficieId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Establecimiento_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="Establecimiento" Type="Self.Establecimiento" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Establecimiento">
+        <PropertyRef Name="UsuarioPropietarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EstablecimientoServicio_Establecimiento">
+    <End Role="Establecimiento" Type="Self.Establecimiento" Multiplicity="1" />
+    <End Role="EstablecimientoServicio" Type="Self.EstablecimientoServicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Establecimiento">
+        <PropertyRef Name="EstablecimientoId" />
+      </Principal>
+      <Dependent Role="EstablecimientoServicio">
+        <PropertyRef Name="EstablecimientoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EstablecimientoServicio_Servicio">
+    <End Role="Servicio" Type="Self.Servicio" Multiplicity="1" />
+    <End Role="EstablecimientoServicio" Type="Self.EstablecimientoServicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Servicio">
+        <PropertyRef Name="ServicioId" />
+      </Principal>
+      <Dependent Role="EstablecimientoServicio">
+        <PropertyRef Name="ServicioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HorarioEspacioDeportivo_EspacioDeportivo">
+    <End Role="EspacioDeportivo" Type="Self.EspacioDeportivo" Multiplicity="1" />
+    <End Role="HorarioEspacioDeportivo" Type="Self.HorarioEspacioDeportivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EspacioDeportivo">
+        <PropertyRef Name="EspacioDeportivoId" />
+      </Principal>
+      <Dependent Role="HorarioEspacioDeportivo">
+        <PropertyRef Name="EspacioDeportivoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HorarioEspacioDeportivo_Horario">
+    <End Role="Horario" Type="Self.Horario" Multiplicity="1" />
+    <End Role="HorarioEspacioDeportivo" Type="Self.HorarioEspacioDeportivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Horario">
+        <PropertyRef Name="HorarioId" />
+      </Principal>
+      <Dependent Role="HorarioEspacioDeportivo">
+        <PropertyRef Name="HorarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HorarioEspacioDeportivo_Reserva">
+    <End Role="Reserva" Type="Self.Reserva" Multiplicity="0..1" />
+    <End Role="HorarioEspacioDeportivo" Type="Self.HorarioEspacioDeportivo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Reserva">
+        <PropertyRef Name="ReservaId" />
+      </Principal>
+      <Dependent Role="HorarioEspacioDeportivo">
+        <PropertyRef Name="ReservaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolPermiso_Permiso">
+    <End Role="Permiso" Type="Self.Permiso" Multiplicity="1" />
+    <End Role="RolPermiso" Type="Self.RolPermiso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Permiso">
+        <PropertyRef Name="PermisoId" />
+      </Principal>
+      <Dependent Role="RolPermiso">
+        <PropertyRef Name="PermisoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_RolPermiso_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
+    <End Role="RolPermiso" Type="Self.RolPermiso" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="RolId" />
+      </Principal>
+      <Dependent Role="RolPermiso">
+        <PropertyRef Name="RolId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuario_Rol">
+    <End Role="Rol" Type="Self.Rol" Multiplicity="0..1" />
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rol">
+        <PropertyRef Name="RolId" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="RolId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PichangAppModelStoreContainer">
+    <EntitySet Name="Deporte" EntityType="Self.Deporte" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Equipo" EntityType="Self.Equipo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EquipoUsuario" EntityType="Self.EquipoUsuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EspacioDeportivo" EntityType="Self.EspacioDeportivo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Establecimiento" EntityType="Self.Establecimiento" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EstablecimientoServicio" EntityType="Self.EstablecimientoServicio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Horario" EntityType="Self.Horario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HorarioEspacioDeportivo" EntityType="Self.HorarioEspacioDeportivo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Reserva" EntityType="Self.Reserva" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RolPermiso" EntityType="Self.RolPermiso" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Servicio" EntityType="Self.Servicio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TipoSuperficie" EntityType="Self.TipoSuperficie" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Equipo_Deporte" Association="Self.FK_Equipo_Deporte">
+      <End Role="Deporte" EntitySet="Deporte" />
+      <End Role="Equipo" EntitySet="Equipo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipoUsuario_Equipo" Association="Self.FK_EquipoUsuario_Equipo">
+      <End Role="Equipo" EntitySet="Equipo" />
+      <End Role="EquipoUsuario" EntitySet="EquipoUsuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EquipoUsuario_Usuario" Association="Self.FK_EquipoUsuario_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="EquipoUsuario" EntitySet="EquipoUsuario" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EspacioDeportivo_Deporte" Association="Self.FK_EspacioDeportivo_Deporte">
+      <End Role="Deporte" EntitySet="Deporte" />
+      <End Role="EspacioDeportivo" EntitySet="EspacioDeportivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EspacioDeportivo_Establecimiento" Association="Self.FK_EspacioDeportivo_Establecimiento">
+      <End Role="Establecimiento" EntitySet="Establecimiento" />
+      <End Role="EspacioDeportivo" EntitySet="EspacioDeportivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EspacioDeportivo_TipoSuperficie" Association="Self.FK_EspacioDeportivo_TipoSuperficie">
+      <End Role="TipoSuperficie" EntitySet="TipoSuperficie" />
+      <End Role="EspacioDeportivo" EntitySet="EspacioDeportivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Establecimiento_Usuario" Association="Self.FK_Establecimiento_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Establecimiento" EntitySet="Establecimiento" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EstablecimientoServicio_Establecimiento" Association="Self.FK_EstablecimientoServicio_Establecimiento">
+      <End Role="Establecimiento" EntitySet="Establecimiento" />
+      <End Role="EstablecimientoServicio" EntitySet="EstablecimientoServicio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EstablecimientoServicio_Servicio" Association="Self.FK_EstablecimientoServicio_Servicio">
+      <End Role="Servicio" EntitySet="Servicio" />
+      <End Role="EstablecimientoServicio" EntitySet="EstablecimientoServicio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HorarioEspacioDeportivo_EspacioDeportivo" Association="Self.FK_HorarioEspacioDeportivo_EspacioDeportivo">
+      <End Role="EspacioDeportivo" EntitySet="EspacioDeportivo" />
+      <End Role="HorarioEspacioDeportivo" EntitySet="HorarioEspacioDeportivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HorarioEspacioDeportivo_Horario" Association="Self.FK_HorarioEspacioDeportivo_Horario">
+      <End Role="Horario" EntitySet="Horario" />
+      <End Role="HorarioEspacioDeportivo" EntitySet="HorarioEspacioDeportivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HorarioEspacioDeportivo_Reserva" Association="Self.FK_HorarioEspacioDeportivo_Reserva">
+      <End Role="Reserva" EntitySet="Reserva" />
+      <End Role="HorarioEspacioDeportivo" EntitySet="HorarioEspacioDeportivo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolPermiso_Permiso" Association="Self.FK_RolPermiso_Permiso">
+      <End Role="Permiso" EntitySet="Permiso" />
+      <End Role="RolPermiso" EntitySet="RolPermiso" />
+    </AssociationSet>
+    <AssociationSet Name="FK_RolPermiso_Rol" Association="Self.FK_RolPermiso_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="RolPermiso" EntitySet="RolPermiso" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
+      <End Role="Rol" EntitySet="Rol" />
+      <End Role="Usuario" EntitySet="Usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
