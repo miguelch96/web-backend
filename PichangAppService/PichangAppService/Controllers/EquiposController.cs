@@ -16,7 +16,7 @@ namespace PichangAppService.Controllers
     {
         public HttpResponseMessage Get()
         {
-            using (PichangAppEntities entities = new PichangAppEntities())
+            using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 var equipos= entities.Equipo.ProjectTo<EquipoDto>().ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, new
@@ -30,7 +30,7 @@ namespace PichangAppService.Controllers
 
         public IHttpActionResult Get(Int32 id)
         {
-            using (PichangAppEntities entities = new PichangAppEntities())
+            using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 var equipo = entities.Equipo.SingleOrDefault(x => x.EquipoId == id);
                 if (equipo == null)

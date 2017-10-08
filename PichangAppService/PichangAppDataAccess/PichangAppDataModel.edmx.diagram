@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4bce1b27d814476983edab9e822396e0" Name="Diagram1">
+        <EntityTypeShape EntityType="PichangAppDBModel.Cancha" Width="1.5" PointX="13.5" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Deporte" Width="1.5" PointX="3" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Distrito" Width="1.5" PointX="6" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Equipo" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.EquipoUsuario" Width="1.5" PointX="10.5" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Establecimiento" Width="1.5" PointX="8.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.EstablecimientoServicio" Width="1.5" PointX="10.5" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Horario" Width="1.5" PointX="13.5" PointY="15.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.HorarioCancha" Width="1.5" PointX="15.75" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Permiso" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Reserva" Width="1.5" PointX="5.25" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Rol" Width="1.5" PointX="0.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.RolPermiso" Width="1.5" PointX="3" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Servicio" Width="1.5" PointX="8.25" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Skill" Width="1.5" PointX="8.25" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.SkillEquipo" Width="1.5" PointX="10.5" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.TipoSuperficie" Width="1.5" PointX="11.25" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Usuario" Width="1.5" PointX="3" PointY="11.375" IsExpanded="true" />
+        <AssociationConnector Association="PichangAppDBModel.FK_EspacioDeportivo_Deporte" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_EspacioDeportivo_Establecimiento" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_EspacioDeportivo_TipoSuperficie" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_HorarioEspacioDeportivo_EspacioDeportivo" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_Equipo_Deporte" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_Establecimiento_Distrito" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_Equipo_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_EquipoUsuario_Equipo" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_SkillEquipo_Equipo" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_EquipoUsuario_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_Establecimiento_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_EstablecimientoServicio_Establecimiento" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_EstablecimientoServicio_Servicio" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_HorarioEspacioDeportivo_Horario" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_HorarioEspacioDeportivo_Reserva" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_RolPermiso_Permiso" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_Reserva_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_RolPermiso_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_Usuario_Rol" ManuallyRouted="false" />
+        <AssociationConnector Association="PichangAppDBModel.FK_SkillEquipo_Skill" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

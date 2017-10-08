@@ -14,7 +14,7 @@ namespace PichangAppService.Controllers
     {
         public IEnumerable<ReservaDto> Get()
         {
-            using (PichangAppEntities entities = new PichangAppEntities())
+            using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 return entities.Reserva.ToList().Select(Mapper.Map<Reserva, ReservaDto>);
             }
@@ -23,7 +23,7 @@ namespace PichangAppService.Controllers
 
         public IHttpActionResult Get(Int32 id)
         {
-            using (PichangAppEntities entities = new PichangAppEntities())
+            using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 var reserva = entities.Reserva.SingleOrDefault(x => x.ReservaId == id);
                 if (reserva == null)

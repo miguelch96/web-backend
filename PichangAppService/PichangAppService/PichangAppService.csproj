@@ -301,6 +301,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\PichangAppService - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\PichangAppServiceAPI - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -347,7 +348,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PichangAppDataAccess\PichangAppDataAccess.csproj">
-      <Project>{e19a4019-c2ed-4cf5-b355-8a52bf4ffb46}</Project>
+      <Project>{d1c6413d-ed76-4fc3-ab48-d2cee21114d4}</Project>
       <Name>PichangAppDataAccess</Name>
     </ProjectReference>
   </ItemGroup>

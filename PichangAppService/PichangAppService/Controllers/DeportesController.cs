@@ -15,10 +15,9 @@ namespace PichangAppService.Controllers
 {
     public class DeportesController : ApiController
     {
-     
         public IEnumerable<DeporteDto> Get()
         {
-            using (PichangAppEntities entities =new PichangAppEntities())
+            using (PichangAppDBEntities entities =new PichangAppDBEntities())
             {
                 return entities.Deporte.ToList().Select(Mapper.Map<Deporte,DeporteDto>);
             }   
@@ -27,7 +26,7 @@ namespace PichangAppService.Controllers
 
         public DeporteDto Get(Int32 id)
         {
-            using (PichangAppEntities entities = new PichangAppEntities())
+            using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 var deporte = entities.Deporte.SingleOrDefault(x => x.DeporteId == id);
                 if(deporte==null)

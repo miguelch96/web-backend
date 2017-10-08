@@ -14,7 +14,7 @@ namespace PichangAppService.Controllers
     {
         public IEnumerable<Usuario> Get()
         {
-            using (PichangAppEntities entities = new PichangAppEntities())
+            using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 var usuarios = entities.Usuario.Where(x => x.Estado == "ACT").ToList();//.Select(Mapper.Map<Usuario, UsuarioDto>);
                 return usuarios;
@@ -23,7 +23,7 @@ namespace PichangAppService.Controllers
 
         public IHttpActionResult Get(Int32 id)
         {
-            using (PichangAppEntities entities = new PichangAppEntities())
+            using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 var usuario = entities.Usuario.SingleOrDefault(x => x.UsuarioId == id);
                 if (usuario == null)

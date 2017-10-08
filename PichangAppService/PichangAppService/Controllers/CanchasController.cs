@@ -15,7 +15,7 @@ namespace PichangAppService.Controllers
     {
         public HttpResponseMessage Get()
         {
-            using (PichangAppEntities entities = new PichangAppEntities())
+            using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 var canchas = entities.Cancha.Where(x => x.Estado == "ACT").ProjectTo<CanchaDto>().ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, new
@@ -29,7 +29,7 @@ namespace PichangAppService.Controllers
 
         public IHttpActionResult Get(Int32 id)
         {
-            using (PichangAppEntities entities = new PichangAppEntities())
+            using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 var cancha = entities.Cancha.SingleOrDefault(x => x.CanchaId == id);
                 if (cancha == null)
@@ -45,7 +45,7 @@ namespace PichangAppService.Controllers
                 return BadRequest();
 
 
-            using (PichangAppEntities entities = new PichangAppEntities())
+            using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 var cancha = Mapper.Map<CanchaDto, Cancha>(canchaDto);
                 entities.Cancha.Add(cancha);
@@ -63,7 +63,7 @@ namespace PichangAppService.Controllers
                 return BadRequest();
 
 
-            using (PichangAppEntities entities = new PichangAppEntities())
+            using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 var cancha = Mapper.Map<CanchaDto, Cancha>(canchaDto);
                 entities.Cancha.Add(cancha);
@@ -79,7 +79,7 @@ namespace PichangAppService.Controllers
         {
             
   
-            using (PichangAppEntities entities = new PichangAppEntities())
+            using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 var canchaInDb = entities.Cancha.SingleOrDefault(x => x.CanchaId == CanchaId);
                 if (canchaInDb==null)
