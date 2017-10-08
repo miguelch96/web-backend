@@ -25,19 +25,22 @@ namespace PichangAppDataAccess
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Cancha> Cancha { get; set; }
         public virtual DbSet<Deporte> Deporte { get; set; }
+        public virtual DbSet<Distrito> Distrito { get; set; }
         public virtual DbSet<Equipo> Equipo { get; set; }
         public virtual DbSet<EquipoUsuario> EquipoUsuario { get; set; }
-        public virtual DbSet<EspacioDeportivo> EspacioDeportivo { get; set; }
         public virtual DbSet<Establecimiento> Establecimiento { get; set; }
         public virtual DbSet<EstablecimientoServicio> EstablecimientoServicio { get; set; }
         public virtual DbSet<Horario> Horario { get; set; }
-        public virtual DbSet<HorarioEspacioDeportivo> HorarioEspacioDeportivo { get; set; }
+        public virtual DbSet<HorarioCancha> HorarioCancha { get; set; }
         public virtual DbSet<Permiso> Permiso { get; set; }
         public virtual DbSet<Reserva> Reserva { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
         public virtual DbSet<RolPermiso> RolPermiso { get; set; }
         public virtual DbSet<Servicio> Servicio { get; set; }
+        public virtual DbSet<Skill> Skill { get; set; }
+        public virtual DbSet<SkillEquipo> SkillEquipo { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TipoSuperficie> TipoSuperficie { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }

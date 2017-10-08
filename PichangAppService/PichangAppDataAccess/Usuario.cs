@@ -17,8 +17,10 @@ namespace PichangAppDataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Usuario()
         {
+            this.Equipo = new HashSet<Equipo>();
             this.EquipoUsuario = new HashSet<EquipoUsuario>();
             this.Establecimiento = new HashSet<Establecimiento>();
+            this.Reserva = new HashSet<Reserva>();
         }
     
         public int UsuarioId { get; set; }
@@ -26,12 +28,17 @@ namespace PichangAppDataAccess
         public string Passwd { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
-        public Nullable<byte> RolId { get; set; }
+        public byte RolId { get; set; }
+        public string Estado { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Equipo> Equipo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipoUsuario> EquipoUsuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Establecimiento> Establecimiento { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Reserva> Reserva { get; set; }
         public virtual Rol Rol { get; set; }
     }
 }

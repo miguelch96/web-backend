@@ -7,7 +7,7 @@ namespace PichangAppService.Dtos
 {
     public class DeporteDto
     {
-        public Int32 DeporteId { get; set; }
+        public byte DeporteId { get; set; }
         public String Nombre { get; set; }
         public String Codigo { get; set; }
     }

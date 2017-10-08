@@ -17,13 +17,13 @@ namespace PichangAppDataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public TipoSuperficie()
         {
-            this.EspacioDeportivo = new HashSet<EspacioDeportivo>();
+            this.Cancha = new HashSet<Cancha>();
         }
     
         public byte TipoSuperficieId { get; set; }
         public string Nombre { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EspacioDeportivo> EspacioDeportivo { get; set; }
+        public virtual ICollection<Cancha> Cancha { get; set; }
     }
 }

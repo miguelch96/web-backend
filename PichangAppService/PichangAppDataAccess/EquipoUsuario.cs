@@ -16,7 +16,7 @@ namespace PichangAppDataAccess
     {
         public int EquipoId { get; set; }
         public int UsuarioId { get; set; }
-        public Nullable<System.DateTime> FechaUnion { get; set; }
+        public System.DateTime FechaUnion { get; set; }
         public string Estado { get; set; }
     
         public virtual Equipo Equipo { get; set; }

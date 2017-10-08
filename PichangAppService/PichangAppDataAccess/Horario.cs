@@ -17,7 +17,7 @@ namespace PichangAppDataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Horario()
         {
-            this.HorarioEspacioDeportivo = new HashSet<HorarioEspacioDeportivo>();
+            this.HorarioCancha = new HashSet<HorarioCancha>();
         }
     
         public int HorarioId { get; set; }
@@ -25,6 +25,6 @@ namespace PichangAppDataAccess
         public System.DateTime HoraFin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HorarioEspacioDeportivo> HorarioEspacioDeportivo { get; set; }
+        public virtual ICollection<HorarioCancha> HorarioCancha { get; set; }
     }
 }

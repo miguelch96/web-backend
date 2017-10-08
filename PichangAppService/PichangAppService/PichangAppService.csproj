@@ -232,9 +232,32 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\DeporteController.cs" />
+    <Compile Include="Controllers\CanchasController.cs" />
+    <Compile Include="Controllers\DeportesController.cs" />
+    <Compile Include="Controllers\EquiposController.cs" />
+    <Compile Include="Controllers\EstablecimientosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ReservasController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Dtos\CanchaDto.cs" />
+    <Compile Include="Dtos\DistritoDto.cs" />
+    <Compile Include="Dtos\EquipoDto.cs" />
+    <Compile Include="Dtos\EquipoUsuarioDto.cs" />
+    <Compile Include="Dtos\EstablecimientoDto.cs" />
+    <Compile Include="Dtos\EstablecimientoServicioDto.cs" />
+    <Compile Include="Dtos\HorarioCanchaDto.cs" />
+    <Compile Include="Dtos\HorarioDto.cs" />
+    <Compile Include="Dtos\PermisoDto.cs" />
+    <Compile Include="Dtos\ReservaDto.cs" />
+    <Compile Include="Dtos\RolDto.cs" />
+    <Compile Include="Dtos\RolPermisoDto.cs" />
+    <Compile Include="Dtos\ServicioDto.cs" />
+    <Compile Include="Dtos\SkillDto.cs" />
+    <Compile Include="Dtos\SkillEquipoDto.cs" />
+    <Compile Include="Dtos\TipoSuperficieDto.cs" />
+    <Compile Include="Dtos\UsuarioDto.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -278,6 +301,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\PichangAppServiceAPI - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />

@@ -17,19 +17,21 @@ namespace PichangAppDataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Establecimiento()
         {
-            this.EspacioDeportivo = new HashSet<EspacioDeportivo>();
+            this.Cancha = new HashSet<Cancha>();
             this.EstablecimientoServicio = new HashSet<EstablecimientoServicio>();
         }
     
         public int EstablecimientoId { get; set; }
         public string Nombre { get; set; }
         public string Direccion { get; set; }
-        public Nullable<byte> DistritoId { get; set; }
+        public byte DistritoId { get; set; }
         public string Descripcion { get; set; }
-        public Nullable<int> UsuarioPropietarioId { get; set; }
+        public int UsuarioPropietarioId { get; set; }
+        public string Estado { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EspacioDeportivo> EspacioDeportivo { get; set; }
+        public virtual ICollection<Cancha> Cancha { get; set; }
+        public virtual Distrito Distrito { get; set; }
         public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EstablecimientoServicio> EstablecimientoServicio { get; set; }

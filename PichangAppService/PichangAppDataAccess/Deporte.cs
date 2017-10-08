@@ -17,8 +17,8 @@ namespace PichangAppDataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Deporte()
         {
+            this.Cancha = new HashSet<Cancha>();
             this.Equipo = new HashSet<Equipo>();
-            this.EspacioDeportivo = new HashSet<EspacioDeportivo>();
         }
     
         public byte DeporteId { get; set; }
@@ -26,8 +26,8 @@ namespace PichangAppDataAccess
         public string Codigo { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Equipo> Equipo { get; set; }
+        public virtual ICollection<Cancha> Cancha { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EspacioDeportivo> EspacioDeportivo { get; set; }
+        public virtual ICollection<Equipo> Equipo { get; set; }
     }
 }

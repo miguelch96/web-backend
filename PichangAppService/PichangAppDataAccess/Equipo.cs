@@ -18,16 +18,21 @@ namespace PichangAppDataAccess
         public Equipo()
         {
             this.EquipoUsuario = new HashSet<EquipoUsuario>();
+            this.SkillEquipo = new HashSet<SkillEquipo>();
         }
     
         public int EquipoId { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
-        public Nullable<byte> DeporteId { get; set; }
-        public Nullable<int> UsuarioCapitanId { get; set; }
+        public byte DeporteId { get; set; }
+        public int UsuarioCapitanId { get; set; }
+        public string Estado { get; set; }
     
         public virtual Deporte Deporte { get; set; }
+        public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<EquipoUsuario> EquipoUsuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SkillEquipo> SkillEquipo { get; set; }
     }
 }
