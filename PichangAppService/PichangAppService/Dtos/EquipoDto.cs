@@ -14,7 +14,7 @@ namespace PichangAppService.Dtos
         public byte DeporteId { get; set; }
         public DeporteDto Deporte { get; set; }
 
-        public byte CapitanId { get; set; }
+        public Int32 CapitanId { get; set; }
         public UsuarioDto Capitan { get; set; }
 
         public IEnumerable<EquipoUsuarioDto> Miembros { get; set; }

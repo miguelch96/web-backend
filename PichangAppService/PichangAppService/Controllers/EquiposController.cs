@@ -22,7 +22,10 @@ namespace PichangAppService.Controllers
                 using (PichangAppDBEntities entities = new PichangAppDBEntities())
                 {
                     var equipos = entities.Equipo.ProjectTo<EquipoDto>().ToList();
-                    return Request.CreateResponse(HttpStatusCode.OK, equipos);
+                    return Request.CreateResponse(HttpStatusCode.OK,new
+                    {
+                        Equipos=equipos
+                    });
 
                 }
             }
@@ -70,6 +73,31 @@ namespace PichangAppService.Controllers
                     var message = Request.CreateResponse(HttpStatusCode.Created, equipoDto);
                     message.Headers.Location = new Uri(Request.RequestUri + "/" + equipo.EquipoId);
                     return message;
+                }
+            }
+
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
+
+        [HttpPut]
+        public HttpResponseMessage Put(int id, [FromBody] EquipoDto equipoDto)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var equipo = entities.Equipo.SingleOrDefault(x => x.EquipoId == id);
+                    if (equipo == null)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.NotFound, "Equipo no encontrada");
+                    }
+
+                    Mapper.Map(equipoDto, equipo);
+                    entities.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, equipoDto);
                 }
             }
 

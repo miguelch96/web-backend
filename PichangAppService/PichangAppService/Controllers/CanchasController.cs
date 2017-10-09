@@ -13,14 +13,17 @@ namespace PichangAppService.Controllers
 {
     public class CanchasController : ApiController
     {
-        public HttpResponseMessage Get()
+        public HttpResponseMessage Get(string distrito=null)
         {
             try
             {
                 using (PichangAppDBEntities entities = new PichangAppDBEntities())
                 {
                     var canchas = entities.Cancha.Where(x => x.Estado == "ACT").ProjectTo<CanchaDto>().ToList();
-                    return Request.CreateResponse(HttpStatusCode.OK, canchas);
+                    return Request.CreateResponse(HttpStatusCode.OK, new
+                    {
+                        Canchas=canchas
+                    });
                 }
             }
             catch (HttpResponseException e)
@@ -77,19 +80,30 @@ namespace PichangAppService.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
             }
 
-        }    
+        }
 
         [HttpPut]
-        public IHttpActionResult Put(CanchaDto canchaDto)
+        public HttpResponseMessage Put(int id, [FromBody] CanchaDto canchaDto)
         {
-            using (PichangAppDBEntities entities = new PichangAppDBEntities())
+            try
             {
-                var cancha = Mapper.Map<CanchaDto, Cancha>(canchaDto);
-                entities.Cancha.Add(cancha);
-                entities.SaveChanges();
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var cancha = entities.Cancha.SingleOrDefault(x => x.CanchaId == id);
+                    if (cancha == null)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.NotFound, "Cancha no encontrada");
+                    }
 
-                canchaDto.CanchaId = cancha.CanchaId;
-                return Created(new Uri(Request.RequestUri + "/" + cancha.CanchaId), canchaDto);
+                    Mapper.Map(canchaDto, cancha);
+                    entities.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, canchaDto);
+                }
+            }
+
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
             }
         }
 

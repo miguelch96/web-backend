@@ -16,9 +16,9 @@ namespace PichangAppService.App_Start
          
             CreateMap<Deporte, DeporteDto>().ReverseMap();
             
-            CreateMap<EquipoUsuario, EquipoUsuarioDto>().ReverseMap();
+           
             
-            CreateMap<EstablecimientoServicio, EstablecimientoServicioDto>().ReverseMap();
+           
             CreateMap<HorarioCancha, HorarioCanchaDto>().ReverseMap();
             CreateMap<Horario, HorarioDto>().ReverseMap();
             CreateMap<Permiso, PermisoDto>().ReverseMap();
@@ -27,15 +27,19 @@ namespace PichangAppService.App_Start
             CreateMap<RolPermiso, RolPermisoDto>().ReverseMap();
             CreateMap<Servicio, ServicioDto>().ReverseMap();
             CreateMap<Skill, SkillDto>().ReverseMap();
-            CreateMap<SkillEquipo, SkillEquipoDto>().ReverseMap();
+            CreateMap<SkillEquipo, SkillEquipoDto>()
+                .ForMember(dest => dest.Nombre, opts => opts.MapFrom(src => src.Skill.Nombre)).ReverseMap();
             CreateMap<TipoSuperficie, TipoSuperficieDto>().ReverseMap();
 
-
+            CreateMap<EstablecimientoServicio, EstablecimientoServicioDto>()
+                .ForMember(dest => dest.Nombre, opts => opts.MapFrom(src => src.Servicio.Nombre)).ReverseMap();
 
             CreateMap<Cancha, CanchaDto>()
                 .ForMember(dest => dest.Establecimiento, opts => opts.MapFrom(src => src.Establecimiento))
                 .ForMember(dest => dest.Deporte, opts => opts.MapFrom(src => src.Deporte))
-                .ForMember(dest => dest.TipoSuperficie, opts => opts.MapFrom(src => src.TipoSuperficie));
+                .ForMember(dest => dest.TipoSuperficie, opts => opts.MapFrom(src => src.TipoSuperficie)).ReverseMap();
+
+            CreateMap<EquipoUsuario, EquipoUsuarioDto>().ReverseMap();
 
             CreateMap<Equipo, EquipoDto>()
                 .ForMember(dest => dest.Capitan, opts => opts.MapFrom(src => src.Usuario))

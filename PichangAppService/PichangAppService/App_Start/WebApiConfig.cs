@@ -40,6 +40,8 @@ namespace PichangAppService
             config.Formatters.Remove(config.Formatters.XmlFormatter);
             json.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
 
+           
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 

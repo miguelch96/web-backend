@@ -12,13 +12,12 @@ namespace PichangAppService.Dtos
         public String Nombre{ get; set; }
         public String Direccion{ get; set; }
         public String Descripcion{ get; set; }
-
         public byte DistritoId { get; set; }
+        public Int32 PropietarioId { get; set; }
+
+
         public DistritoDto Distrito { get; set; }
-
-        public byte PropietarioId { get; set; }
         public UsuarioDto Propietario { get; set; }
-
         public IEnumerable<EstablecimientoServicioDto> Servicios { get; set; }
         //public IEnumerable<CanchaDto> Canchas { get; set; }
 

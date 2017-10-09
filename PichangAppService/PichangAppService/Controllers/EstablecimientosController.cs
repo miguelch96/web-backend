@@ -23,7 +23,10 @@ namespace PichangAppService.Controllers
                 using (PichangAppDBEntities entities = new PichangAppDBEntities())
                 {
                     var establecimientos = entities.Establecimiento.ProjectTo<EstablecimientoDto>().ToList();
-                    return Request.CreateResponse(HttpStatusCode.OK, establecimientos);
+                    return Request.CreateResponse(HttpStatusCode.OK,new
+                    {
+                        Establecimientos=establecimientos
+                    });
 
                 }
             }
@@ -49,6 +52,30 @@ namespace PichangAppService.Controllers
                         Mapper.Map<Establecimiento, EstablecimientoDto>(establecimiento));
                 }
             }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
+
+        [HttpPut]
+        public HttpResponseMessage Put(int id, [FromBody] EstablecimientoDto establecimientoDto)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var establecimiento = entities.Establecimiento.SingleOrDefault(x => x.EstablecimientoId == id);
+                    if (establecimiento == null)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.NotFound, "Establecimiento no encontrada");
+                    }
+                    Mapper.Map(establecimientoDto, establecimiento);
+                    entities.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, establecimientoDto);
+                }
+            }
+
             catch (HttpResponseException e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);

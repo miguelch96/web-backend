@@ -262,3 +262,6 @@ C:\Curso Vidly\PichangAppService\PichangAppService\obj\Release\PichangAppService
 C:\Curso Vidly\PichangAppService\PichangAppService\obj\Release\PichangAppService.csproj.CoreCompileInputs.cache
 C:\Curso Vidly\PichangAppService\PichangAppService\obj\Release\PichangAppService.dll
 C:\Curso Vidly\PichangAppService\PichangAppService\obj\Release\PichangAppService.pdb
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppService\bin\Swashbuckle.Core.dll
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppService\bin\WebActivatorEx.dll
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppService\bin\Swashbuckle.Examples.dll

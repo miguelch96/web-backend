@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <sitemanifest>
-  <IisApp path="C:\Curso Vidly\PichangAppService\PichangAppService\obj\Release\Package\PackageTmp" />
-  <setAcl path="C:\Curso Vidly\PichangAppService\PichangAppService\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
-  <setAcl path="C:\Curso Vidly\PichangAppService\PichangAppService\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+  <IisApp path="D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppService\obj\Release\Package\PackageTmp" />
+  <setAcl path="D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppService\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppService\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
 </sitemanifest>
