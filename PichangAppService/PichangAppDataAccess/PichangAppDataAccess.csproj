@@ -113,6 +113,9 @@
     <Compile Include="SkillEquipo.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="sysdiagrams.cs">
+      <DependentUpon>PichangAppDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="TipoSuperficie.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>

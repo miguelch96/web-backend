@@ -9,3 +9,14 @@ C:\Curso Vidly\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppData
 C:\Curso Vidly\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppDataAccess.csproj.CoreCompileInputs.cache
 C:\Curso Vidly\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppDataAccess.dll
 C:\Curso Vidly\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppDataAccess.pdb
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\bin\Release\PichangAppDataAccess.dll.config
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\bin\Release\PichangAppDataAccess.dll
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\bin\Release\PichangAppDataAccess.pdb
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\bin\Release\EntityFramework.dll
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\bin\Release\EntityFramework.SqlServer.dll
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\bin\Release\EntityFramework.xml
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\bin\Release\EntityFramework.SqlServer.xml
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppDataAccess.csprojResolveAssemblyReference.cache
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppDataAccess.csproj.CoreCompileInputs.cache
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppDataAccess.dll
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppDataAccess.pdb

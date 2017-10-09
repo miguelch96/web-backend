@@ -1,0 +1,6 @@
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccessLocal\bin\Release\PichangAppDataAccessLocal.dll
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccessLocal\bin\Release\PichangAppDataAccessLocal.pdb
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccessLocal\obj\Release\PichangAppDataAccessLocal.csprojResolveAssemblyReference.cache
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccessLocal\obj\Release\PichangAppDataAccessLocal.csproj.CoreCompileInputs.cache
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccessLocal\obj\Release\PichangAppDataAccessLocal.dll
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccessLocal\obj\Release\PichangAppDataAccessLocal.pdb

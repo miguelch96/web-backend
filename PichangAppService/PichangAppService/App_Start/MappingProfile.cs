@@ -39,14 +39,17 @@ namespace PichangAppService.App_Start
 
             CreateMap<Equipo, EquipoDto>()
                 .ForMember(dest => dest.Capitan, opts => opts.MapFrom(src => src.Usuario))
-                .ForMember(dest => dest.Miembros, opts => opts.MapFrom(src => src.EquipoUsuario)).ReverseMap();
+                .ForMember(dest => dest.Miembros, opts => opts.MapFrom(src => src.EquipoUsuario))
+                .ForMember(dest => dest.CapitanId, opts => opts.MapFrom(src => src.UsuarioCapitanId)).ReverseMap();
 
             CreateMap<Usuario, UsuarioDto>().ReverseMap();
             CreateMap<Distrito, DistritoDto>().ReverseMap();
+
             CreateMap<Establecimiento, EstablecimientoDto>()
                 .ForMember(dest => dest.Distrito, opts => opts.MapFrom(src => src.Distrito))
                 .ForMember(dest => dest.Propietario, opts => opts.MapFrom(src => src.Usuario))
-                .ForMember(dest => dest.Servicios, opts => opts.MapFrom(src => src.EstablecimientoServicio)).ReverseMap();
+                .ForMember(dest => dest.Servicios, opts => opts.MapFrom(src => src.EstablecimientoServicio))
+                .ForMember(dest => dest.PropietarioId, opts => opts.MapFrom(src => src.UsuarioPropietarioId)).ReverseMap();
             //.ForMember(dest => dest.Canchas, opts => opts.MapFrom(src => src.Cancha));
 
 

@@ -14,30 +14,93 @@ namespace PichangAppService.Controllers
 {
     public class EquiposController : ApiController
     {
+        [HttpGet]
         public HttpResponseMessage Get()
         {
-            using (PichangAppDBEntities entities = new PichangAppDBEntities())
+            try
             {
-                var equipos= entities.Equipo.ProjectTo<EquipoDto>().ToList();
-                return Request.CreateResponse(HttpStatusCode.OK, new
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
                 {
-                    StatusCode = HttpStatusCode.OK,
-                    Equipos = equipos
-                });
+                    var equipos = entities.Equipo.ProjectTo<EquipoDto>().ToList();
+                    return Request.CreateResponse(HttpStatusCode.OK, equipos);
+
+                }
             }
-        }
-
-
-        public IHttpActionResult Get(Int32 id)
-        {
-            using (PichangAppDBEntities entities = new PichangAppDBEntities())
+            catch (HttpResponseException e)
             {
-                var equipo = entities.Equipo.SingleOrDefault(x => x.EquipoId == id);
-                if (equipo == null)
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
-                return Ok(Mapper.Map<Equipo, EquipoDto>(equipo));
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+
+        }
+
+        [HttpGet]
+        public HttpResponseMessage Get(Int32 id)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var equipo = entities.Equipo.SingleOrDefault(x => x.EquipoId == id);
+                    if (equipo == null)
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Equipo no encontrado");
+
+                    return Request.CreateResponse(HttpStatusCode.OK,
+                        Mapper.Map<Equipo, EquipoDto>(equipo));
+                }
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
             }
         }
 
+        [HttpPost]
+        public HttpResponseMessage Post([FromBody] EquipoDto equipoDto)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var equipo = Mapper.Map<EquipoDto, Equipo>(equipoDto);
+                    equipo.Estado = "ACT";
+                    entities.Equipo.Add(equipo);
+                    entities.SaveChanges();
+                    equipoDto.EquipoId = equipo.EquipoId;
+
+                    var message = Request.CreateResponse(HttpStatusCode.Created, equipoDto);
+                    message.Headers.Location = new Uri(Request.RequestUri + "/" + equipo.EquipoId);
+                    return message;
+                }
+            }
+
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
+
+        [HttpDelete]
+        public HttpResponseMessage Delete(int id)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var equipo = entities.Equipo.SingleOrDefault(x => x.EquipoId == id);
+                    if (equipo == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Equipo con Id= " + id + " not found");
+                    }
+                    equipo.Estado = "INA";
+                    entities.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK);
+
+                }
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
     }
 }

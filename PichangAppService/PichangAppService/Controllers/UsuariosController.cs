@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using PichangAppDataAccess;
 using PichangAppService.Dtos;
 
@@ -12,23 +13,72 @@ namespace PichangAppService.Controllers
 {
     public class UsuariosController : ApiController
     {
-        public IEnumerable<Usuario> Get()
+        [HttpGet]
+        public HttpResponseMessage Get()
         {
-            using (PichangAppDBEntities entities = new PichangAppDBEntities())
+            try
             {
-                var usuarios = entities.Usuario.Where(x => x.Estado == "ACT").ToList();//.Select(Mapper.Map<Usuario, UsuarioDto>);
-                return usuarios;
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var usuarios =
+                        entities.Usuario.Where(x => x.Estado == "ACT").ProjectTo<UsuarioDto>()
+                            .ToList();
+                    return Request.CreateResponse(HttpStatusCode.OK,usuarios);
+                }
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+           
+        }
+
+        [HttpPost]
+        public HttpResponseMessage Post([FromBody] UsuarioDto usuarioDto)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var usuario = Mapper.Map<UsuarioDto, Usuario>(usuarioDto);
+                    usuario.Estado = "ACT";
+                    entities.Usuario.Add(usuario);
+                    entities.SaveChanges();
+                    usuarioDto.UsuarioId = usuario.UsuarioId;
+
+                    var message = Request.CreateResponse(HttpStatusCode.Created,usuarioDto);
+                    message.Headers.Location = new Uri(Request.RequestUri +"/"+ usuario.UsuarioId);
+                    return message;
+                }
+            }
+
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
             }
         }
 
-        public IHttpActionResult Get(Int32 id)
+        [HttpDelete]
+        public HttpResponseMessage Delete(int id)
         {
-            using (PichangAppDBEntities entities = new PichangAppDBEntities())
+            try
             {
-                var usuario = entities.Usuario.SingleOrDefault(x => x.UsuarioId == id);
-                if (usuario == null)
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
-                return Ok(Mapper.Map<Usuario, UsuarioDto>(usuario));
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var usuario = entities.Usuario.SingleOrDefault(x => x.UsuarioId == id);
+                    if (usuario == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Usuario con Id= " + id + " not found");
+                    }
+                    usuario.Estado = "INA";
+                    entities.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK);
+
+                }
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest,e);
             }
         }
     }

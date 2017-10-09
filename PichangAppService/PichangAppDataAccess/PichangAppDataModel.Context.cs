@@ -41,6 +41,7 @@ namespace PichangAppDataAccess
         public virtual DbSet<Servicio> Servicio { get; set; }
         public virtual DbSet<Skill> Skill { get; set; }
         public virtual DbSet<SkillEquipo> SkillEquipo { get; set; }
+        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TipoSuperficie> TipoSuperficie { get; set; }
         public virtual DbSet<Usuario> Usuario { get; set; }
     }

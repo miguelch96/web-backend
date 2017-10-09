@@ -15,54 +15,73 @@ namespace PichangAppService.Controllers
     {
         public HttpResponseMessage Get()
         {
-            using (PichangAppDBEntities entities = new PichangAppDBEntities())
+            try
             {
-                var canchas = entities.Cancha.Where(x => x.Estado == "ACT").ProjectTo<CanchaDto>().ToList();
-                return Request.CreateResponse(HttpStatusCode.OK, new
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
                 {
-                    StatusCode=HttpStatusCode.OK,
-                    Canchas = canchas
-                });
+                    var canchas = entities.Cancha.Where(x => x.Estado == "ACT").ProjectTo<CanchaDto>().ToList();
+                    return Request.CreateResponse(HttpStatusCode.OK, canchas);
+                }
             }
-        }
-
-
-        public IHttpActionResult Get(Int32 id)
-        {
-            using (PichangAppDBEntities entities = new PichangAppDBEntities())
+            catch (HttpResponseException e)
             {
-                var cancha = entities.Cancha.SingleOrDefault(x => x.CanchaId == id);
-                if (cancha == null)
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
-                return Ok(Mapper.Map<Cancha, CanchaDto>(cancha));
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+            
+        }
+
+
+        public HttpResponseMessage Get(Int32 id)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var cancha = entities.Cancha.SingleOrDefault(x => x.CanchaId == id);
+
+                    if (cancha == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Cancha con Id= " + id + " no encontrado");
+                    }
+                    return Request.CreateResponse(HttpStatusCode.OK, Mapper.Map<Cancha, CanchaDto>(cancha));
+                }
+            }
+            catch (Exception e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+
             }
         }
+
 
         [HttpPost]
-        public IHttpActionResult Post(CanchaDto canchaDto)
+        public HttpResponseMessage Post([FromBody] CanchaDto canchaDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-
-            using (PichangAppDBEntities entities = new PichangAppDBEntities())
+            try
             {
-                var cancha = Mapper.Map<CanchaDto, Cancha>(canchaDto);
-                entities.Cancha.Add(cancha);
-                entities.SaveChanges();
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var cancha = Mapper.Map<CanchaDto, Cancha>(canchaDto);
+                    cancha.Estado = "ACT";
+                    entities.Cancha.Add(cancha);
+                    entities.SaveChanges();
+                    canchaDto.CanchaId = cancha.CanchaId;
 
-                canchaDto.CanchaId = cancha.CanchaId;
-                return Created(new Uri(Request.RequestUri+"/"+cancha.CanchaId),canchaDto );
+                    var message = Request.CreateResponse(HttpStatusCode.Created, canchaDto);
+                    message.Headers.Location = new Uri(Request.RequestUri + "/" + cancha.CanchaId);
+                    return message;
+                }
             }
-        }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
 
-        [HttpPost]
+        }    
+
+        [HttpPut]
         public IHttpActionResult Put(CanchaDto canchaDto)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
-
             using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
                 var cancha = Mapper.Map<CanchaDto, Cancha>(canchaDto);
@@ -74,23 +93,32 @@ namespace PichangAppService.Controllers
             }
         }
 
-        [HttpPost]
-        public IHttpActionResult Delete(int CanchaId)
+        [HttpDelete]
+        public HttpResponseMessage Delete(int id)
         {
-            
-  
-            using (PichangAppDBEntities entities = new PichangAppDBEntities())
+            try
             {
-                var canchaInDb = entities.Cancha.SingleOrDefault(x => x.CanchaId == CanchaId);
-                if (canchaInDb==null)
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
                 {
-                    return NotFound();
-                }
+                    var canchaInDb = entities.Cancha.Where(x=>x.Estado=="ACT").SingleOrDefault(x => x.CanchaId == id);
+                    if (canchaInDb == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound,"Cancha no encontrada");
+                    }
 
-                canchaInDb.Estado = "INA";
-                entities.SaveChanges();
-                return Ok();
+                    canchaInDb.Estado = "INA";
+                    entities.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
             }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+
         }
+
+
+      
     }
 }

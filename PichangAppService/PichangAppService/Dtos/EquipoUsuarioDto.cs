@@ -9,6 +9,5 @@ namespace PichangAppService.Dtos
     {
         public UsuarioDto Usuario { get; set; }
         public DateTime FechaUnion { get; set; }
-        public String Estado { get; set; }
     }
 }

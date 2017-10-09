@@ -18,26 +18,89 @@ namespace PichangAppService.Controllers
         [HttpGet]
         public HttpResponseMessage Get()
         {
-            using (PichangAppDBEntities entities = new PichangAppDBEntities())
+            try
             {
-                var establecimientos = entities.Establecimiento.ProjectTo<EstablecimientoDto>().ToList();
-                return Request.CreateResponse(HttpStatusCode.OK, new
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
                 {
-                    StatusCode = HttpStatusCode.OK,
-                    Establecimientos = establecimientos
-                });
+                    var establecimientos = entities.Establecimiento.ProjectTo<EstablecimientoDto>().ToList();
+                    return Request.CreateResponse(HttpStatusCode.OK, establecimientos);
+
+                }
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+            
+        }
+        
+        [HttpGet]
+        public HttpResponseMessage Get(Int32 id)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var establecimiento = entities.Establecimiento.SingleOrDefault(x => x.EstablecimientoId == id);
+                    if (establecimiento == null)
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Establecimiento no encontrado");
+
+                    return Request.CreateResponse(HttpStatusCode.OK,
+                        Mapper.Map<Establecimiento, EstablecimientoDto>(establecimiento));
+                }
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
             }
         }
 
-
-        public EstablecimientoDto Get(Int32 id)
+        [HttpPost]
+        public HttpResponseMessage Post([FromBody] EstablecimientoDto establecimientoDto)
         {
-            using (PichangAppDBEntities entities = new PichangAppDBEntities())
+            try
             {
-                var establecimiento = entities.Establecimiento.SingleOrDefault(x => x.EstablecimientoId == id);
-                if (establecimiento == null)
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
-                return Mapper.Map<Establecimiento, EstablecimientoDto>(establecimiento);
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var establecimiento = Mapper.Map<EstablecimientoDto, Establecimiento>(establecimientoDto);
+                    establecimiento.Estado = "ACT";
+                    entities.Establecimiento.Add(establecimiento);
+                    entities.SaveChanges();
+                    establecimientoDto.EstablecimientoId = establecimiento.EstablecimientoId;
+
+                    var message = Request.CreateResponse(HttpStatusCode.Created, establecimientoDto);
+                    message.Headers.Location = new Uri(Request.RequestUri + "/" + establecimiento.EstablecimientoId);
+                    return message;
+                }
+            }
+
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
+
+        [HttpDelete]
+        public HttpResponseMessage Delete(int id)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var establecimiento = entities.Establecimiento.SingleOrDefault(x => x.EstablecimientoId == id);
+                    if (establecimiento == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Establecimiento con Id= " + id + " not found");
+                    }
+                    establecimiento.Estado = "INA";
+                    entities.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK);
+
+                }
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
             }
         }
     }

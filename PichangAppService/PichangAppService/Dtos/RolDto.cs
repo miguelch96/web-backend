@@ -7,9 +7,9 @@ namespace PichangAppService.Dtos
 {
     public class RolDto
     {
-        public Int32 RolId { get; set; }
+        public byte RolId { get; set; }
         public String Nombre { get; set; }
         public String Descripcion { get; set; }
-        public IEnumerable<RolPermisoDto> RolPermiso { get; set; }
+        //public IEnumerable<RolPermisoDto> RolPermiso { get; set; }
     }
 }

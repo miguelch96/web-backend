@@ -13,7 +13,8 @@ namespace PichangAppService.Dtos
         public String Passwd{ get; set; }
         public String Nombre{ get; set; }
         public String Apellido{ get; set; }
-        public byte RolId{ get; set; }
+        public byte RolId { get; set; }
+        public RolDto Rol { get; set; }
         //public IEnumerable<EquipoUsuarioDto> EquipoUsuario { get; set; }
     }
 }
