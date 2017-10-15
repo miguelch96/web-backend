@@ -17,8 +17,8 @@ namespace PichangAppService.Dtos
         public Int32 CapitanId { get; set; }
         public UsuarioDto Capitan { get; set; }
 
-        public IEnumerable<EquipoUsuarioDto> Miembros { get; set; }
-        public IEnumerable<SkillEquipoDto> SkillEquipo { get; set; }
+        public IEnumerable<UsuarioDto> Miembros { get; set; }
+        public IEnumerable<SkillDto> Skills { get; set; }
 
 
     }

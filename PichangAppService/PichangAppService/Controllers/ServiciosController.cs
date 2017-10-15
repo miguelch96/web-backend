@@ -10,13 +10,13 @@ using PichangAppService.Dtos;
 
 namespace PichangAppService.Controllers
 {
-    public class RolesController : ApiController
+    public class ServiciosController : ApiController
     {
-        public IEnumerable<RolDto> Get()
+        public IEnumerable<ServicioDto> Get()
         {
             using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
-                return entities.Rol.ToList().Select(Mapper.Map<Rol, RolDto>);
+                return entities.Servicio.ToList().Select(Mapper.Map<Servicio, ServicioDto>);
             }
         }
     }

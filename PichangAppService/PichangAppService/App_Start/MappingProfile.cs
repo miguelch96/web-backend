@@ -17,13 +17,16 @@ namespace PichangAppService.App_Start
             CreateMap<Deporte, DeporteDto>().ReverseMap();
             
            
-            
-           
             CreateMap<HorarioCancha, HorarioCanchaDto>().ReverseMap();
             CreateMap<Horario, HorarioDto>().ReverseMap();
             CreateMap<Permiso, PermisoDto>().ReverseMap();
             CreateMap<Reserva, ReservaDto>().ReverseMap();
-            CreateMap<Rol, RolDto>().ReverseMap();
+
+
+            CreateMap<Rol, RolDto>()
+                .ForMember(dest => dest.Permisos, opts => opts.MapFrom(src => src.RolPermiso.Select(x => x.Permiso))).ReverseMap();
+
+
             CreateMap<RolPermiso, RolPermisoDto>().ReverseMap();
             CreateMap<Servicio, ServicioDto>().ReverseMap();
             CreateMap<Skill, SkillDto>().ReverseMap();
@@ -43,7 +46,8 @@ namespace PichangAppService.App_Start
 
             CreateMap<Equipo, EquipoDto>()
                 .ForMember(dest => dest.Capitan, opts => opts.MapFrom(src => src.Usuario))
-                .ForMember(dest => dest.Miembros, opts => opts.MapFrom(src => src.EquipoUsuario))
+                .ForMember(dest => dest.Miembros, opts => opts.MapFrom(src => src.EquipoUsuario.Select(x=>x.Usuario)))
+                .ForMember(dest => dest.Skills, opts => opts.MapFrom(src => src.SkillEquipo.Select(x=>x.Skill)))
                 .ForMember(dest => dest.CapitanId, opts => opts.MapFrom(src => src.UsuarioCapitanId)).ReverseMap();
 
             CreateMap<Usuario, UsuarioDto>().ReverseMap();
@@ -52,10 +56,9 @@ namespace PichangAppService.App_Start
             CreateMap<Establecimiento, EstablecimientoDto>()
                 .ForMember(dest => dest.Distrito, opts => opts.MapFrom(src => src.Distrito))
                 .ForMember(dest => dest.Propietario, opts => opts.MapFrom(src => src.Usuario))
-                .ForMember(dest => dest.Servicios, opts => opts.MapFrom(src => src.EstablecimientoServicio))
+                .ForMember(dest => dest.Servicios, opts => opts.MapFrom(src => src.EstablecimientoServicio.Select(x=>x.Servicio)))
                 .ForMember(dest => dest.PropietarioId, opts => opts.MapFrom(src => src.UsuarioPropietarioId)).ReverseMap();
-            //.ForMember(dest => dest.Canchas, opts => opts.MapFrom(src => src.Cancha));
-
+      
 
 
 

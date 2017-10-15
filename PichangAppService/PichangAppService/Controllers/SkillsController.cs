@@ -10,13 +10,13 @@ using PichangAppService.Dtos;
 
 namespace PichangAppService.Controllers
 {
-    public class RolesController : ApiController
+    public class SkillsController : ApiController
     {
-        public IEnumerable<RolDto> Get()
+        public IEnumerable<SkillDto> Get()
         {
             using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
-                return entities.Rol.ToList().Select(Mapper.Map<Rol, RolDto>);
+                return entities.Skill.ToList().Select(Mapper.Map<Skill, SkillDto>);
             }
         }
     }

@@ -59,7 +59,7 @@ namespace PichangAppService.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage Put(int id, [FromBody] EstablecimientoDto establecimientoDto)
+        public HttpResponseMessage Put([FromUri] int id, [FromBody] EstablecimientoDto establecimientoDto)
         {
             try
             {
@@ -68,10 +68,34 @@ namespace PichangAppService.Controllers
                     var establecimiento = entities.Establecimiento.SingleOrDefault(x => x.EstablecimientoId == id);
                     if (establecimiento == null)
                     {
-                        return Request.CreateResponse(HttpStatusCode.NotFound, "Establecimiento no encontrada");
+                        return Request.CreateResponse(HttpStatusCode.NotFound, "Establecimiento no encontrado");
                     }
+
+                    
                     Mapper.Map(establecimientoDto, establecimiento);
+
+                    //ELIMINAR SERVICIOS ANTERIORES
+                    var serviciosActuales = entities.EstablecimientoServicio.Where(x => x.EstablecimientoId == establecimiento.EstablecimientoId).DefaultIfEmpty().ToList();
+                    if (serviciosActuales.Count != 0)
+                    {
+                        foreach (var servicio in serviciosActuales)
+                        {
+                            entities.EstablecimientoServicio.Remove(servicio);
+                        }
+                    }
+
+                    //INSERTAR NUEVOS SERVICIOS
+                    foreach (var servicio in establecimientoDto.Servicios)
+                    {
+                        entities.EstablecimientoServicio.Add(new EstablecimientoServicio()
+                        {
+                            EstablecimientoId = establecimiento.EstablecimientoId,
+                            ServicioId = servicio.ServicioId
+                        });
+                    }
+
                     entities.SaveChanges();
+
                     return Request.CreateResponse(HttpStatusCode.OK, establecimientoDto);
                 }
             }

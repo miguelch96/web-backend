@@ -15,6 +15,5 @@ namespace PichangAppService.Dtos
         public String Apellido{ get; set; }
         public byte RolId { get; set; }
         public RolDto Rol { get; set; }
-        //public IEnumerable<EquipoUsuarioDto> EquipoUsuario { get; set; }
     }
 }

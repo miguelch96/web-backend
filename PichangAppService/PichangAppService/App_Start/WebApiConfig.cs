@@ -22,16 +22,6 @@ namespace PichangAppService
             config.SuppressDefaultHostAuthentication();
             config.Filters.Add(new HostAuthenticationFilter(OAuthDefaults.AuthenticationType));
 
-            /*var settings = config.Formatters.JsonFormatter.SerializerSettings;
-            //settings.PreserveReferencesHandling = Newtonsoft.Json.PreserveReferencesHandling.Objects;
-            settings.ContractResolver=new CamelCasePropertyNamesContractResolver();
-            settings.Formatting = Newtonsoft.Json.Formatting.Indented;
-            settings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;*/
-
-            /*var settings = config.Formatters.JsonFormatter.SerializerSettings;
-            settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            settings.Formatting = Newtonsoft.Json.Formatting.Indented;*/
-
 
             var json = config.Formatters.JsonFormatter;
             json.SerializerSettings.ContractResolver=new CamelCasePropertyNamesContractResolver();
@@ -52,9 +42,7 @@ namespace PichangAppService
                 defaults: new { id = RouteParameter.Optional }
             );
 
-            
-
-          
+            //config.Filters.Add(new RequireHttpsAttribute());
         }
     }
 }

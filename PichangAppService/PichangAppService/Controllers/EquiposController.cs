@@ -96,6 +96,57 @@ namespace PichangAppService.Controllers
                     }
 
                     Mapper.Map(equipoDto, equipo);
+
+                    if (equipoDto.Skills.Count() != 0)
+                    {
+                        //CAPTURAR TODOS LOS SKILLS ACTUALES
+                        var skillsActuales = entities.SkillEquipo.Where(x => x.EquipoId == equipo.EquipoId).DefaultIfEmpty().ToList();
+
+                        //ELIMINAR SKILLS ACTUALES
+                        if (skillsActuales.Count != 0)
+                        {
+                            foreach (var skill in skillsActuales)
+                            {
+                                entities.SkillEquipo.Remove(skill);
+                            }
+                        }
+
+                        //INSERTAR NUEVOS SKILLS
+                        foreach (var skill in equipoDto.Skills)
+                        {
+                            entities.SkillEquipo.Add(new SkillEquipo()
+                            {
+                                EquipoId = equipo.EquipoId,
+                                SkillId = skill.SkillId
+                            });
+                        }
+                    }
+
+                    if (equipoDto.Miembros.Count()!=0)
+                    {
+                        //CAPTURAR TODOS LOS MIEMBROS ACTUALES
+                        var miembrosActuales = entities.EquipoUsuario.Where(x => x.EquipoId == equipo.EquipoId).DefaultIfEmpty().ToList();
+
+                        //ELIMINAR MIEMROS ACTUALES
+                        if (miembrosActuales.Count != 0)
+                        {
+                            foreach (var miembro in miembrosActuales)
+                            {
+                                entities.EquipoUsuario.Remove(miembro);
+                            }
+                        }
+
+                        //INSERTAR NUEVOS MIEMBROS
+                        foreach (var miembro in equipoDto.Miembros)
+                        {
+                            entities.EquipoUsuario.Add(new EquipoUsuario()
+                            {
+                                EquipoId = equipo.EquipoId,
+                                UsuarioId = miembro.UsuarioId
+                            });
+                        }
+                    }
+                    
                     entities.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, equipoDto);
                 }

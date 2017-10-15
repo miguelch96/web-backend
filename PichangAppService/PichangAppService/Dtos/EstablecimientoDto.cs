@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 using PichangAppDataAccess;
 
 namespace PichangAppService.Dtos
@@ -14,12 +15,11 @@ namespace PichangAppService.Dtos
         public String Descripcion{ get; set; }
         public byte DistritoId { get; set; }
         public Int32 PropietarioId { get; set; }
-
-
         public DistritoDto Distrito { get; set; }
         public UsuarioDto Propietario { get; set; }
-        public IEnumerable<EstablecimientoServicioDto> Servicios { get; set; }
-        //public IEnumerable<CanchaDto> Canchas { get; set; }
+
+        public IEnumerable<ServicioDto> Servicios { get; set; }
+
 
     }
 }
