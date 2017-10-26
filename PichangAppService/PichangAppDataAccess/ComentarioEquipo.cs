@@ -12,13 +12,17 @@ namespace PichangAppDataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class SkillEquipo
+    public partial class ComentarioEquipo
     {
+        public int ComentarioEquipoId { get; set; }
         public int EquipoId { get; set; }
-        public byte SkillId { get; set; }
-        public Nullable<short> Cantidad { get; set; }
+        public int UsuarioId { get; set; }
+        public string Comentario { get; set; }
+        public Nullable<byte> SkillId { get; set; }
+        public decimal Calificacion { get; set; }
     
         public virtual Equipo Equipo { get; set; }
         public virtual Skill Skill { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

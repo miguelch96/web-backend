@@ -17,6 +17,25 @@
           <Property Name="TipoSuperficieId" Type="tinyint" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="3" />
         </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="CategoriaId" />
+          </Key>
+          <Property Name="CategoriaId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="50" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="ComentarioEquipo">
+          <Key>
+            <PropertyRef Name="ComentarioEquipoId" />
+          </Key>
+          <Property Name="ComentarioEquipoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquipoId" Type="int" Nullable="false" />
+          <Property Name="UsuarioId" Type="int" Nullable="false" />
+          <Property Name="Comentario" Type="varchar" MaxLength="300" />
+          <Property Name="SkillId" Type="tinyint" />
+          <Property Name="Calificacion" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+        </EntityType>
         <EntityType Name="Deporte">
           <Key>
             <PropertyRef Name="DeporteId" />
@@ -42,6 +61,10 @@
           <Property Name="DeporteId" Type="tinyint" Nullable="false" />
           <Property Name="UsuarioCapitanId" Type="int" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="3" />
+          <Property Name="DistritoId" Type="tinyint" />
+          <Property Name="CategoriaId" Type="tinyint" />
+          <Property Name="ImagenPortadaUrl" Type="varchar" MaxLength="300" />
+          <Property Name="Calificacion" Type="decimal" Precision="6" Scale="2" />
         </EntityType>
         <EntityType Name="EquipoUsuario">
           <Key>
@@ -92,6 +115,15 @@
           <Property Name="Estado" Type="varchar" MaxLength="3" />
           <Property Name="ReservaId" Type="int" />
         </EntityType>
+        <EntityType Name="ImagenEquipo">
+          <Key>
+            <PropertyRef Name="ImagenEquipoId" />
+          </Key>
+          <Property Name="ImagenEquipoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquipoId" Type="int" Nullable="false" />
+          <Property Name="FechaSubida" Type="datetime" />
+          <Property Name="ImagenUrl" Type="varchar" MaxLength="300" />
+        </EntityType>
         <EntityType Name="Permiso">
           <Key>
             <PropertyRef Name="PermisoId" />
@@ -141,6 +173,7 @@
           </Key>
           <Property Name="SkillId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ImagenSkillUrl" Type="varchar" MaxLength="300" />
         </EntityType>
         <EntityType Name="SkillEquipo">
           <Key>
@@ -149,7 +182,7 @@
           </Key>
           <Property Name="EquipoId" Type="int" Nullable="false" />
           <Property Name="SkillId" Type="tinyint" Nullable="false" />
-          <Property Name="Promedio" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="Cantidad" Type="smallint" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -179,7 +212,56 @@
           <Property Name="Apellido" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="RolId" Type="tinyint" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="3" />
+          <Property Name="ImagenPerfilUrl" Type="varchar" MaxLength="300" />
         </EntityType>
+        <Association Name="FK_ComentarioEquipo_Equipo">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+          <End Role="ComentarioEquipo" Type="Self.ComentarioEquipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="EquipoId" />
+            </Principal>
+            <Dependent Role="ComentarioEquipo">
+              <PropertyRef Name="EquipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComentarioEquipo_Skill">
+          <End Role="Skill" Type="Self.Skill" Multiplicity="0..1" />
+          <End Role="ComentarioEquipo" Type="Self.ComentarioEquipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="SkillId" />
+            </Principal>
+            <Dependent Role="ComentarioEquipo">
+              <PropertyRef Name="SkillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComentarioEquipo_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="ComentarioEquipo" Type="Self.ComentarioEquipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="ComentarioEquipo">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipo_Categoria">
+          <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="CategoriaId" />
+            </Principal>
+            <Dependent Role="Equipo">
+              <PropertyRef Name="CategoriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Equipo_Deporte">
           <End Role="Deporte" Type="Self.Deporte" Multiplicity="1" />
           <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
@@ -189,6 +271,18 @@
             </Principal>
             <Dependent Role="Equipo">
               <PropertyRef Name="DeporteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipo_Distrito">
+          <End Role="Distrito" Type="Self.Distrito" Multiplicity="0..1" />
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distrito">
+              <PropertyRef Name="DistritoId" />
+            </Principal>
+            <Dependent Role="Equipo">
+              <PropertyRef Name="DistritoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -348,6 +442,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ImagenesEquipo_Equipo">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+          <End Role="ImagenEquipo" Type="Self.ImagenEquipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="EquipoId" />
+            </Principal>
+            <Dependent Role="ImagenEquipo">
+              <PropertyRef Name="EquipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Reserva_Usuario">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
           <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
@@ -422,6 +528,8 @@
         </Association>
         <EntityContainer Name="PichangAppDBModelStoreContainer">
           <EntitySet Name="Cancha" EntityType="Self.Cancha" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ComentarioEquipo" EntityType="Self.ComentarioEquipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Deporte" EntityType="Self.Deporte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Distrito" EntityType="Self.Distrito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Equipo" EntityType="Self.Equipo" Schema="dbo" store:Type="Tables" />
@@ -430,6 +538,7 @@
           <EntitySet Name="EstablecimientoServicio" EntityType="Self.EstablecimientoServicio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Horario" EntityType="Self.Horario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HorarioCancha" EntityType="Self.HorarioCancha" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ImagenEquipo" EntityType="Self.ImagenEquipo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reserva" EntityType="Self.Reserva" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
@@ -440,8 +549,28 @@
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoSuperficie" EntityType="Self.TipoSuperficie" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ComentarioEquipo_Equipo" Association="Self.FK_ComentarioEquipo_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="ComentarioEquipo" EntitySet="ComentarioEquipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComentarioEquipo_Skill" Association="Self.FK_ComentarioEquipo_Skill">
+            <End Role="Skill" EntitySet="Skill" />
+            <End Role="ComentarioEquipo" EntitySet="ComentarioEquipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComentarioEquipo_Usuario" Association="Self.FK_ComentarioEquipo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="ComentarioEquipo" EntitySet="ComentarioEquipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipo_Categoria" Association="Self.FK_Equipo_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Equipo" EntitySet="Equipo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Equipo_Deporte" Association="Self.FK_Equipo_Deporte">
             <End Role="Deporte" EntitySet="Deporte" />
+            <End Role="Equipo" EntitySet="Equipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipo_Distrito" Association="Self.FK_Equipo_Distrito">
+            <End Role="Distrito" EntitySet="Distrito" />
             <End Role="Equipo" EntitySet="Equipo" />
           </AssociationSet>
           <AssociationSet Name="FK_Equipo_Usuario" Association="Self.FK_Equipo_Usuario">
@@ -496,6 +625,10 @@
             <End Role="Reserva" EntitySet="Reserva" />
             <End Role="HorarioCancha" EntitySet="HorarioCancha" />
           </AssociationSet>
+          <AssociationSet Name="FK_ImagenesEquipo_Equipo" Association="Self.FK_ImagenesEquipo_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="ImagenEquipo" EntitySet="ImagenEquipo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Reserva_Usuario" Association="Self.FK_Reserva_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Reserva" EntitySet="Reserva" />
@@ -527,6 +660,8 @@
       <Schema Namespace="PichangAppDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="PichangAppDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Cancha" EntityType="PichangAppDBModel.Cancha" />
+          <EntitySet Name="Categoria" EntityType="PichangAppDBModel.Categoria" />
+          <EntitySet Name="ComentarioEquipo" EntityType="PichangAppDBModel.ComentarioEquipo" />
           <EntitySet Name="Deporte" EntityType="PichangAppDBModel.Deporte" />
           <EntitySet Name="Distrito" EntityType="PichangAppDBModel.Distrito" />
           <EntitySet Name="Equipo" EntityType="PichangAppDBModel.Equipo" />
@@ -535,6 +670,7 @@
           <EntitySet Name="EstablecimientoServicio" EntityType="PichangAppDBModel.EstablecimientoServicio" />
           <EntitySet Name="Horario" EntityType="PichangAppDBModel.Horario" />
           <EntitySet Name="HorarioCancha" EntityType="PichangAppDBModel.HorarioCancha" />
+          <EntitySet Name="ImagenEquipo" EntityType="PichangAppDBModel.ImagenEquipo" />
           <EntitySet Name="Permiso" EntityType="PichangAppDBModel.Permiso" />
           <EntitySet Name="Reserva" EntityType="PichangAppDBModel.Reserva" />
           <EntitySet Name="Rol" EntityType="PichangAppDBModel.Rol" />
@@ -561,8 +697,28 @@
             <End Role="Cancha" EntitySet="Cancha" />
             <End Role="HorarioCancha" EntitySet="HorarioCancha" />
           </AssociationSet>
+          <AssociationSet Name="FK_Equipo_Categoria" Association="PichangAppDBModel.FK_Equipo_Categoria">
+            <End Role="Categoria" EntitySet="Categoria" />
+            <End Role="Equipo" EntitySet="Equipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComentarioEquipo_Equipo" Association="PichangAppDBModel.FK_ComentarioEquipo_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="ComentarioEquipo" EntitySet="ComentarioEquipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComentarioEquipo_Skill" Association="PichangAppDBModel.FK_ComentarioEquipo_Skill">
+            <End Role="Skill" EntitySet="Skill" />
+            <End Role="ComentarioEquipo" EntitySet="ComentarioEquipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ComentarioEquipo_Usuario" Association="PichangAppDBModel.FK_ComentarioEquipo_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="ComentarioEquipo" EntitySet="ComentarioEquipo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Equipo_Deporte" Association="PichangAppDBModel.FK_Equipo_Deporte">
             <End Role="Deporte" EntitySet="Deporte" />
+            <End Role="Equipo" EntitySet="Equipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Equipo_Distrito" Association="PichangAppDBModel.FK_Equipo_Distrito">
+            <End Role="Distrito" EntitySet="Distrito" />
             <End Role="Equipo" EntitySet="Equipo" />
           </AssociationSet>
           <AssociationSet Name="FK_Establecimiento_Distrito" Association="PichangAppDBModel.FK_Establecimiento_Distrito">
@@ -576,6 +732,10 @@
           <AssociationSet Name="FK_EquipoUsuario_Equipo" Association="PichangAppDBModel.FK_EquipoUsuario_Equipo">
             <End Role="Equipo" EntitySet="Equipo" />
             <End Role="EquipoUsuario" EntitySet="EquipoUsuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImagenesEquipo_Equipo" Association="PichangAppDBModel.FK_ImagenesEquipo_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="ImagenEquipo" EntitySet="ImagenEquipo" />
           </AssociationSet>
           <AssociationSet Name="FK_SkillEquipo_Equipo" Association="PichangAppDBModel.FK_SkillEquipo_Equipo">
             <End Role="Equipo" EntitySet="Equipo" />
@@ -642,6 +802,29 @@
           <NavigationProperty Name="TipoSuperficie" Relationship="PichangAppDBModel.FK_EspacioDeportivo_TipoSuperficie" FromRole="Cancha" ToRole="TipoSuperficie" />
           <NavigationProperty Name="HorarioCancha" Relationship="PichangAppDBModel.FK_HorarioEspacioDeportivo_EspacioDeportivo" FromRole="Cancha" ToRole="HorarioCancha" />
         </EntityType>
+        <EntityType Name="Categoria">
+          <Key>
+            <PropertyRef Name="CategoriaId" />
+          </Key>
+          <Property Name="CategoriaId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Equipo" Relationship="PichangAppDBModel.FK_Equipo_Categoria" FromRole="Categoria" ToRole="Equipo" />
+        </EntityType>
+        <EntityType Name="ComentarioEquipo">
+          <Key>
+            <PropertyRef Name="ComentarioEquipoId" />
+          </Key>
+          <Property Name="ComentarioEquipoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipoId" Type="Int32" Nullable="false" />
+          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+          <Property Name="Comentario" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="SkillId" Type="Byte" />
+          <Property Name="Calificacion" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <NavigationProperty Name="Equipo" Relationship="PichangAppDBModel.FK_ComentarioEquipo_Equipo" FromRole="ComentarioEquipo" ToRole="Equipo" />
+          <NavigationProperty Name="Skill" Relationship="PichangAppDBModel.FK_ComentarioEquipo_Skill" FromRole="ComentarioEquipo" ToRole="Skill" />
+          <NavigationProperty Name="Usuario" Relationship="PichangAppDBModel.FK_ComentarioEquipo_Usuario" FromRole="ComentarioEquipo" ToRole="Usuario" />
+        </EntityType>
         <EntityType Name="Deporte">
           <Key>
             <PropertyRef Name="DeporteId" />
@@ -658,6 +841,7 @@
           </Key>
           <Property Name="DistritoId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Equipo" Relationship="PichangAppDBModel.FK_Equipo_Distrito" FromRole="Distrito" ToRole="Equipo" />
           <NavigationProperty Name="Establecimiento" Relationship="PichangAppDBModel.FK_Establecimiento_Distrito" FromRole="Distrito" ToRole="Establecimiento" />
         </EntityType>
         <EntityType Name="Equipo">
@@ -670,9 +854,17 @@
           <Property Name="DeporteId" Type="Byte" Nullable="false" />
           <Property Name="UsuarioCapitanId" Type="Int32" Nullable="false" />
           <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="DistritoId" Type="Byte" />
+          <Property Name="CategoriaId" Type="Byte" />
+          <Property Name="ImagenPortadaUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Calificacion" Type="Decimal" Precision="6" Scale="2" />
+          <NavigationProperty Name="Categoria" Relationship="PichangAppDBModel.FK_Equipo_Categoria" FromRole="Equipo" ToRole="Categoria" />
+          <NavigationProperty Name="ComentarioEquipo" Relationship="PichangAppDBModel.FK_ComentarioEquipo_Equipo" FromRole="Equipo" ToRole="ComentarioEquipo" />
           <NavigationProperty Name="Deporte" Relationship="PichangAppDBModel.FK_Equipo_Deporte" FromRole="Equipo" ToRole="Deporte" />
+          <NavigationProperty Name="Distrito" Relationship="PichangAppDBModel.FK_Equipo_Distrito" FromRole="Equipo" ToRole="Distrito" />
           <NavigationProperty Name="Usuario" Relationship="PichangAppDBModel.FK_Equipo_Usuario" FromRole="Equipo" ToRole="Usuario" />
           <NavigationProperty Name="EquipoUsuario" Relationship="PichangAppDBModel.FK_EquipoUsuario_Equipo" FromRole="Equipo" ToRole="EquipoUsuario" />
+          <NavigationProperty Name="ImagenEquipo" Relationship="PichangAppDBModel.FK_ImagenesEquipo_Equipo" FromRole="Equipo" ToRole="ImagenEquipo" />
           <NavigationProperty Name="SkillEquipo" Relationship="PichangAppDBModel.FK_SkillEquipo_Equipo" FromRole="Equipo" ToRole="SkillEquipo" />
         </EntityType>
         <EntityType Name="EquipoUsuario">
@@ -736,6 +928,16 @@
           <NavigationProperty Name="Horario" Relationship="PichangAppDBModel.FK_HorarioEspacioDeportivo_Horario" FromRole="HorarioCancha" ToRole="Horario" />
           <NavigationProperty Name="Reserva" Relationship="PichangAppDBModel.FK_HorarioEspacioDeportivo_Reserva" FromRole="HorarioCancha" ToRole="Reserva" />
         </EntityType>
+        <EntityType Name="ImagenEquipo">
+          <Key>
+            <PropertyRef Name="ImagenEquipoId" />
+          </Key>
+          <Property Name="ImagenEquipoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipoId" Type="Int32" Nullable="false" />
+          <Property Name="FechaSubida" Type="DateTime" Precision="3" />
+          <Property Name="ImagenUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Equipo" Relationship="PichangAppDBModel.FK_ImagenesEquipo_Equipo" FromRole="ImagenEquipo" ToRole="Equipo" />
+        </EntityType>
         <EntityType Name="Permiso">
           <Key>
             <PropertyRef Name="PermisoId" />
@@ -793,6 +995,8 @@
           </Key>
           <Property Name="SkillId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ImagenSkillUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ComentarioEquipo" Relationship="PichangAppDBModel.FK_ComentarioEquipo_Skill" FromRole="Skill" ToRole="ComentarioEquipo" />
           <NavigationProperty Name="SkillEquipo" Relationship="PichangAppDBModel.FK_SkillEquipo_Skill" FromRole="Skill" ToRole="SkillEquipo" />
         </EntityType>
         <EntityType Name="SkillEquipo">
@@ -802,7 +1006,7 @@
           </Key>
           <Property Name="EquipoId" Type="Int32" Nullable="false" />
           <Property Name="SkillId" Type="Byte" Nullable="false" />
-          <Property Name="Promedio" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="Cantidad" Type="Int16" />
           <NavigationProperty Name="Equipo" Relationship="PichangAppDBModel.FK_SkillEquipo_Equipo" FromRole="SkillEquipo" ToRole="Equipo" />
           <NavigationProperty Name="Skill" Relationship="PichangAppDBModel.FK_SkillEquipo_Skill" FromRole="SkillEquipo" ToRole="Skill" />
         </EntityType>
@@ -835,6 +1039,8 @@
           <Property Name="Apellido" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="RolId" Type="Byte" Nullable="false" />
           <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="ImagenPerfilUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ComentarioEquipo" Relationship="PichangAppDBModel.FK_ComentarioEquipo_Usuario" FromRole="Usuario" ToRole="ComentarioEquipo" />
           <NavigationProperty Name="Equipo" Relationship="PichangAppDBModel.FK_Equipo_Usuario" FromRole="Usuario" ToRole="Equipo" />
           <NavigationProperty Name="EquipoUsuario" Relationship="PichangAppDBModel.FK_EquipoUsuario_Usuario" FromRole="Usuario" ToRole="EquipoUsuario" />
           <NavigationProperty Name="Establecimiento" Relationship="PichangAppDBModel.FK_Establecimiento_Usuario" FromRole="Usuario" ToRole="Establecimiento" />
@@ -889,6 +1095,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Equipo_Categoria">
+          <End Type="PichangAppDBModel.Categoria" Role="Categoria" Multiplicity="0..1" />
+          <End Type="PichangAppDBModel.Equipo" Role="Equipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Categoria">
+              <PropertyRef Name="CategoriaId" />
+            </Principal>
+            <Dependent Role="Equipo">
+              <PropertyRef Name="CategoriaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComentarioEquipo_Equipo">
+          <End Type="PichangAppDBModel.Equipo" Role="Equipo" Multiplicity="1" />
+          <End Type="PichangAppDBModel.ComentarioEquipo" Role="ComentarioEquipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="EquipoId" />
+            </Principal>
+            <Dependent Role="ComentarioEquipo">
+              <PropertyRef Name="EquipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComentarioEquipo_Skill">
+          <End Type="PichangAppDBModel.Skill" Role="Skill" Multiplicity="0..1" />
+          <End Type="PichangAppDBModel.ComentarioEquipo" Role="ComentarioEquipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skill">
+              <PropertyRef Name="SkillId" />
+            </Principal>
+            <Dependent Role="ComentarioEquipo">
+              <PropertyRef Name="SkillId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ComentarioEquipo_Usuario">
+          <End Type="PichangAppDBModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="PichangAppDBModel.ComentarioEquipo" Role="ComentarioEquipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="UsuarioId" />
+            </Principal>
+            <Dependent Role="ComentarioEquipo">
+              <PropertyRef Name="UsuarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Equipo_Deporte">
           <End Type="PichangAppDBModel.Deporte" Role="Deporte" Multiplicity="1" />
           <End Type="PichangAppDBModel.Equipo" Role="Equipo" Multiplicity="*" />
@@ -898,6 +1152,18 @@
             </Principal>
             <Dependent Role="Equipo">
               <PropertyRef Name="DeporteId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Equipo_Distrito">
+          <End Type="PichangAppDBModel.Distrito" Role="Distrito" Multiplicity="0..1" />
+          <End Type="PichangAppDBModel.Equipo" Role="Equipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Distrito">
+              <PropertyRef Name="DistritoId" />
+            </Principal>
+            <Dependent Role="Equipo">
+              <PropertyRef Name="DistritoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -933,6 +1199,18 @@
               <PropertyRef Name="EquipoId" />
             </Principal>
             <Dependent Role="EquipoUsuario">
+              <PropertyRef Name="EquipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImagenesEquipo_Equipo">
+          <End Type="PichangAppDBModel.Equipo" Role="Equipo" Multiplicity="1" />
+          <End Type="PichangAppDBModel.ImagenEquipo" Role="ImagenEquipo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="EquipoId" />
+            </Principal>
+            <Dependent Role="ImagenEquipo">
               <PropertyRef Name="EquipoId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1100,6 +1378,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Categoria">
+            <EntityTypeMapping TypeName="PichangAppDBModel.Categoria">
+              <MappingFragment StoreEntitySet="Categoria">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ComentarioEquipo">
+            <EntityTypeMapping TypeName="PichangAppDBModel.ComentarioEquipo">
+              <MappingFragment StoreEntitySet="ComentarioEquipo">
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+                <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+                <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+                <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
+                <ScalarProperty Name="ComentarioEquipoId" ColumnName="ComentarioEquipoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Deporte">
             <EntityTypeMapping TypeName="PichangAppDBModel.Deporte">
               <MappingFragment StoreEntitySet="Deporte">
@@ -1120,6 +1419,10 @@
           <EntitySetMapping Name="Equipo">
             <EntityTypeMapping TypeName="PichangAppDBModel.Equipo">
               <MappingFragment StoreEntitySet="Equipo">
+                <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+                <ScalarProperty Name="ImagenPortadaUrl" ColumnName="ImagenPortadaUrl" />
+                <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+                <ScalarProperty Name="DistritoId" ColumnName="DistritoId" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="UsuarioCapitanId" ColumnName="UsuarioCapitanId" />
                 <ScalarProperty Name="DeporteId" ColumnName="DeporteId" />
@@ -1180,6 +1483,16 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ImagenEquipo">
+            <EntityTypeMapping TypeName="PichangAppDBModel.ImagenEquipo">
+              <MappingFragment StoreEntitySet="ImagenEquipo">
+                <ScalarProperty Name="ImagenUrl" ColumnName="ImagenUrl" />
+                <ScalarProperty Name="FechaSubida" ColumnName="FechaSubida" />
+                <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
+                <ScalarProperty Name="ImagenEquipoId" ColumnName="ImagenEquipoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Permiso">
             <EntityTypeMapping TypeName="PichangAppDBModel.Permiso">
               <MappingFragment StoreEntitySet="Permiso">
@@ -1230,6 +1543,7 @@
           <EntitySetMapping Name="Skill">
             <EntityTypeMapping TypeName="PichangAppDBModel.Skill">
               <MappingFragment StoreEntitySet="Skill">
+                <ScalarProperty Name="ImagenSkillUrl" ColumnName="ImagenSkillUrl" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="SkillId" ColumnName="SkillId" />
               </MappingFragment>
@@ -1238,7 +1552,7 @@
           <EntitySetMapping Name="SkillEquipo">
             <EntityTypeMapping TypeName="PichangAppDBModel.SkillEquipo">
               <MappingFragment StoreEntitySet="SkillEquipo">
-                <ScalarProperty Name="Promedio" ColumnName="Promedio" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
                 <ScalarProperty Name="SkillId" ColumnName="SkillId" />
                 <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
               </MappingFragment>
@@ -1266,6 +1580,7 @@
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="PichangAppDBModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="ImagenPerfilUrl" ColumnName="ImagenPerfilUrl" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="RolId" ColumnName="RolId" />
                 <ScalarProperty Name="Apellido" ColumnName="Apellido" />

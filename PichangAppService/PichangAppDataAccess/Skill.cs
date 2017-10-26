@@ -17,12 +17,16 @@ namespace PichangAppDataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Skill()
         {
+            this.ComentarioEquipo = new HashSet<ComentarioEquipo>();
             this.SkillEquipo = new HashSet<SkillEquipo>();
         }
     
         public byte SkillId { get; set; }
         public string Nombre { get; set; }
+        public string ImagenSkillUrl { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ComentarioEquipo> ComentarioEquipo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SkillEquipo> SkillEquipo { get; set; }
     }

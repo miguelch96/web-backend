@@ -12,21 +12,19 @@ namespace PichangAppDataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class Distrito
+    public partial class Categoria
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Distrito()
+        public Categoria()
         {
             this.Equipo = new HashSet<Equipo>();
-            this.Establecimiento = new HashSet<Establecimiento>();
         }
     
-        public byte DistritoId { get; set; }
+        public byte CategoriaId { get; set; }
         public string Nombre { get; set; }
+        public string Descripcion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Equipo> Equipo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Establecimiento> Establecimiento { get; set; }
     }
 }

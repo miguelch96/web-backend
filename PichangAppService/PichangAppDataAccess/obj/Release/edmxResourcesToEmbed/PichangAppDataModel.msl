@@ -14,6 +14,27 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Categoria">
+      <EntityTypeMapping TypeName="PichangAppDBModel.Categoria">
+        <MappingFragment StoreEntitySet="Categoria">
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ComentarioEquipo">
+      <EntityTypeMapping TypeName="PichangAppDBModel.ComentarioEquipo">
+        <MappingFragment StoreEntitySet="ComentarioEquipo">
+          <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+          <ScalarProperty Name="SkillId" ColumnName="SkillId" />
+          <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
+          <ScalarProperty Name="ComentarioEquipoId" ColumnName="ComentarioEquipoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Deporte">
       <EntityTypeMapping TypeName="PichangAppDBModel.Deporte">
         <MappingFragment StoreEntitySet="Deporte">
@@ -34,6 +55,10 @@
     <EntitySetMapping Name="Equipo">
       <EntityTypeMapping TypeName="PichangAppDBModel.Equipo">
         <MappingFragment StoreEntitySet="Equipo">
+          <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+          <ScalarProperty Name="ImagenPortadaUrl" ColumnName="ImagenPortadaUrl" />
+          <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+          <ScalarProperty Name="DistritoId" ColumnName="DistritoId" />
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="UsuarioCapitanId" ColumnName="UsuarioCapitanId" />
           <ScalarProperty Name="DeporteId" ColumnName="DeporteId" />
@@ -94,6 +119,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ImagenEquipo">
+      <EntityTypeMapping TypeName="PichangAppDBModel.ImagenEquipo">
+        <MappingFragment StoreEntitySet="ImagenEquipo">
+          <ScalarProperty Name="ImagenUrl" ColumnName="ImagenUrl" />
+          <ScalarProperty Name="FechaSubida" ColumnName="FechaSubida" />
+          <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
+          <ScalarProperty Name="ImagenEquipoId" ColumnName="ImagenEquipoId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Permiso">
       <EntityTypeMapping TypeName="PichangAppDBModel.Permiso">
         <MappingFragment StoreEntitySet="Permiso">
@@ -144,6 +179,7 @@
     <EntitySetMapping Name="Skill">
       <EntityTypeMapping TypeName="PichangAppDBModel.Skill">
         <MappingFragment StoreEntitySet="Skill">
+          <ScalarProperty Name="ImagenSkillUrl" ColumnName="ImagenSkillUrl" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="SkillId" ColumnName="SkillId" />
         </MappingFragment>
@@ -152,7 +188,7 @@
     <EntitySetMapping Name="SkillEquipo">
       <EntityTypeMapping TypeName="PichangAppDBModel.SkillEquipo">
         <MappingFragment StoreEntitySet="SkillEquipo">
-          <ScalarProperty Name="Promedio" ColumnName="Promedio" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
           <ScalarProperty Name="SkillId" ColumnName="SkillId" />
           <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
         </MappingFragment>
@@ -180,6 +216,7 @@
     <EntitySetMapping Name="Usuario">
       <EntityTypeMapping TypeName="PichangAppDBModel.Usuario">
         <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="ImagenPerfilUrl" ColumnName="ImagenPerfilUrl" />
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="RolId" ColumnName="RolId" />
           <ScalarProperty Name="Apellido" ColumnName="Apellido" />

@@ -12,6 +12,25 @@
     <Property Name="TipoSuperficieId" Type="tinyint" Nullable="false" />
     <Property Name="Estado" Type="varchar" MaxLength="3" />
   </EntityType>
+  <EntityType Name="Categoria">
+    <Key>
+      <PropertyRef Name="CategoriaId" />
+    </Key>
+    <Property Name="CategoriaId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="ComentarioEquipo">
+    <Key>
+      <PropertyRef Name="ComentarioEquipoId" />
+    </Key>
+    <Property Name="ComentarioEquipoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EquipoId" Type="int" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="Comentario" Type="varchar" MaxLength="300" />
+    <Property Name="SkillId" Type="tinyint" />
+    <Property Name="Calificacion" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+  </EntityType>
   <EntityType Name="Deporte">
     <Key>
       <PropertyRef Name="DeporteId" />
@@ -37,6 +56,10 @@
     <Property Name="DeporteId" Type="tinyint" Nullable="false" />
     <Property Name="UsuarioCapitanId" Type="int" Nullable="false" />
     <Property Name="Estado" Type="varchar" MaxLength="3" />
+    <Property Name="DistritoId" Type="tinyint" />
+    <Property Name="CategoriaId" Type="tinyint" />
+    <Property Name="ImagenPortadaUrl" Type="varchar" MaxLength="300" />
+    <Property Name="Calificacion" Type="decimal" Precision="6" Scale="2" />
   </EntityType>
   <EntityType Name="EquipoUsuario">
     <Key>
@@ -87,6 +110,15 @@
     <Property Name="Estado" Type="varchar" MaxLength="3" />
     <Property Name="ReservaId" Type="int" />
   </EntityType>
+  <EntityType Name="ImagenEquipo">
+    <Key>
+      <PropertyRef Name="ImagenEquipoId" />
+    </Key>
+    <Property Name="ImagenEquipoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EquipoId" Type="int" Nullable="false" />
+    <Property Name="FechaSubida" Type="datetime" />
+    <Property Name="ImagenUrl" Type="varchar" MaxLength="300" />
+  </EntityType>
   <EntityType Name="Permiso">
     <Key>
       <PropertyRef Name="PermisoId" />
@@ -136,6 +168,7 @@
     </Key>
     <Property Name="SkillId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ImagenSkillUrl" Type="varchar" MaxLength="300" />
   </EntityType>
   <EntityType Name="SkillEquipo">
     <Key>
@@ -144,7 +177,7 @@
     </Key>
     <Property Name="EquipoId" Type="int" Nullable="false" />
     <Property Name="SkillId" Type="tinyint" Nullable="false" />
-    <Property Name="Promedio" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="Cantidad" Type="smallint" />
   </EntityType>
   <EntityType Name="sysdiagrams">
     <Key>
@@ -174,7 +207,56 @@
     <Property Name="Apellido" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="RolId" Type="tinyint" Nullable="false" />
     <Property Name="Estado" Type="varchar" MaxLength="3" />
+    <Property Name="ImagenPerfilUrl" Type="varchar" MaxLength="300" />
   </EntityType>
+  <Association Name="FK_ComentarioEquipo_Equipo">
+    <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+    <End Role="ComentarioEquipo" Type="Self.ComentarioEquipo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipo">
+        <PropertyRef Name="EquipoId" />
+      </Principal>
+      <Dependent Role="ComentarioEquipo">
+        <PropertyRef Name="EquipoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComentarioEquipo_Skill">
+    <End Role="Skill" Type="Self.Skill" Multiplicity="0..1" />
+    <End Role="ComentarioEquipo" Type="Self.ComentarioEquipo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Skill">
+        <PropertyRef Name="SkillId" />
+      </Principal>
+      <Dependent Role="ComentarioEquipo">
+        <PropertyRef Name="SkillId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComentarioEquipo_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="ComentarioEquipo" Type="Self.ComentarioEquipo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="ComentarioEquipo">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Equipo_Categoria">
+    <End Role="Categoria" Type="Self.Categoria" Multiplicity="0..1" />
+    <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="CategoriaId" />
+      </Principal>
+      <Dependent Role="Equipo">
+        <PropertyRef Name="CategoriaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Equipo_Deporte">
     <End Role="Deporte" Type="Self.Deporte" Multiplicity="1" />
     <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
@@ -184,6 +266,18 @@
       </Principal>
       <Dependent Role="Equipo">
         <PropertyRef Name="DeporteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Equipo_Distrito">
+    <End Role="Distrito" Type="Self.Distrito" Multiplicity="0..1" />
+    <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Distrito">
+        <PropertyRef Name="DistritoId" />
+      </Principal>
+      <Dependent Role="Equipo">
+        <PropertyRef Name="DistritoId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -343,6 +437,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_ImagenesEquipo_Equipo">
+    <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+    <End Role="ImagenEquipo" Type="Self.ImagenEquipo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Equipo">
+        <PropertyRef Name="EquipoId" />
+      </Principal>
+      <Dependent Role="ImagenEquipo">
+        <PropertyRef Name="EquipoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Reserva_Usuario">
     <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
     <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
@@ -417,6 +523,8 @@
   </Association>
   <EntityContainer Name="PichangAppDBModelStoreContainer">
     <EntitySet Name="Cancha" EntityType="Self.Cancha" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ComentarioEquipo" EntityType="Self.ComentarioEquipo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Deporte" EntityType="Self.Deporte" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Distrito" EntityType="Self.Distrito" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Equipo" EntityType="Self.Equipo" Schema="dbo" store:Type="Tables" />
@@ -425,6 +533,7 @@
     <EntitySet Name="EstablecimientoServicio" EntityType="Self.EstablecimientoServicio" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Horario" EntityType="Self.Horario" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HorarioCancha" EntityType="Self.HorarioCancha" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImagenEquipo" EntityType="Self.ImagenEquipo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reserva" EntityType="Self.Reserva" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
@@ -435,8 +544,28 @@
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoSuperficie" EntityType="Self.TipoSuperficie" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ComentarioEquipo_Equipo" Association="Self.FK_ComentarioEquipo_Equipo">
+      <End Role="Equipo" EntitySet="Equipo" />
+      <End Role="ComentarioEquipo" EntitySet="ComentarioEquipo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComentarioEquipo_Skill" Association="Self.FK_ComentarioEquipo_Skill">
+      <End Role="Skill" EntitySet="Skill" />
+      <End Role="ComentarioEquipo" EntitySet="ComentarioEquipo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComentarioEquipo_Usuario" Association="Self.FK_ComentarioEquipo_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="ComentarioEquipo" EntitySet="ComentarioEquipo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Equipo_Categoria" Association="Self.FK_Equipo_Categoria">
+      <End Role="Categoria" EntitySet="Categoria" />
+      <End Role="Equipo" EntitySet="Equipo" />
+    </AssociationSet>
     <AssociationSet Name="FK_Equipo_Deporte" Association="Self.FK_Equipo_Deporte">
       <End Role="Deporte" EntitySet="Deporte" />
+      <End Role="Equipo" EntitySet="Equipo" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Equipo_Distrito" Association="Self.FK_Equipo_Distrito">
+      <End Role="Distrito" EntitySet="Distrito" />
       <End Role="Equipo" EntitySet="Equipo" />
     </AssociationSet>
     <AssociationSet Name="FK_Equipo_Usuario" Association="Self.FK_Equipo_Usuario">
@@ -490,6 +619,10 @@
     <AssociationSet Name="FK_HorarioEspacioDeportivo_Reserva" Association="Self.FK_HorarioEspacioDeportivo_Reserva">
       <End Role="Reserva" EntitySet="Reserva" />
       <End Role="HorarioCancha" EntitySet="HorarioCancha" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ImagenesEquipo_Equipo" Association="Self.FK_ImagenesEquipo_Equipo">
+      <End Role="Equipo" EntitySet="Equipo" />
+      <End Role="ImagenEquipo" EntitySet="ImagenEquipo" />
     </AssociationSet>
     <AssociationSet Name="FK_Reserva_Usuario" Association="Self.FK_Reserva_Usuario">
       <End Role="Usuario" EntitySet="Usuario" />

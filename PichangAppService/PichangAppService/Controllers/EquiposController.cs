@@ -22,10 +22,7 @@ namespace PichangAppService.Controllers
                 using (PichangAppDBEntities entities = new PichangAppDBEntities())
                 {
                     var equipos = entities.Equipo.ProjectTo<EquipoDto>().ToList();
-                    return Request.CreateResponse(HttpStatusCode.OK,new
-                    {
-                        Equipos=equipos
-                    });
+                    return Request.CreateResponse(HttpStatusCode.OK,equipos);
 
                 }
             }
@@ -92,60 +89,20 @@ namespace PichangAppService.Controllers
                     var equipo = entities.Equipo.SingleOrDefault(x => x.EquipoId == id);
                     if (equipo == null)
                     {
-                        return Request.CreateResponse(HttpStatusCode.NotFound, "Equipo no encontrada");
+                        return Request.CreateResponse(HttpStatusCode.NotFound, "Equipo no encontrado");
                     }
 
+                    var imagenesEquipo = equipo.ImagenEquipo;
+                    var skills = equipo.SkillEquipo;
+                    var miembros = equipo.EquipoUsuario;
+                    var comentarios = equipo.ComentarioEquipo;
                     Mapper.Map(equipoDto, equipo);
 
-                    if (equipoDto.Skills.Count() != 0)
-                    {
-                        //CAPTURAR TODOS LOS SKILLS ACTUALES
-                        var skillsActuales = entities.SkillEquipo.Where(x => x.EquipoId == equipo.EquipoId).DefaultIfEmpty().ToList();
+                    equipo.ImagenEquipo = imagenesEquipo;
+                    equipo.SkillEquipo = skills;
+                    equipo.EquipoUsuario = miembros;
+                    equipo.ComentarioEquipo = comentarios;
 
-                        //ELIMINAR SKILLS ACTUALES
-                        if (skillsActuales.Count != 0)
-                        {
-                            foreach (var skill in skillsActuales)
-                            {
-                                entities.SkillEquipo.Remove(skill);
-                            }
-                        }
-
-                        //INSERTAR NUEVOS SKILLS
-                        foreach (var skill in equipoDto.Skills)
-                        {
-                            entities.SkillEquipo.Add(new SkillEquipo()
-                            {
-                                EquipoId = equipo.EquipoId,
-                                SkillId = skill.SkillId
-                            });
-                        }
-                    }
-
-                    if (equipoDto.Miembros.Count()!=0)
-                    {
-                        //CAPTURAR TODOS LOS MIEMBROS ACTUALES
-                        var miembrosActuales = entities.EquipoUsuario.Where(x => x.EquipoId == equipo.EquipoId).DefaultIfEmpty().ToList();
-
-                        //ELIMINAR MIEMROS ACTUALES
-                        if (miembrosActuales.Count != 0)
-                        {
-                            foreach (var miembro in miembrosActuales)
-                            {
-                                entities.EquipoUsuario.Remove(miembro);
-                            }
-                        }
-
-                        //INSERTAR NUEVOS MIEMBROS
-                        foreach (var miembro in equipoDto.Miembros)
-                        {
-                            entities.EquipoUsuario.Add(new EquipoUsuario()
-                            {
-                                EquipoId = equipo.EquipoId,
-                                UsuarioId = miembro.UsuarioId
-                            });
-                        }
-                    }
                     
                     entities.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, equipoDto);

@@ -52,6 +52,12 @@
     <Compile Include="Cancha.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Categoria.cs">
+      <DependentUpon>PichangAppDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ComentarioEquipo.cs">
+      <DependentUpon>PichangAppDataModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Deporte.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
@@ -74,6 +80,9 @@
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HorarioCancha.cs">
+      <DependentUpon>PichangAppDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImagenEquipo.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Permiso.cs">

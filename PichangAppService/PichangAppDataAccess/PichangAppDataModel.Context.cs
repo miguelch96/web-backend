@@ -26,6 +26,8 @@ namespace PichangAppDataAccess
         }
     
         public virtual DbSet<Cancha> Cancha { get; set; }
+        public virtual DbSet<Categoria> Categoria { get; set; }
+        public virtual DbSet<ComentarioEquipo> ComentarioEquipo { get; set; }
         public virtual DbSet<Deporte> Deporte { get; set; }
         public virtual DbSet<Distrito> Distrito { get; set; }
         public virtual DbSet<Equipo> Equipo { get; set; }
@@ -34,6 +36,7 @@ namespace PichangAppDataAccess
         public virtual DbSet<EstablecimientoServicio> EstablecimientoServicio { get; set; }
         public virtual DbSet<Horario> Horario { get; set; }
         public virtual DbSet<HorarioCancha> HorarioCancha { get; set; }
+        public virtual DbSet<ImagenEquipo> ImagenEquipo { get; set; }
         public virtual DbSet<Permiso> Permiso { get; set; }
         public virtual DbSet<Reserva> Reserva { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }

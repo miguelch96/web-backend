@@ -8,11 +8,13 @@ namespace PichangAppService.Dtos
 {
     public class EquipoUsuarioDto
     {
-        public Int32 UsuarioId { get; set; }    
-        public UsuarioDto Usuario { get; set; }
+        public Int32 MiembroId { get; set; }    
+        public String NombreMiembro { get; set; }
+        public String ImagenPerfilUrl { get; set; }
+        public DateTime FechaUnion { get; set; }
 
         [JsonIgnore]
         public Int32 EquipoId { get; set; }    
-        public DateTime? FechaUnion { get; set; }
+        
     }
 }

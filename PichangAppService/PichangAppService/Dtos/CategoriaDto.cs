@@ -2,13 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace PichangAppService.Dtos
 {
-    public class SkillDto
+    public class CategoriaDto
     {
-        public byte SkillId { get; set; }
+        [JsonIgnore]
+        public byte CategoriaId { get; set; }
         public String Nombre { get; set; }
-        public String ImagenSkillUrl { get; set; }
+        public String Descripcion { get; set; }
     }
 }

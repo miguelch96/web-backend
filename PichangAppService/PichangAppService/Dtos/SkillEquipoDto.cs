@@ -11,7 +11,7 @@ namespace PichangAppService.Dtos
         [JsonIgnore]
         public Int32 EquipoId { get; set; }   
         public byte SkillId { get; set; }
-        public String Nombre { get; set; }  
-        public Decimal Promedio { get; set; }
+        public String Nombre { get; set; }
+        public int Cantidad { get; set; }  
     }
 }

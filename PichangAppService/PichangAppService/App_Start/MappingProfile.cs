@@ -13,6 +13,12 @@ namespace PichangAppService.App_Start
         public MappingProfile()
         {
 
+            CreateMap<Categoria, CategoriaDto>().ReverseMap();
+            CreateMap<ComentarioEquipo, ComentarioEquipoDto>()
+                .ForMember(dest => dest.NombreUsuario, opts => opts.MapFrom(src => src.Usuario.Nombre+" "+src.Usuario.Apellido))
+                .ForMember(dest => dest.ImagenPerfilUrl, opts => opts.MapFrom(src => src.Usuario.ImagenPerfilUrl)).ReverseMap();
+
+            CreateMap<ImagenEquipo, ImagenEquipoDto>().ReverseMap();
          
             CreateMap<Deporte, DeporteDto>().ReverseMap();
             
@@ -42,13 +48,18 @@ namespace PichangAppService.App_Start
                 .ForMember(dest => dest.Deporte, opts => opts.MapFrom(src => src.Deporte))
                 .ForMember(dest => dest.TipoSuperficie, opts => opts.MapFrom(src => src.TipoSuperficie)).ReverseMap();
 
-            CreateMap<EquipoUsuario, EquipoUsuarioDto>().ReverseMap();
+            CreateMap<EquipoUsuario, EquipoUsuarioDto>()
+                .ForMember(dest => dest.MiembroId, opts => opts.MapFrom(src => src.UsuarioId))
+                .ForMember(dest => dest.ImagenPerfilUrl, opts => opts.MapFrom(src => src.Usuario.ImagenPerfilUrl))
+                .ForMember(dest => dest.NombreMiembro, opts => opts.MapFrom(src => src.Usuario.Nombre+" "+src.Usuario.Apellido)).ReverseMap();
 
             CreateMap<Equipo, EquipoDto>()
                 .ForMember(dest => dest.Capitan, opts => opts.MapFrom(src => src.Usuario))
-                .ForMember(dest => dest.Miembros, opts => opts.MapFrom(src => src.EquipoUsuario.Select(x=>x.Usuario)))
-                .ForMember(dest => dest.Skills, opts => opts.MapFrom(src => src.SkillEquipo.Select(x=>x.Skill)))
-                .ForMember(dest => dest.CapitanId, opts => opts.MapFrom(src => src.UsuarioCapitanId)).ReverseMap();
+                .ForMember(dest => dest.Miembros, opts => opts.MapFrom(src => src.EquipoUsuario))
+                .ForMember(dest => dest.Skills, opts => opts.MapFrom(src => src.SkillEquipo))
+                .ForMember(dest => dest.CapitanId, opts => opts.MapFrom(src => src.UsuarioCapitanId))
+                .ForMember(dest => dest.Comentarios, opts => opts.MapFrom(src => src.ComentarioEquipo))
+                .ForMember(dest => dest.Imagenes, opts => opts.MapFrom(src => src.ImagenEquipo)).ReverseMap();
 
             CreateMap<Usuario, UsuarioDto>().ReverseMap();
             CreateMap<Distrito, DistritoDto>().ReverseMap();
