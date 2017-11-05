@@ -265,3 +265,5 @@ C:\Curso Vidly\PichangAppService\PichangAppService\obj\Release\PichangAppService
 D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppService\bin\Swashbuckle.Core.dll
 D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppService\bin\WebActivatorEx.dll
 D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppService\bin\Swashbuckle.Examples.dll
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppService\bin\System.Web.Http.Tracing.dll
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppService\bin\System.Web.Http.Tracing.xml

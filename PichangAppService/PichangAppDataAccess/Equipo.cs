@@ -18,9 +18,11 @@ namespace PichangAppDataAccess
         public Equipo()
         {
             this.ComentarioEquipo = new HashSet<ComentarioEquipo>();
-            this.EquipoUsuario = new HashSet<EquipoUsuario>();
             this.ImagenEquipo = new HashSet<ImagenEquipo>();
+            this.Reto = new HashSet<Reto>();
+            this.Reto1 = new HashSet<Reto>();
             this.SkillEquipo = new HashSet<SkillEquipo>();
+            this.Usuario1 = new HashSet<Usuario>();
         }
     
         public int EquipoId { get; set; }
@@ -41,10 +43,14 @@ namespace PichangAppDataAccess
         public virtual Distrito Distrito { get; set; }
         public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<EquipoUsuario> EquipoUsuario { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ImagenEquipo> ImagenEquipo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Reto> Reto { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Reto> Reto1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SkillEquipo> SkillEquipo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Usuario> Usuario1 { get; set; }
     }
 }

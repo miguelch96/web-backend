@@ -66,16 +66,6 @@
           <Property Name="ImagenPortadaUrl" Type="varchar" MaxLength="300" />
           <Property Name="Calificacion" Type="decimal" Precision="6" Scale="2" />
         </EntityType>
-        <EntityType Name="EquipoUsuario">
-          <Key>
-            <PropertyRef Name="EquipoId" />
-            <PropertyRef Name="UsuarioId" />
-          </Key>
-          <Property Name="EquipoId" Type="int" Nullable="false" />
-          <Property Name="UsuarioId" Type="int" Nullable="false" />
-          <Property Name="FechaUnion" Type="datetime" Nullable="false" />
-          <Property Name="Estado" Type="varchar" MaxLength="3" />
-        </EntityType>
         <EntityType Name="Establecimiento">
           <Key>
             <PropertyRef Name="EstablecimientoId" />
@@ -102,18 +92,18 @@
             <PropertyRef Name="HorarioId" />
           </Key>
           <Property Name="HorarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="HoraInicio" Type="datetime" Nullable="false" />
-          <Property Name="HoraFin" Type="datetime" Nullable="false" />
+          <Property Name="HoraInicio" Type="time" Precision="7" Nullable="false" />
+          <Property Name="HoraFin" Type="time" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="HorarioCancha">
           <Key>
-            <PropertyRef Name="HorarioId" />
-            <PropertyRef Name="CanchaId" />
+            <PropertyRef Name="HorarioCanchaId" />
           </Key>
           <Property Name="HorarioId" Type="int" Nullable="false" />
           <Property Name="CanchaId" Type="int" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="3" />
-          <Property Name="ReservaId" Type="int" />
+          <Property Name="HorarioCanchaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Fecha" Type="date" />
         </EntityType>
         <EntityType Name="ImagenEquipo">
           <Key>
@@ -124,24 +114,28 @@
           <Property Name="FechaSubida" Type="datetime" />
           <Property Name="ImagenUrl" Type="varchar" MaxLength="300" />
         </EntityType>
-        <EntityType Name="Permiso">
-          <Key>
-            <PropertyRef Name="PermisoId" />
-          </Key>
-          <Property Name="PermisoId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Codigo" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="Estado" Type="varchar" MaxLength="3" />
-        </EntityType>
         <EntityType Name="Reserva">
           <Key>
             <PropertyRef Name="ReservaId" />
           </Key>
           <Property Name="ReservaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UsuarioId" Type="int" Nullable="false" />
-          <Property Name="FechaSolicitud" Type="datetime" Nullable="false" />
-          <Property Name="Estado" Type="varchar" MaxLength="3" />
+          <Property Name="UsuarioId" Type="int" />
+          <Property Name="FechaSolicitud" Type="datetime" />
+          <Property Name="Estado" Type="varchar" MaxLength="10" />
+          <Property Name="HorarioId" Type="int" Nullable="false" />
+          <Property Name="Fecha" Type="date" Nullable="false" />
+          <Property Name="CanchaId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Reto">
+          <Key>
+            <PropertyRef Name="RetoId" />
+          </Key>
+          <Property Name="RetoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EquipoRetadorId" Type="int" Nullable="false" />
+          <Property Name="EquipoRetadoId" Type="int" Nullable="false" />
+          <Property Name="FechaEnvio" Type="datetime" />
+          <Property Name="Estado" Type="varchar" MaxLength="20" />
+          <Property Name="ReservaId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -150,15 +144,6 @@
           <Property Name="RolId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Descripcion" Type="varchar" MaxLength="100" Nullable="false" />
-        </EntityType>
-        <EntityType Name="RolPermiso">
-          <Key>
-            <PropertyRef Name="RolId" />
-            <PropertyRef Name="PermisoId" />
-          </Key>
-          <Property Name="RolId" Type="tinyint" Nullable="false" />
-          <Property Name="PermisoId" Type="smallint" Nullable="false" />
-          <Property Name="Estado" Type="varchar" MaxLength="3" />
         </EntityType>
         <EntityType Name="Servicio">
           <Key>
@@ -213,6 +198,7 @@
           <Property Name="RolId" Type="tinyint" Nullable="false" />
           <Property Name="Estado" Type="varchar" MaxLength="3" />
           <Property Name="ImagenPerfilUrl" Type="varchar" MaxLength="300" />
+          <Property Name="EquipoId" Type="int" />
         </EntityType>
         <Association Name="FK_ComentarioEquipo_Equipo">
           <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
@@ -295,30 +281,6 @@
             </Principal>
             <Dependent Role="Equipo">
               <PropertyRef Name="UsuarioCapitanId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EquipoUsuario_Equipo">
-          <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
-          <End Role="EquipoUsuario" Type="Self.EquipoUsuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Equipo">
-              <PropertyRef Name="EquipoId" />
-            </Principal>
-            <Dependent Role="EquipoUsuario">
-              <PropertyRef Name="EquipoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_EquipoUsuario_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-          <End Role="EquipoUsuario" Type="Self.EquipoUsuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="UsuarioId" />
-            </Principal>
-            <Dependent Role="EquipoUsuario">
-              <PropertyRef Name="UsuarioId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -406,42 +368,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HorarioEspacioDeportivo_EspacioDeportivo">
-          <End Role="Cancha" Type="Self.Cancha" Multiplicity="1" />
-          <End Role="HorarioCancha" Type="Self.HorarioCancha" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Cancha">
-              <PropertyRef Name="CanchaId" />
-            </Principal>
-            <Dependent Role="HorarioCancha">
-              <PropertyRef Name="CanchaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HorarioEspacioDeportivo_Horario">
-          <End Role="Horario" Type="Self.Horario" Multiplicity="1" />
-          <End Role="HorarioCancha" Type="Self.HorarioCancha" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Horario">
-              <PropertyRef Name="HorarioId" />
-            </Principal>
-            <Dependent Role="HorarioCancha">
-              <PropertyRef Name="HorarioId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HorarioEspacioDeportivo_Reserva">
-          <End Role="Reserva" Type="Self.Reserva" Multiplicity="0..1" />
-          <End Role="HorarioCancha" Type="Self.HorarioCancha" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Reserva">
-              <PropertyRef Name="ReservaId" />
-            </Principal>
-            <Dependent Role="HorarioCancha">
-              <PropertyRef Name="ReservaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ImagenesEquipo_Equipo">
           <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
           <End Role="ImagenEquipo" Type="Self.ImagenEquipo" Multiplicity="*" />
@@ -454,8 +380,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Reserva_Cancha">
+          <End Role="Cancha" Type="Self.Cancha" Multiplicity="1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cancha">
+              <PropertyRef Name="CanchaId" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="CanchaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reserva_Horario">
+          <End Role="Horario" Type="Self.Horario" Multiplicity="1" />
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Horario">
+              <PropertyRef Name="HorarioId" />
+            </Principal>
+            <Dependent Role="Reserva">
+              <PropertyRef Name="HorarioId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Reserva_Usuario">
-          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="Reserva" Type="Self.Reserva" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
@@ -466,27 +416,39 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RolPermiso_Permiso">
-          <End Role="Permiso" Type="Self.Permiso" Multiplicity="1" />
-          <End Role="RolPermiso" Type="Self.RolPermiso" Multiplicity="*" />
+        <Association Name="FK_Reto_Equipo">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+          <End Role="Reto" Type="Self.Reto" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Permiso">
-              <PropertyRef Name="PermisoId" />
+            <Principal Role="Equipo">
+              <PropertyRef Name="EquipoId" />
             </Principal>
-            <Dependent Role="RolPermiso">
-              <PropertyRef Name="PermisoId" />
+            <Dependent Role="Reto">
+              <PropertyRef Name="EquipoRetadorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RolPermiso_Rol">
-          <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
-          <End Role="RolPermiso" Type="Self.RolPermiso" Multiplicity="*" />
+        <Association Name="FK_Reto_Equipo1">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
+          <End Role="Reto" Type="Self.Reto" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Rol">
-              <PropertyRef Name="RolId" />
+            <Principal Role="Equipo">
+              <PropertyRef Name="EquipoId" />
             </Principal>
-            <Dependent Role="RolPermiso">
-              <PropertyRef Name="RolId" />
+            <Dependent Role="Reto">
+              <PropertyRef Name="EquipoRetadoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reto_Reserva">
+          <End Role="Reserva" Type="Self.Reserva" Multiplicity="1" />
+          <End Role="Reto" Type="Self.Reto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reserva">
+              <PropertyRef Name="ReservaId" />
+            </Principal>
+            <Dependent Role="Reto">
+              <PropertyRef Name="ReservaId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -514,6 +476,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Usuario_Equipo">
+          <End Role="Equipo" Type="Self.Equipo" Multiplicity="0..1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="EquipoId" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="EquipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Usuario_Rol">
           <End Role="Rol" Type="Self.Rol" Multiplicity="1" />
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
@@ -533,16 +507,14 @@
           <EntitySet Name="Deporte" EntityType="Self.Deporte" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Distrito" EntityType="Self.Distrito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Equipo" EntityType="Self.Equipo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="EquipoUsuario" EntityType="Self.EquipoUsuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Establecimiento" EntityType="Self.Establecimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EstablecimientoServicio" EntityType="Self.EstablecimientoServicio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Horario" EntityType="Self.Horario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HorarioCancha" EntityType="Self.HorarioCancha" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ImagenEquipo" EntityType="Self.ImagenEquipo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reserva" EntityType="Self.Reserva" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reto" EntityType="Self.Reto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Rol" EntityType="Self.Rol" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RolPermiso" EntityType="Self.RolPermiso" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Servicio" EntityType="Self.Servicio" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Skill" EntityType="Self.Skill" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SkillEquipo" EntityType="Self.SkillEquipo" Schema="dbo" store:Type="Tables" />
@@ -577,14 +549,6 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Equipo" EntitySet="Equipo" />
           </AssociationSet>
-          <AssociationSet Name="FK_EquipoUsuario_Equipo" Association="Self.FK_EquipoUsuario_Equipo">
-            <End Role="Equipo" EntitySet="Equipo" />
-            <End Role="EquipoUsuario" EntitySet="EquipoUsuario" />
-          </AssociationSet>
-          <AssociationSet Name="FK_EquipoUsuario_Usuario" Association="Self.FK_EquipoUsuario_Usuario">
-            <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="EquipoUsuario" EntitySet="EquipoUsuario" />
-          </AssociationSet>
           <AssociationSet Name="FK_EspacioDeportivo_Deporte" Association="Self.FK_EspacioDeportivo_Deporte">
             <End Role="Deporte" EntitySet="Deporte" />
             <End Role="Cancha" EntitySet="Cancha" />
@@ -613,33 +577,33 @@
             <End Role="Servicio" EntitySet="Servicio" />
             <End Role="EstablecimientoServicio" EntitySet="EstablecimientoServicio" />
           </AssociationSet>
-          <AssociationSet Name="FK_HorarioEspacioDeportivo_EspacioDeportivo" Association="Self.FK_HorarioEspacioDeportivo_EspacioDeportivo">
-            <End Role="Cancha" EntitySet="Cancha" />
-            <End Role="HorarioCancha" EntitySet="HorarioCancha" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HorarioEspacioDeportivo_Horario" Association="Self.FK_HorarioEspacioDeportivo_Horario">
-            <End Role="Horario" EntitySet="Horario" />
-            <End Role="HorarioCancha" EntitySet="HorarioCancha" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HorarioEspacioDeportivo_Reserva" Association="Self.FK_HorarioEspacioDeportivo_Reserva">
-            <End Role="Reserva" EntitySet="Reserva" />
-            <End Role="HorarioCancha" EntitySet="HorarioCancha" />
-          </AssociationSet>
           <AssociationSet Name="FK_ImagenesEquipo_Equipo" Association="Self.FK_ImagenesEquipo_Equipo">
             <End Role="Equipo" EntitySet="Equipo" />
             <End Role="ImagenEquipo" EntitySet="ImagenEquipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Cancha" Association="Self.FK_Reserva_Cancha">
+            <End Role="Cancha" EntitySet="Cancha" />
+            <End Role="Reserva" EntitySet="Reserva" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reserva_Horario" Association="Self.FK_Reserva_Horario">
+            <End Role="Horario" EntitySet="Horario" />
+            <End Role="Reserva" EntitySet="Reserva" />
           </AssociationSet>
           <AssociationSet Name="FK_Reserva_Usuario" Association="Self.FK_Reserva_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Reserva" EntitySet="Reserva" />
           </AssociationSet>
-          <AssociationSet Name="FK_RolPermiso_Permiso" Association="Self.FK_RolPermiso_Permiso">
-            <End Role="Permiso" EntitySet="Permiso" />
-            <End Role="RolPermiso" EntitySet="RolPermiso" />
+          <AssociationSet Name="FK_Reto_Equipo" Association="Self.FK_Reto_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="Reto" EntitySet="Reto" />
           </AssociationSet>
-          <AssociationSet Name="FK_RolPermiso_Rol" Association="Self.FK_RolPermiso_Rol">
-            <End Role="Rol" EntitySet="Rol" />
-            <End Role="RolPermiso" EntitySet="RolPermiso" />
+          <AssociationSet Name="FK_Reto_Equipo1" Association="Self.FK_Reto_Equipo1">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="Reto" EntitySet="Reto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reto_Reserva" Association="Self.FK_Reto_Reserva">
+            <End Role="Reserva" EntitySet="Reserva" />
+            <End Role="Reto" EntitySet="Reto" />
           </AssociationSet>
           <AssociationSet Name="FK_SkillEquipo_Equipo" Association="Self.FK_SkillEquipo_Equipo">
             <End Role="Equipo" EntitySet="Equipo" />
@@ -648,6 +612,10 @@
           <AssociationSet Name="FK_SkillEquipo_Skill" Association="Self.FK_SkillEquipo_Skill">
             <End Role="Skill" EntitySet="Skill" />
             <End Role="SkillEquipo" EntitySet="SkillEquipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Equipo" Association="Self.FK_Usuario_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="Usuario" EntitySet="Usuario" />
           </AssociationSet>
           <AssociationSet Name="FK_Usuario_Rol" Association="Self.FK_Usuario_Rol">
             <End Role="Rol" EntitySet="Rol" />
@@ -665,16 +633,14 @@
           <EntitySet Name="Deporte" EntityType="PichangAppDBModel.Deporte" />
           <EntitySet Name="Distrito" EntityType="PichangAppDBModel.Distrito" />
           <EntitySet Name="Equipo" EntityType="PichangAppDBModel.Equipo" />
-          <EntitySet Name="EquipoUsuario" EntityType="PichangAppDBModel.EquipoUsuario" />
           <EntitySet Name="Establecimiento" EntityType="PichangAppDBModel.Establecimiento" />
           <EntitySet Name="EstablecimientoServicio" EntityType="PichangAppDBModel.EstablecimientoServicio" />
           <EntitySet Name="Horario" EntityType="PichangAppDBModel.Horario" />
           <EntitySet Name="HorarioCancha" EntityType="PichangAppDBModel.HorarioCancha" />
           <EntitySet Name="ImagenEquipo" EntityType="PichangAppDBModel.ImagenEquipo" />
-          <EntitySet Name="Permiso" EntityType="PichangAppDBModel.Permiso" />
           <EntitySet Name="Reserva" EntityType="PichangAppDBModel.Reserva" />
+          <EntitySet Name="Reto" EntityType="PichangAppDBModel.Reto" />
           <EntitySet Name="Rol" EntityType="PichangAppDBModel.Rol" />
-          <EntitySet Name="RolPermiso" EntityType="PichangAppDBModel.RolPermiso" />
           <EntitySet Name="Servicio" EntityType="PichangAppDBModel.Servicio" />
           <EntitySet Name="Skill" EntityType="PichangAppDBModel.Skill" />
           <EntitySet Name="SkillEquipo" EntityType="PichangAppDBModel.SkillEquipo" />
@@ -693,9 +659,9 @@
             <End Role="TipoSuperficie" EntitySet="TipoSuperficie" />
             <End Role="Cancha" EntitySet="Cancha" />
           </AssociationSet>
-          <AssociationSet Name="FK_HorarioEspacioDeportivo_EspacioDeportivo" Association="PichangAppDBModel.FK_HorarioEspacioDeportivo_EspacioDeportivo">
+          <AssociationSet Name="FK_Reserva_Cancha" Association="PichangAppDBModel.FK_Reserva_Cancha">
             <End Role="Cancha" EntitySet="Cancha" />
-            <End Role="HorarioCancha" EntitySet="HorarioCancha" />
+            <End Role="Reserva" EntitySet="Reserva" />
           </AssociationSet>
           <AssociationSet Name="FK_Equipo_Categoria" Association="PichangAppDBModel.FK_Equipo_Categoria">
             <End Role="Categoria" EntitySet="Categoria" />
@@ -729,21 +695,25 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Equipo" EntitySet="Equipo" />
           </AssociationSet>
-          <AssociationSet Name="FK_EquipoUsuario_Equipo" Association="PichangAppDBModel.FK_EquipoUsuario_Equipo">
-            <End Role="Equipo" EntitySet="Equipo" />
-            <End Role="EquipoUsuario" EntitySet="EquipoUsuario" />
-          </AssociationSet>
           <AssociationSet Name="FK_ImagenesEquipo_Equipo" Association="PichangAppDBModel.FK_ImagenesEquipo_Equipo">
             <End Role="Equipo" EntitySet="Equipo" />
             <End Role="ImagenEquipo" EntitySet="ImagenEquipo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reto_Equipo" Association="PichangAppDBModel.FK_Reto_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="Reto" EntitySet="Reto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reto_Equipo1" Association="PichangAppDBModel.FK_Reto_Equipo1">
+            <End Role="Equipo" EntitySet="Equipo" />
+            <End Role="Reto" EntitySet="Reto" />
           </AssociationSet>
           <AssociationSet Name="FK_SkillEquipo_Equipo" Association="PichangAppDBModel.FK_SkillEquipo_Equipo">
             <End Role="Equipo" EntitySet="Equipo" />
             <End Role="SkillEquipo" EntitySet="SkillEquipo" />
           </AssociationSet>
-          <AssociationSet Name="FK_EquipoUsuario_Usuario" Association="PichangAppDBModel.FK_EquipoUsuario_Usuario">
+          <AssociationSet Name="FK_Usuario_Equipo" Association="PichangAppDBModel.FK_Usuario_Equipo">
+            <End Role="Equipo" EntitySet="Equipo" />
             <End Role="Usuario" EntitySet="Usuario" />
-            <End Role="EquipoUsuario" EntitySet="EquipoUsuario" />
           </AssociationSet>
           <AssociationSet Name="FK_Establecimiento_Usuario" Association="PichangAppDBModel.FK_Establecimiento_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
@@ -757,25 +727,17 @@
             <End Role="Servicio" EntitySet="Servicio" />
             <End Role="EstablecimientoServicio" EntitySet="EstablecimientoServicio" />
           </AssociationSet>
-          <AssociationSet Name="FK_HorarioEspacioDeportivo_Horario" Association="PichangAppDBModel.FK_HorarioEspacioDeportivo_Horario">
+          <AssociationSet Name="FK_Reserva_Horario" Association="PichangAppDBModel.FK_Reserva_Horario">
             <End Role="Horario" EntitySet="Horario" />
-            <End Role="HorarioCancha" EntitySet="HorarioCancha" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HorarioEspacioDeportivo_Reserva" Association="PichangAppDBModel.FK_HorarioEspacioDeportivo_Reserva">
             <End Role="Reserva" EntitySet="Reserva" />
-            <End Role="HorarioCancha" EntitySet="HorarioCancha" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RolPermiso_Permiso" Association="PichangAppDBModel.FK_RolPermiso_Permiso">
-            <End Role="Permiso" EntitySet="Permiso" />
-            <End Role="RolPermiso" EntitySet="RolPermiso" />
           </AssociationSet>
           <AssociationSet Name="FK_Reserva_Usuario" Association="PichangAppDBModel.FK_Reserva_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Reserva" EntitySet="Reserva" />
           </AssociationSet>
-          <AssociationSet Name="FK_RolPermiso_Rol" Association="PichangAppDBModel.FK_RolPermiso_Rol">
-            <End Role="Rol" EntitySet="Rol" />
-            <End Role="RolPermiso" EntitySet="RolPermiso" />
+          <AssociationSet Name="FK_Reto_Reserva" Association="PichangAppDBModel.FK_Reto_Reserva">
+            <End Role="Reserva" EntitySet="Reserva" />
+            <End Role="Reto" EntitySet="Reto" />
           </AssociationSet>
           <AssociationSet Name="FK_Usuario_Rol" Association="PichangAppDBModel.FK_Usuario_Rol">
             <End Role="Rol" EntitySet="Rol" />
@@ -800,7 +762,7 @@
           <NavigationProperty Name="Deporte" Relationship="PichangAppDBModel.FK_EspacioDeportivo_Deporte" FromRole="Cancha" ToRole="Deporte" />
           <NavigationProperty Name="Establecimiento" Relationship="PichangAppDBModel.FK_EspacioDeportivo_Establecimiento" FromRole="Cancha" ToRole="Establecimiento" />
           <NavigationProperty Name="TipoSuperficie" Relationship="PichangAppDBModel.FK_EspacioDeportivo_TipoSuperficie" FromRole="Cancha" ToRole="TipoSuperficie" />
-          <NavigationProperty Name="HorarioCancha" Relationship="PichangAppDBModel.FK_HorarioEspacioDeportivo_EspacioDeportivo" FromRole="Cancha" ToRole="HorarioCancha" />
+          <NavigationProperty Name="Reserva" Relationship="PichangAppDBModel.FK_Reserva_Cancha" FromRole="Cancha" ToRole="Reserva" />
         </EntityType>
         <EntityType Name="Categoria">
           <Key>
@@ -863,21 +825,11 @@
           <NavigationProperty Name="Deporte" Relationship="PichangAppDBModel.FK_Equipo_Deporte" FromRole="Equipo" ToRole="Deporte" />
           <NavigationProperty Name="Distrito" Relationship="PichangAppDBModel.FK_Equipo_Distrito" FromRole="Equipo" ToRole="Distrito" />
           <NavigationProperty Name="Usuario" Relationship="PichangAppDBModel.FK_Equipo_Usuario" FromRole="Equipo" ToRole="Usuario" />
-          <NavigationProperty Name="EquipoUsuario" Relationship="PichangAppDBModel.FK_EquipoUsuario_Equipo" FromRole="Equipo" ToRole="EquipoUsuario" />
           <NavigationProperty Name="ImagenEquipo" Relationship="PichangAppDBModel.FK_ImagenesEquipo_Equipo" FromRole="Equipo" ToRole="ImagenEquipo" />
+          <NavigationProperty Name="Reto" Relationship="PichangAppDBModel.FK_Reto_Equipo" FromRole="Equipo" ToRole="Reto" />
+          <NavigationProperty Name="Reto1" Relationship="PichangAppDBModel.FK_Reto_Equipo1" FromRole="Equipo" ToRole="Reto" />
           <NavigationProperty Name="SkillEquipo" Relationship="PichangAppDBModel.FK_SkillEquipo_Equipo" FromRole="Equipo" ToRole="SkillEquipo" />
-        </EntityType>
-        <EntityType Name="EquipoUsuario">
-          <Key>
-            <PropertyRef Name="EquipoId" />
-            <PropertyRef Name="UsuarioId" />
-          </Key>
-          <Property Name="EquipoId" Type="Int32" Nullable="false" />
-          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
-          <Property Name="FechaUnion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Equipo" Relationship="PichangAppDBModel.FK_EquipoUsuario_Equipo" FromRole="EquipoUsuario" ToRole="Equipo" />
-          <NavigationProperty Name="Usuario" Relationship="PichangAppDBModel.FK_EquipoUsuario_Usuario" FromRole="EquipoUsuario" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="PichangAppDBModel.FK_Usuario_Equipo" FromRole="Equipo" ToRole="Usuario" />
         </EntityType>
         <EntityType Name="Establecimiento">
           <Key>
@@ -911,22 +863,19 @@
             <PropertyRef Name="HorarioId" />
           </Key>
           <Property Name="HorarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="HoraInicio" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="HoraFin" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="HorarioCancha" Relationship="PichangAppDBModel.FK_HorarioEspacioDeportivo_Horario" FromRole="Horario" ToRole="HorarioCancha" />
+          <Property Name="HoraInicio" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="HoraFin" Type="Time" Nullable="false" Precision="7" />
+          <NavigationProperty Name="Reserva" Relationship="PichangAppDBModel.FK_Reserva_Horario" FromRole="Horario" ToRole="Reserva" />
         </EntityType>
         <EntityType Name="HorarioCancha">
           <Key>
-            <PropertyRef Name="HorarioId" />
-            <PropertyRef Name="CanchaId" />
+            <PropertyRef Name="HorarioCanchaId" />
           </Key>
           <Property Name="HorarioId" Type="Int32" Nullable="false" />
           <Property Name="CanchaId" Type="Int32" Nullable="false" />
           <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="ReservaId" Type="Int32" />
-          <NavigationProperty Name="Cancha" Relationship="PichangAppDBModel.FK_HorarioEspacioDeportivo_EspacioDeportivo" FromRole="HorarioCancha" ToRole="Cancha" />
-          <NavigationProperty Name="Horario" Relationship="PichangAppDBModel.FK_HorarioEspacioDeportivo_Horario" FromRole="HorarioCancha" ToRole="Horario" />
-          <NavigationProperty Name="Reserva" Relationship="PichangAppDBModel.FK_HorarioEspacioDeportivo_Reserva" FromRole="HorarioCancha" ToRole="Reserva" />
+          <Property Name="HorarioCanchaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Fecha" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="ImagenEquipo">
           <Key>
@@ -938,27 +887,35 @@
           <Property Name="ImagenUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Equipo" Relationship="PichangAppDBModel.FK_ImagenesEquipo_Equipo" FromRole="ImagenEquipo" ToRole="Equipo" />
         </EntityType>
-        <EntityType Name="Permiso">
-          <Key>
-            <PropertyRef Name="PermisoId" />
-          </Key>
-          <Property Name="PermisoId" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Codigo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="RolPermiso" Relationship="PichangAppDBModel.FK_RolPermiso_Permiso" FromRole="Permiso" ToRole="RolPermiso" />
-        </EntityType>
         <EntityType Name="Reserva">
           <Key>
             <PropertyRef Name="ReservaId" />
           </Key>
           <Property Name="ReservaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UsuarioId" Type="Int32" Nullable="false" />
-          <Property Name="FechaSolicitud" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="HorarioCancha" Relationship="PichangAppDBModel.FK_HorarioEspacioDeportivo_Reserva" FromRole="Reserva" ToRole="HorarioCancha" />
+          <Property Name="UsuarioId" Type="Int32" />
+          <Property Name="FechaSolicitud" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="HorarioId" Type="Int32" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CanchaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cancha" Relationship="PichangAppDBModel.FK_Reserva_Cancha" FromRole="Reserva" ToRole="Cancha" />
+          <NavigationProperty Name="Horario" Relationship="PichangAppDBModel.FK_Reserva_Horario" FromRole="Reserva" ToRole="Horario" />
           <NavigationProperty Name="Usuario" Relationship="PichangAppDBModel.FK_Reserva_Usuario" FromRole="Reserva" ToRole="Usuario" />
+          <NavigationProperty Name="Reto" Relationship="PichangAppDBModel.FK_Reto_Reserva" FromRole="Reserva" ToRole="Reto" />
+        </EntityType>
+        <EntityType Name="Reto">
+          <Key>
+            <PropertyRef Name="RetoId" />
+          </Key>
+          <Property Name="RetoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EquipoRetadorId" Type="Int32" Nullable="false" />
+          <Property Name="EquipoRetadoId" Type="Int32" Nullable="false" />
+          <Property Name="FechaEnvio" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="ReservaId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Equipo" Relationship="PichangAppDBModel.FK_Reto_Equipo" FromRole="Reto" ToRole="Equipo" />
+          <NavigationProperty Name="Equipo1" Relationship="PichangAppDBModel.FK_Reto_Equipo1" FromRole="Reto" ToRole="Equipo" />
+          <NavigationProperty Name="Reserva" Relationship="PichangAppDBModel.FK_Reto_Reserva" FromRole="Reto" ToRole="Reserva" />
         </EntityType>
         <EntityType Name="Rol">
           <Key>
@@ -967,19 +924,7 @@
           <Property Name="RolId" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="RolPermiso" Relationship="PichangAppDBModel.FK_RolPermiso_Rol" FromRole="Rol" ToRole="RolPermiso" />
           <NavigationProperty Name="Usuario" Relationship="PichangAppDBModel.FK_Usuario_Rol" FromRole="Rol" ToRole="Usuario" />
-        </EntityType>
-        <EntityType Name="RolPermiso">
-          <Key>
-            <PropertyRef Name="RolId" />
-            <PropertyRef Name="PermisoId" />
-          </Key>
-          <Property Name="RolId" Type="Byte" Nullable="false" />
-          <Property Name="PermisoId" Type="Int16" Nullable="false" />
-          <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Permiso" Relationship="PichangAppDBModel.FK_RolPermiso_Permiso" FromRole="RolPermiso" ToRole="Permiso" />
-          <NavigationProperty Name="Rol" Relationship="PichangAppDBModel.FK_RolPermiso_Rol" FromRole="RolPermiso" ToRole="Rol" />
         </EntityType>
         <EntityType Name="Servicio">
           <Key>
@@ -1040,9 +985,10 @@
           <Property Name="RolId" Type="Byte" Nullable="false" />
           <Property Name="Estado" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
           <Property Name="ImagenPerfilUrl" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="EquipoId" Type="Int32" />
           <NavigationProperty Name="ComentarioEquipo" Relationship="PichangAppDBModel.FK_ComentarioEquipo_Usuario" FromRole="Usuario" ToRole="ComentarioEquipo" />
           <NavigationProperty Name="Equipo" Relationship="PichangAppDBModel.FK_Equipo_Usuario" FromRole="Usuario" ToRole="Equipo" />
-          <NavigationProperty Name="EquipoUsuario" Relationship="PichangAppDBModel.FK_EquipoUsuario_Usuario" FromRole="Usuario" ToRole="EquipoUsuario" />
+          <NavigationProperty Name="Equipo1" Relationship="PichangAppDBModel.FK_Usuario_Equipo" FromRole="Usuario" ToRole="Equipo" />
           <NavigationProperty Name="Establecimiento" Relationship="PichangAppDBModel.FK_Establecimiento_Usuario" FromRole="Usuario" ToRole="Establecimiento" />
           <NavigationProperty Name="Reserva" Relationship="PichangAppDBModel.FK_Reserva_Usuario" FromRole="Usuario" ToRole="Reserva" />
           <NavigationProperty Name="Rol" Relationship="PichangAppDBModel.FK_Usuario_Rol" FromRole="Usuario" ToRole="Rol" />
@@ -1083,14 +1029,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HorarioEspacioDeportivo_EspacioDeportivo">
+        <Association Name="FK_Reserva_Cancha">
           <End Type="PichangAppDBModel.Cancha" Role="Cancha" Multiplicity="1" />
-          <End Type="PichangAppDBModel.HorarioCancha" Role="HorarioCancha" Multiplicity="*" />
+          <End Type="PichangAppDBModel.Reserva" Role="Reserva" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Cancha">
               <PropertyRef Name="CanchaId" />
             </Principal>
-            <Dependent Role="HorarioCancha">
+            <Dependent Role="Reserva">
               <PropertyRef Name="CanchaId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1191,18 +1137,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EquipoUsuario_Equipo">
-          <End Type="PichangAppDBModel.Equipo" Role="Equipo" Multiplicity="1" />
-          <End Type="PichangAppDBModel.EquipoUsuario" Role="EquipoUsuario" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Equipo">
-              <PropertyRef Name="EquipoId" />
-            </Principal>
-            <Dependent Role="EquipoUsuario">
-              <PropertyRef Name="EquipoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ImagenesEquipo_Equipo">
           <End Type="PichangAppDBModel.Equipo" Role="Equipo" Multiplicity="1" />
           <End Type="PichangAppDBModel.ImagenEquipo" Role="ImagenEquipo" Multiplicity="*" />
@@ -1212,6 +1146,30 @@
             </Principal>
             <Dependent Role="ImagenEquipo">
               <PropertyRef Name="EquipoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reto_Equipo">
+          <End Type="PichangAppDBModel.Equipo" Role="Equipo" Multiplicity="1" />
+          <End Type="PichangAppDBModel.Reto" Role="Reto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="EquipoId" />
+            </Principal>
+            <Dependent Role="Reto">
+              <PropertyRef Name="EquipoRetadorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reto_Equipo1">
+          <End Type="PichangAppDBModel.Equipo" Role="Equipo" Multiplicity="1" />
+          <End Type="PichangAppDBModel.Reto" Role="Reto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Equipo">
+              <PropertyRef Name="EquipoId" />
+            </Principal>
+            <Dependent Role="Reto">
+              <PropertyRef Name="EquipoRetadoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1227,15 +1185,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_EquipoUsuario_Usuario">
-          <End Type="PichangAppDBModel.Usuario" Role="Usuario" Multiplicity="1" />
-          <End Type="PichangAppDBModel.EquipoUsuario" Role="EquipoUsuario" Multiplicity="*" />
+        <Association Name="FK_Usuario_Equipo">
+          <End Type="PichangAppDBModel.Equipo" Role="Equipo" Multiplicity="0..1" />
+          <End Type="PichangAppDBModel.Usuario" Role="Usuario" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Usuario">
-              <PropertyRef Name="UsuarioId" />
+            <Principal Role="Equipo">
+              <PropertyRef Name="EquipoId" />
             </Principal>
-            <Dependent Role="EquipoUsuario">
-              <PropertyRef Name="UsuarioId" />
+            <Dependent Role="Usuario">
+              <PropertyRef Name="EquipoId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1275,44 +1233,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HorarioEspacioDeportivo_Horario">
+        <Association Name="FK_Reserva_Horario">
           <End Type="PichangAppDBModel.Horario" Role="Horario" Multiplicity="1" />
-          <End Type="PichangAppDBModel.HorarioCancha" Role="HorarioCancha" Multiplicity="*" />
+          <End Type="PichangAppDBModel.Reserva" Role="Reserva" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Horario">
               <PropertyRef Name="HorarioId" />
             </Principal>
-            <Dependent Role="HorarioCancha">
+            <Dependent Role="Reserva">
               <PropertyRef Name="HorarioId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_HorarioEspacioDeportivo_Reserva">
-          <End Type="PichangAppDBModel.Reserva" Role="Reserva" Multiplicity="0..1" />
-          <End Type="PichangAppDBModel.HorarioCancha" Role="HorarioCancha" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Reserva">
-              <PropertyRef Name="ReservaId" />
-            </Principal>
-            <Dependent Role="HorarioCancha">
-              <PropertyRef Name="ReservaId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RolPermiso_Permiso">
-          <End Type="PichangAppDBModel.Permiso" Role="Permiso" Multiplicity="1" />
-          <End Type="PichangAppDBModel.RolPermiso" Role="RolPermiso" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Permiso">
-              <PropertyRef Name="PermisoId" />
-            </Principal>
-            <Dependent Role="RolPermiso">
-              <PropertyRef Name="PermisoId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Reserva_Usuario">
-          <End Type="PichangAppDBModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="PichangAppDBModel.Usuario" Role="Usuario" Multiplicity="0..1" />
           <End Type="PichangAppDBModel.Reserva" Role="Reserva" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Usuario">
@@ -1323,15 +1257,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RolPermiso_Rol">
-          <End Type="PichangAppDBModel.Rol" Role="Rol" Multiplicity="1" />
-          <End Type="PichangAppDBModel.RolPermiso" Role="RolPermiso" Multiplicity="*" />
+        <Association Name="FK_Reto_Reserva">
+          <End Type="PichangAppDBModel.Reserva" Role="Reserva" Multiplicity="1" />
+          <End Type="PichangAppDBModel.Reto" Role="Reto" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Rol">
-              <PropertyRef Name="RolId" />
+            <Principal Role="Reserva">
+              <PropertyRef Name="ReservaId" />
             </Principal>
-            <Dependent Role="RolPermiso">
-              <PropertyRef Name="RolId" />
+            <Dependent Role="Reto">
+              <PropertyRef Name="ReservaId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1432,16 +1366,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="EquipoUsuario">
-            <EntityTypeMapping TypeName="PichangAppDBModel.EquipoUsuario">
-              <MappingFragment StoreEntitySet="EquipoUsuario">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="FechaUnion" ColumnName="FechaUnion" />
-                <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-                <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Establecimiento">
             <EntityTypeMapping TypeName="PichangAppDBModel.Establecimiento">
               <MappingFragment StoreEntitySet="Establecimiento">
@@ -1476,7 +1400,8 @@
           <EntitySetMapping Name="HorarioCancha">
             <EntityTypeMapping TypeName="PichangAppDBModel.HorarioCancha">
               <MappingFragment StoreEntitySet="HorarioCancha">
-                <ScalarProperty Name="ReservaId" ColumnName="ReservaId" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="HorarioCanchaId" ColumnName="HorarioCanchaId" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="CanchaId" ColumnName="CanchaId" />
                 <ScalarProperty Name="HorarioId" ColumnName="HorarioId" />
@@ -1493,24 +1418,28 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Permiso">
-            <EntityTypeMapping TypeName="PichangAppDBModel.Permiso">
-              <MappingFragment StoreEntitySet="Permiso">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="PermisoId" ColumnName="PermisoId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Reserva">
             <EntityTypeMapping TypeName="PichangAppDBModel.Reserva">
               <MappingFragment StoreEntitySet="Reserva">
+                <ScalarProperty Name="CanchaId" ColumnName="CanchaId" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="HorarioId" ColumnName="HorarioId" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="FechaSolicitud" ColumnName="FechaSolicitud" />
                 <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
                 <ScalarProperty Name="ReservaId" ColumnName="ReservaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reto">
+            <EntityTypeMapping TypeName="PichangAppDBModel.Reto">
+              <MappingFragment StoreEntitySet="Reto">
+                <ScalarProperty Name="ReservaId" ColumnName="ReservaId" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
+                <ScalarProperty Name="EquipoRetadoId" ColumnName="EquipoRetadoId" />
+                <ScalarProperty Name="EquipoRetadorId" ColumnName="EquipoRetadorId" />
+                <ScalarProperty Name="RetoId" ColumnName="RetoId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1519,15 +1448,6 @@
               <MappingFragment StoreEntitySet="Rol">
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-                <ScalarProperty Name="RolId" ColumnName="RolId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RolPermiso">
-            <EntityTypeMapping TypeName="PichangAppDBModel.RolPermiso">
-              <MappingFragment StoreEntitySet="RolPermiso">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
-                <ScalarProperty Name="PermisoId" ColumnName="PermisoId" />
                 <ScalarProperty Name="RolId" ColumnName="RolId" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1580,6 +1500,7 @@
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="PichangAppDBModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
                 <ScalarProperty Name="ImagenPerfilUrl" ColumnName="ImagenPerfilUrl" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="RolId" ColumnName="RolId" />

@@ -17,14 +17,14 @@ namespace PichangAppDataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Horario()
         {
-            this.HorarioCancha = new HashSet<HorarioCancha>();
+            this.Reserva = new HashSet<Reserva>();
         }
     
         public int HorarioId { get; set; }
-        public System.DateTime HoraInicio { get; set; }
-        public System.DateTime HoraFin { get; set; }
+        public System.TimeSpan HoraInicio { get; set; }
+        public System.TimeSpan HoraFin { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HorarioCancha> HorarioCancha { get; set; }
+        public virtual ICollection<Reserva> Reserva { get; set; }
     }
 }

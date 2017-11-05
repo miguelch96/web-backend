@@ -13,7 +13,7 @@ namespace PichangAppService.Controllers
 {
     public class CanchasController : ApiController
     {
-        public HttpResponseMessage Get(string distrito=null)
+        public HttpResponseMessage Get(String distritoId=null,Int32? horarioId=null,DateTime? fecha=null)
         {
             try
             {

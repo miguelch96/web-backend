@@ -65,11 +65,15 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http.Tracing, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Tracing.5.2.3\lib\net45\System.Web.Http.Tracing.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -244,11 +248,12 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CanchasController.cs" />
     <Compile Include="Controllers\DeportesController.cs" />
-    <Compile Include="Controllers\EquipoMiembrosController.cs" />
     <Compile Include="Controllers\EquiposController.cs" />
     <Compile Include="Controllers\EstablecimientosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\HorariosController.cs" />
     <Compile Include="Controllers\ReservasController.cs" />
+    <Compile Include="Controllers\RetosController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\ServiciosController.cs" />
     <Compile Include="Controllers\EquipoSkillsController.cs" />
@@ -260,16 +265,19 @@
     <Compile Include="Dtos\ComentarioEquipoDto.cs" />
     <Compile Include="Dtos\DistritoDto.cs" />
     <Compile Include="Dtos\EquipoDto.cs" />
-    <Compile Include="Dtos\EquipoUsuarioDto.cs" />
     <Compile Include="Dtos\EstablecimientoDto.cs" />
     <Compile Include="Dtos\EstablecimientoServicioDto.cs" />
-    <Compile Include="Dtos\HorarioCanchaDto.cs" />
     <Compile Include="Dtos\HorarioDto.cs" />
     <Compile Include="Dtos\ImagenEquipoDto.cs" />
-    <Compile Include="Dtos\PermisoDto.cs" />
+    <Compile Include="Dtos\POSTDtos\EquipoPostDto.cs" />
+    <Compile Include="Dtos\POSTDtos\EquipoPutDto.cs" />
+    <Compile Include="Dtos\POSTDtos\ReservaPostDto.cs" />
+    <Compile Include="Dtos\POSTDtos\RetoPostDto.cs" />
+    <Compile Include="Dtos\POSTDtos\UsuarioPostDto.cs" />
     <Compile Include="Dtos\ReservaDto.cs" />
+    <Compile Include="Dtos\RetoDto.cs" />
+    <Compile Include="Dtos\RetosEquipoAux.cs" />
     <Compile Include="Dtos\RolDto.cs" />
-    <Compile Include="Dtos\RolPermisoDto.cs" />
     <Compile Include="Dtos\ServicioDto.cs" />
     <Compile Include="Dtos\SkillDto.cs" />
     <Compile Include="Dtos\SkillEquipoDto.cs" />
@@ -287,6 +295,9 @@
     <Compile Include="RequireHttpsAttribute.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="SwaggerExamples\EquipoExamples\EquipoPostRequestExample.cs" />
+    <Compile Include="SwaggerExamples\EquipoExamples\EquipoPutRequestExample.cs" />
+    <Compile Include="SwaggerExamples\EquipoExamples\RetoPostRequestExample.cs" />
     <Compile Include="SwaggerExamples\UsuarioDtoRequestExample.cs" />
     <Compile Include="SwaggerExamples\UsuarioDtoResponseExample.cs" />
   </ItemGroup>

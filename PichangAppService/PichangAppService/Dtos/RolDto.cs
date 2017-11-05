@@ -10,6 +10,5 @@ namespace PichangAppService.Dtos
         public byte RolId { get; set; }
         public String Nombre { get; set; }
         public String Descripcion { get; set; }
-        public IEnumerable<PermisoDto> Permisos { get; set; }
     }
 }

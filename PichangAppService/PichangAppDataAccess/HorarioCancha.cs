@@ -17,10 +17,7 @@ namespace PichangAppDataAccess
         public int HorarioId { get; set; }
         public int CanchaId { get; set; }
         public string Estado { get; set; }
-        public Nullable<int> ReservaId { get; set; }
-    
-        public virtual Cancha Cancha { get; set; }
-        public virtual Horario Horario { get; set; }
-        public virtual Reserva Reserva { get; set; }
+        public int HorarioCanchaId { get; set; }
+        public Nullable<System.DateTime> Fecha { get; set; }
     }
 }

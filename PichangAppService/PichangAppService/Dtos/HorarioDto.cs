@@ -8,7 +8,7 @@ namespace PichangAppService.Dtos
     public class HorarioDto
     {
         public Int32 HorarioId { get; set; }
-        public DateTime HoraInicio { get; set; }
-        public DateTime HoraFin { get; set; }
+        public TimeSpan HoraInicio { get; set; }
+        public TimeSpan HoraFin { get; set; }
     }
 }

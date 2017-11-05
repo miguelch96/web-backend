@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -10,6 +12,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using PichangAppDataAccess;
 using PichangAppService.Dtos;
+using PichangAppService.Dtos.POSTDtos;
 using PichangAppService.SwaggerExamples;
 using Swashbuckle.Examples;
 using Swashbuckle.Swagger;
@@ -72,17 +75,19 @@ namespace PichangAppService.Controllers
         [SwaggerResponse(HttpStatusCode.Created, Type = typeof(UsuarioDto))]
         [SwaggerResponseExample(HttpStatusCode.Created, typeof(UsuarioDtoResponseExample))]
         [SwaggerResponse(HttpStatusCode.BadRequest)]
-        public async Task<HttpResponseMessage> Post([FromBody] UsuarioDto usuarioDto)
+        public HttpResponseMessage Post([FromBody] UsuarioPostDto usuarioDto)
         {
             try
             {
                 using (PichangAppDBEntities entities = new PichangAppDBEntities())
                 {
-                    var usuario = Mapper.Map<UsuarioDto, Usuario>(usuarioDto);
+                    var usuario = Mapper.Map<UsuarioPostDto, Usuario>(usuarioDto);
                     usuario.Estado = "ACT";
                     entities.Usuario.Add(usuario);
                     entities.SaveChanges();
                     usuarioDto.UsuarioId = usuario.UsuarioId;
+
+
 
                     var message = Request.CreateResponse(HttpStatusCode.Created, usuarioDto);
                     message.Headers.Location = new Uri(Request.RequestUri + "/" + usuario.UsuarioId);
@@ -90,13 +95,13 @@ namespace PichangAppService.Controllers
                 }
             }
 
-            catch (HttpResponseException e)
+            catch (DbEntityValidationException e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
             }
         }
         
-        public HttpResponseMessage Put(int id, [FromBody] UsuarioDto usuarioDto)
+        public HttpResponseMessage Put(int id, [FromBody] UsuarioPostDto usuarioDto)
         {
             try
             {
@@ -114,7 +119,7 @@ namespace PichangAppService.Controllers
                 }
             }
 
-            catch (HttpResponseException e)
+            catch (DbEntityValidationException e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
             }
@@ -138,7 +143,10 @@ namespace PichangAppService.Controllers
                     }
                     usuario.Estado = "INA";
                     entities.SaveChanges();
-                    return Request.CreateResponse(HttpStatusCode.OK);
+                    return Request.CreateResponse(HttpStatusCode.OK,new
+                    {
+                        Message="Usuario eliminado correctamente"
+                    });
                 }
             }
             catch (HttpResponseException e)

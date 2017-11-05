@@ -12,6 +12,7 @@ namespace PichangAppService.Dtos
         public Int32 EquipoId { get; set; }   
         public byte SkillId { get; set; }
         public String Nombre { get; set; }
-        public int Cantidad { get; set; }  
+        public int Cantidad { get; set; }
+        public String ImagenSkillUrl { get; set; }
     }
 }

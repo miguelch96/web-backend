@@ -17,7 +17,6 @@ namespace PichangAppDataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Rol()
         {
-            this.RolPermiso = new HashSet<RolPermiso>();
             this.Usuario = new HashSet<Usuario>();
         }
     
@@ -25,8 +24,6 @@ namespace PichangAppDataAccess
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RolPermiso> RolPermiso { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuario> Usuario { get; set; }
     }

@@ -68,16 +68,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="EquipoUsuario">
-      <EntityTypeMapping TypeName="PichangAppDBModel.EquipoUsuario">
-        <MappingFragment StoreEntitySet="EquipoUsuario">
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
-          <ScalarProperty Name="FechaUnion" ColumnName="FechaUnion" />
-          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
-          <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Establecimiento">
       <EntityTypeMapping TypeName="PichangAppDBModel.Establecimiento">
         <MappingFragment StoreEntitySet="Establecimiento">
@@ -112,7 +102,8 @@
     <EntitySetMapping Name="HorarioCancha">
       <EntityTypeMapping TypeName="PichangAppDBModel.HorarioCancha">
         <MappingFragment StoreEntitySet="HorarioCancha">
-          <ScalarProperty Name="ReservaId" ColumnName="ReservaId" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="HorarioCanchaId" ColumnName="HorarioCanchaId" />
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="CanchaId" ColumnName="CanchaId" />
           <ScalarProperty Name="HorarioId" ColumnName="HorarioId" />
@@ -129,24 +120,28 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Permiso">
-      <EntityTypeMapping TypeName="PichangAppDBModel.Permiso">
-        <MappingFragment StoreEntitySet="Permiso">
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
-          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-          <ScalarProperty Name="PermisoId" ColumnName="PermisoId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Reserva">
       <EntityTypeMapping TypeName="PichangAppDBModel.Reserva">
         <MappingFragment StoreEntitySet="Reserva">
+          <ScalarProperty Name="CanchaId" ColumnName="CanchaId" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="HorarioId" ColumnName="HorarioId" />
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="FechaSolicitud" ColumnName="FechaSolicitud" />
           <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
           <ScalarProperty Name="ReservaId" ColumnName="ReservaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Reto">
+      <EntityTypeMapping TypeName="PichangAppDBModel.Reto">
+        <MappingFragment StoreEntitySet="Reto">
+          <ScalarProperty Name="ReservaId" ColumnName="ReservaId" />
+          <ScalarProperty Name="Estado" ColumnName="Estado" />
+          <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
+          <ScalarProperty Name="EquipoRetadoId" ColumnName="EquipoRetadoId" />
+          <ScalarProperty Name="EquipoRetadorId" ColumnName="EquipoRetadorId" />
+          <ScalarProperty Name="RetoId" ColumnName="RetoId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -155,15 +150,6 @@
         <MappingFragment StoreEntitySet="Rol">
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-          <ScalarProperty Name="RolId" ColumnName="RolId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="RolPermiso">
-      <EntityTypeMapping TypeName="PichangAppDBModel.RolPermiso">
-        <MappingFragment StoreEntitySet="RolPermiso">
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
-          <ScalarProperty Name="PermisoId" ColumnName="PermisoId" />
           <ScalarProperty Name="RolId" ColumnName="RolId" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -216,6 +202,7 @@
     <EntitySetMapping Name="Usuario">
       <EntityTypeMapping TypeName="PichangAppDBModel.Usuario">
         <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
           <ScalarProperty Name="ImagenPerfilUrl" ColumnName="ImagenPerfilUrl" />
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="RolId" ColumnName="RolId" />

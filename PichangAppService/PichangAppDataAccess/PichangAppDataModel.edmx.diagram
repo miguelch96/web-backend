@@ -5,32 +5,30 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="4bce1b27d814476983edab9e822396e0" Name="Diagram1">
-        <EntityTypeShape EntityType="PichangAppDBModel.Cancha" Width="1.5" PointX="10.5" PointY="18.875" />
-        <EntityTypeShape EntityType="PichangAppDBModel.Categoria" Width="1.5" PointX="3" PointY="19.625" />
-        <EntityTypeShape EntityType="PichangAppDBModel.ComentarioEquipo" Width="1.5" PointX="10.5" PointY="15" />
-        <EntityTypeShape EntityType="PichangAppDBModel.Deporte" Width="1.5" PointX="3" PointY="8.875" />
-        <EntityTypeShape EntityType="PichangAppDBModel.Distrito" Width="1.5" PointX="3" PointY="22.125" />
-        <EntityTypeShape EntityType="PichangAppDBModel.Equipo" Width="1.5" PointX="5.25" PointY="14.125" />
-        <EntityTypeShape EntityType="PichangAppDBModel.EquipoUsuario" Width="1.5" PointX="10.5" PointY="11.375" />
-        <EntityTypeShape EntityType="PichangAppDBModel.Establecimiento" Width="1.5" PointX="8.25" PointY="14.875" />
-        <EntityTypeShape EntityType="PichangAppDBModel.EstablecimientoServicio" Width="1.5" PointX="13.5" PointY="15.375" />
-        <EntityTypeShape EntityType="PichangAppDBModel.Horario" Width="1.5" PointX="10.5" PointY="23.625" />
-        <EntityTypeShape EntityType="PichangAppDBModel.HorarioCancha" Width="1.5" PointX="12.75" PointY="23.25" />
-        <EntityTypeShape EntityType="PichangAppDBModel.ImagenEquipo" Width="1.5" PointX="7.5" PointY="21.125" />
-        <EntityTypeShape EntityType="PichangAppDBModel.Permiso" Width="1.5" PointX="0.75" PointY="9.625" />
-        <EntityTypeShape EntityType="PichangAppDBModel.Reserva" Width="1.5" PointX="5.25" PointY="28" />
-        <EntityTypeShape EntityType="PichangAppDBModel.Rol" Width="1.5" PointX="0.75" PointY="12.75" />
-        <EntityTypeShape EntityType="PichangAppDBModel.RolPermiso" Width="1.5" PointX="3" PointY="11.75" />
-        <EntityTypeShape EntityType="PichangAppDBModel.Servicio" Width="1.5" PointX="11.25" PointY="8.625" />
-        <EntityTypeShape EntityType="PichangAppDBModel.Skill" Width="1.5" PointX="8.25" PointY="8.5" />
-        <EntityTypeShape EntityType="PichangAppDBModel.SkillEquipo" Width="1.5" PointX="7.5" PointY="11.375" />
-        <EntityTypeShape EntityType="PichangAppDBModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="PichangAppDBModel.TipoSuperficie" Width="1.5" PointX="8.25" PointY="24.625" />
-        <EntityTypeShape EntityType="PichangAppDBModel.Usuario" Width="1.5" PointX="3" PointY="14.625" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Cancha" Width="1.5" PointX="15.75" PointY="9.375" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Categoria" Width="1.5" PointX="0.75" PointY="7.375" />
+        <EntityTypeShape EntityType="PichangAppDBModel.ComentarioEquipo" Width="1.5" PointX="7.5" PointY="9.5" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Deporte" Width="1.5" PointX="0.75" PointY="12.875" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Distrito" Width="1.5" PointX="0.75" PointY="10" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Equipo" Width="1.5" PointX="3" PointY="8.5" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Establecimiento" Width="1.5" PointX="10.5" PointY="9.375" />
+        <EntityTypeShape EntityType="PichangAppDBModel.EstablecimientoServicio" Width="1.5" PointX="12.75" PointY="9.875" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Horario" Width="1.5" PointX="15.75" PointY="5.875" />
+        <EntityTypeShape EntityType="PichangAppDBModel.HorarioCancha" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PichangAppDBModel.ImagenEquipo" Width="1.5" PointX="5.25" PointY="21.625" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Reserva" Width="1.5" PointX="18" PointY="9.375" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Reto" Width="1.5" PointX="8.25" PointY="5.5" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Rol" Width="1.5" PointX="3" PointY="5" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Servicio" Width="1.5" PointX="10.5" PointY="6.125" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Skill" Width="1.5" PointX="3" PointY="1.875" />
+        <EntityTypeShape EntityType="PichangAppDBModel.SkillEquipo" Width="1.5" PointX="5.25" PointY="5.875" />
+        <EntityTypeShape EntityType="PichangAppDBModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PichangAppDBModel.TipoSuperficie" Width="1.5" PointX="13.5" PointY="7.125" />
+        <EntityTypeShape EntityType="PichangAppDBModel.Usuario" Width="1.5" PointX="5.25" PointY="9" />
         <AssociationConnector Association="PichangAppDBModel.FK_EspacioDeportivo_Deporte" />
         <AssociationConnector Association="PichangAppDBModel.FK_EspacioDeportivo_Establecimiento" />
         <AssociationConnector Association="PichangAppDBModel.FK_EspacioDeportivo_TipoSuperficie" />
-        <AssociationConnector Association="PichangAppDBModel.FK_HorarioEspacioDeportivo_EspacioDeportivo" />
+        <AssociationConnector Association="PichangAppDBModel.FK_Reserva_Cancha" />
         <AssociationConnector Association="PichangAppDBModel.FK_Equipo_Categoria" />
         <AssociationConnector Association="PichangAppDBModel.FK_ComentarioEquipo_Equipo" />
         <AssociationConnector Association="PichangAppDBModel.FK_ComentarioEquipo_Skill" />
@@ -39,18 +37,17 @@
         <AssociationConnector Association="PichangAppDBModel.FK_Equipo_Distrito" />
         <AssociationConnector Association="PichangAppDBModel.FK_Establecimiento_Distrito" />
         <AssociationConnector Association="PichangAppDBModel.FK_Equipo_Usuario" />
-        <AssociationConnector Association="PichangAppDBModel.FK_EquipoUsuario_Equipo" />
         <AssociationConnector Association="PichangAppDBModel.FK_ImagenesEquipo_Equipo" />
+        <AssociationConnector Association="PichangAppDBModel.FK_Reto_Equipo" />
+        <AssociationConnector Association="PichangAppDBModel.FK_Reto_Equipo1" />
         <AssociationConnector Association="PichangAppDBModel.FK_SkillEquipo_Equipo" />
-        <AssociationConnector Association="PichangAppDBModel.FK_EquipoUsuario_Usuario" />
+        <AssociationConnector Association="PichangAppDBModel.FK_Usuario_Equipo" />
         <AssociationConnector Association="PichangAppDBModel.FK_Establecimiento_Usuario" />
         <AssociationConnector Association="PichangAppDBModel.FK_EstablecimientoServicio_Establecimiento" />
         <AssociationConnector Association="PichangAppDBModel.FK_EstablecimientoServicio_Servicio" />
-        <AssociationConnector Association="PichangAppDBModel.FK_HorarioEspacioDeportivo_Horario" />
-        <AssociationConnector Association="PichangAppDBModel.FK_HorarioEspacioDeportivo_Reserva" />
-        <AssociationConnector Association="PichangAppDBModel.FK_RolPermiso_Permiso" />
+        <AssociationConnector Association="PichangAppDBModel.FK_Reserva_Horario" />
         <AssociationConnector Association="PichangAppDBModel.FK_Reserva_Usuario" />
-        <AssociationConnector Association="PichangAppDBModel.FK_RolPermiso_Rol" />
+        <AssociationConnector Association="PichangAppDBModel.FK_Reto_Reserva" />
         <AssociationConnector Association="PichangAppDBModel.FK_Usuario_Rol" />
         <AssociationConnector Association="PichangAppDBModel.FK_SkillEquipo_Skill" />
       </Diagram>

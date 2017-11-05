@@ -18,13 +18,7 @@ namespace PichangAppService.SwaggerExamples
                 Passwd = "A2gafdf24hF42G2G",
                 Nombre = "Miguel",
                 Apellido = "Chipana",
-                RolId = 1,
-                Rol=new RolDto()
-                {
-                    RolId = 1,
-                    Nombre = "Jugador",
-                    Descripcion = "Deportista que alquila espacios deportivos"
-                }
+                NombreRol = "Jugador"
             };
         }
     }

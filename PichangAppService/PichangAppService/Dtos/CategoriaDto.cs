@@ -8,7 +8,6 @@ namespace PichangAppService.Dtos
 {
     public class CategoriaDto
     {
-        [JsonIgnore]
         public byte CategoriaId { get; set; }
         public String Nombre { get; set; }
         public String Descripcion { get; set; }

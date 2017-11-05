@@ -8,21 +8,41 @@ using AutoMapper;
 using PichangAppDataAccess;
 using PichangAppService.Dtos;
 using System.Data.Entity;
+using System.Threading.Tasks;
 using AutoMapper.QueryableExtensions;
+using PichangAppService.Dtos.POSTDtos;
+using PichangAppService.SwaggerExamples;
+using PichangAppService.SwaggerExamples.EquipoExamples;
+using Swashbuckle.Examples;
+using Swashbuckle.Swagger.Annotations;
 
 namespace PichangAppService.Controllers
 {
     public class EquiposController : ApiController
     {
         [HttpGet]
-        public HttpResponseMessage Get()
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(IEnumerable<EquipoDto>))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(HttpResponseException))]
+        public HttpResponseMessage Get(Int32? categoriaId=null,Int32? distritoId=null,String nombre=null)
         {
             try
             {
                 using (PichangAppDBEntities entities = new PichangAppDBEntities())
                 {
-                    var equipos = entities.Equipo.ProjectTo<EquipoDto>().ToList();
-                    return Request.CreateResponse(HttpStatusCode.OK,equipos);
+                    IQueryable<Equipo> equipos = entities.Equipo;
+                    if (categoriaId != null)
+                        equipos = equipos.Where(x => x.CategoriaId == categoriaId);
+                    if (distritoId != null)
+                        equipos = equipos.Where(x => x.DistritoId == distritoId);
+                    if (nombre != null)
+                        equipos = equipos.Where(x => x.Nombre.Contains(nombre));
+
+                    var equiposDto = equipos.ProjectTo<EquipoDto>().ToList();
+
+                    return Request.CreateResponse(HttpStatusCode.OK, new
+                    {
+                        Equipos= equiposDto
+                    });
 
                 }
             }
@@ -34,6 +54,9 @@ namespace PichangAppService.Controllers
         }
 
         [HttpGet]
+        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(IEnumerable<EquipoDto>))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(HttpResponseException))]
+        [SwaggerResponse(HttpStatusCode.NotFound, Type = typeof(String))]
         public HttpResponseMessage Get(Int32 id)
         {
             try
@@ -54,19 +77,129 @@ namespace PichangAppService.Controllers
             }
         }
 
-        [HttpPost]
-        public HttpResponseMessage Post([FromBody] EquipoDto equipoDto)
+        [Route("~/api/equipos/{equipoId:int}/miembros")]
+        public HttpResponseMessage GetTeamMembers(Int32 equipoId)
         {
             try
             {
                 using (PichangAppDBEntities entities = new PichangAppDBEntities())
                 {
-                    var equipo = Mapper.Map<EquipoDto, Equipo>(equipoDto);
+                    var equipo = entities.Equipo.SingleOrDefault(x => x.EquipoId == equipoId);
+                    if (equipo == null)
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Equipo no encontrado");
+
+                    var equipoDto = Mapper.Map<Equipo, EquipoDto>(equipo);
+                    return Request.CreateResponse(HttpStatusCode.OK,new
+                    {
+                        equipoDto.EquipoId,
+                        equipoDto.Miembros
+                    });
+                }
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
+
+        [Route("~/api/equipos/{equipoId:int}/skills")]
+        public HttpResponseMessage GetTeamSkills(Int32 equipoId)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var equipo = entities.Equipo.SingleOrDefault(x => x.EquipoId == equipoId);
+                    if (equipo == null)
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Equipo no encontrado");
+
+                    var equipoDto = Mapper.Map<Equipo, EquipoDto>(equipo);
+                    return Request.CreateResponse(HttpStatusCode.OK, new
+                    {
+                        equipoDto.EquipoId,
+                        equipoDto.Skills
+                    });
+                }
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
+
+        [Route("~/api/equipos/{equipoId:int}/comentarios")]
+        public HttpResponseMessage GetTeamComments(Int32 equipoId)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var equipo = entities.Equipo.SingleOrDefault(x => x.EquipoId == equipoId);
+                    if (equipo == null)
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Equipo no encontrado");
+
+                    var comentarios = entities.ComentarioEquipo.Where(x => x.EquipoId == equipoId)
+                        .ProjectTo<ComentarioEquipoDto>().ToList();
+
+                    return Request.CreateResponse(HttpStatusCode.OK, new
+                    {
+                        equipo.EquipoId,
+                        comentarios
+                    });
+                }
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
+
+        [Route("~/api/equipos/{equipoId:int}/retos")]
+        public HttpResponseMessage GetTeamOffs(Int32 equipoId)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var equipo = entities.Equipo.SingleOrDefault(x => x.EquipoId == equipoId);
+                    if (equipo == null)
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Equipo no encontrado");
+
+
+                    var retosEnviados = entities.Reto.Where(x => x.EquipoRetadorId == equipoId).ProjectTo<RetoDto>().ToList();
+                    var retosRecibidos = entities.Reto.Where(x => x.EquipoRetadoId == equipoId).ProjectTo<RetoDto>().ToList();
+
+                    return Request.CreateResponse(HttpStatusCode.OK, new
+                    {
+                        equipo.EquipoId,
+                        retosEnviados,
+                        retosRecibidos
+                    });
+                }
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
+
+        [HttpPost]
+        [SwaggerRequestExample(typeof(EquipoPostDto),typeof(EquipoPostRequestExample))]
+        public HttpResponseMessage Post([FromBody] EquipoPostDto equipoDto)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var equipo = Mapper.Map<EquipoPostDto, Equipo>(equipoDto);
+                    var usuario = entities.Usuario.SingleOrDefault(x => x.UsuarioId == equipo.UsuarioCapitanId);
+
                     equipo.Estado = "ACT";
                     entities.Equipo.Add(equipo);
                     entities.SaveChanges();
                     equipoDto.EquipoId = equipo.EquipoId;
-
+                    usuario.EquipoId = equipo.EquipoId;
+                    entities.SaveChanges();
                     var message = Request.CreateResponse(HttpStatusCode.Created, equipoDto);
                     message.Headers.Location = new Uri(Request.RequestUri + "/" + equipo.EquipoId);
                     return message;
@@ -80,7 +213,8 @@ namespace PichangAppService.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage Put(int id, [FromBody] EquipoDto equipoDto)
+        [SwaggerRequestExample(typeof(EquipoPutDto), typeof(EquipoPutRequestExample))]
+        public HttpResponseMessage Put(int id, [FromBody] EquipoPutDto equipoDto)
         {
             try
             {
@@ -92,18 +226,7 @@ namespace PichangAppService.Controllers
                         return Request.CreateResponse(HttpStatusCode.NotFound, "Equipo no encontrado");
                     }
 
-                    var imagenesEquipo = equipo.ImagenEquipo;
-                    var skills = equipo.SkillEquipo;
-                    var miembros = equipo.EquipoUsuario;
-                    var comentarios = equipo.ComentarioEquipo;
                     Mapper.Map(equipoDto, equipo);
-
-                    equipo.ImagenEquipo = imagenesEquipo;
-                    equipo.SkillEquipo = skills;
-                    equipo.EquipoUsuario = miembros;
-                    equipo.ComentarioEquipo = comentarios;
-
-                    
                     entities.SaveChanges();
                     return Request.CreateResponse(HttpStatusCode.OK, equipoDto);
                 }

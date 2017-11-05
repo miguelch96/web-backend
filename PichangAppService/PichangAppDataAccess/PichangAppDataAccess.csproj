@@ -67,9 +67,6 @@
     <Compile Include="Equipo.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="EquipoUsuario.cs">
-      <DependentUpon>PichangAppDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Establecimiento.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
@@ -83,9 +80,6 @@
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ImagenEquipo.cs">
-      <DependentUpon>PichangAppDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Permiso.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="PichangAppDataModel.Context.cs">
@@ -107,10 +101,10 @@
     <Compile Include="Reserva.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Rol.cs">
+    <Compile Include="Reto.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="RolPermiso.cs">
+    <Compile Include="Rol.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Servicio.cs">
