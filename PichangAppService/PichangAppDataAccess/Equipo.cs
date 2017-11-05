@@ -28,7 +28,6 @@ namespace PichangAppDataAccess
         public int EquipoId { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
-        public byte DeporteId { get; set; }
         public int UsuarioCapitanId { get; set; }
         public string Estado { get; set; }
         public Nullable<byte> DistritoId { get; set; }
@@ -39,7 +38,6 @@ namespace PichangAppDataAccess
         public virtual Categoria Categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ComentarioEquipo> ComentarioEquipo { get; set; }
-        public virtual Deporte Deporte { get; set; }
         public virtual Distrito Distrito { get; set; }
         public virtual Usuario Usuario { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

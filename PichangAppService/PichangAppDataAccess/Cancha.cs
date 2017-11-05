@@ -17,21 +17,34 @@ namespace PichangAppDataAccess
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Cancha()
         {
+            this.ComentarioCancha = new HashSet<ComentarioCancha>();
+            this.ImagenCancha = new HashSet<ImagenCancha>();
             this.Reserva = new HashSet<Reserva>();
+            this.Servicio = new HashSet<Servicio>();
         }
     
         public int CanchaId { get; set; }
         public string Nombre { get; set; }
         public decimal Precio { get; set; }
-        public int EstablecimientoId { get; set; }
-        public byte DeporteId { get; set; }
         public byte TipoSuperficieId { get; set; }
         public string Estado { get; set; }
+        public string Direccion { get; set; }
+        public byte DistritoId { get; set; }
+        public int PropietarioId { get; set; }
+        public Nullable<decimal> Calificacion { get; set; }
+        public string Descripcion { get; set; }
+        public string ImagenPortadaUrl { get; set; }
     
-        public virtual Deporte Deporte { get; set; }
-        public virtual Establecimiento Establecimiento { get; set; }
+        public virtual Distrito Distrito { get; set; }
+        public virtual Usuario Usuario { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ComentarioCancha> ComentarioCancha { get; set; }
         public virtual TipoSuperficie TipoSuperficie { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ImagenCancha> ImagenCancha { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Reserva> Reserva { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Servicio> Servicio { get; set; }
     }
 }

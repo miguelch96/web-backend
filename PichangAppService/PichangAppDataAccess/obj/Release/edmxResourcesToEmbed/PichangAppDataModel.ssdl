@@ -7,10 +7,22 @@
     <Property Name="CanchaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Precio" Type="decimal" Precision="6" Scale="2" Nullable="false" />
-    <Property Name="EstablecimientoId" Type="int" Nullable="false" />
-    <Property Name="DeporteId" Type="tinyint" Nullable="false" />
     <Property Name="TipoSuperficieId" Type="tinyint" Nullable="false" />
     <Property Name="Estado" Type="varchar" MaxLength="3" />
+    <Property Name="Direccion" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="DistritoId" Type="tinyint" Nullable="false" />
+    <Property Name="PropietarioId" Type="int" Nullable="false" />
+    <Property Name="Calificacion" Type="decimal" Precision="6" Scale="2" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="500" />
+    <Property Name="ImagenPortadaUrl" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="CanchaServicio">
+    <Key>
+      <PropertyRef Name="CanchaId" />
+      <PropertyRef Name="ServicioId" />
+    </Key>
+    <Property Name="CanchaId" Type="int" Nullable="false" />
+    <Property Name="ServicioId" Type="smallint" Nullable="false" />
   </EntityType>
   <EntityType Name="Categoria">
     <Key>
@@ -19,6 +31,16 @@
     <Property Name="CategoriaId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre" Type="varchar" MaxLength="50" />
     <Property Name="Descripcion" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="ComentarioCancha">
+    <Key>
+      <PropertyRef Name="ComentarioCanchaId" />
+    </Key>
+    <Property Name="ComentarioCanchaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="Comentario" Type="varchar" MaxLength="300" />
+    <Property Name="Calificacion" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="CanchaId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="ComentarioEquipo">
     <Key>
@@ -30,14 +52,6 @@
     <Property Name="Comentario" Type="varchar" MaxLength="300" />
     <Property Name="SkillId" Type="tinyint" />
     <Property Name="Calificacion" Type="decimal" Precision="6" Scale="2" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Deporte">
-    <Key>
-      <PropertyRef Name="DeporteId" />
-    </Key>
-    <Property Name="DeporteId" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Codigo" Type="varchar" MaxLength="10" Nullable="false" />
   </EntityType>
   <EntityType Name="Distrito">
     <Key>
@@ -53,34 +67,12 @@
     <Property Name="EquipoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="DeporteId" Type="tinyint" Nullable="false" />
     <Property Name="UsuarioCapitanId" Type="int" Nullable="false" />
     <Property Name="Estado" Type="varchar" MaxLength="3" />
     <Property Name="DistritoId" Type="tinyint" />
     <Property Name="CategoriaId" Type="tinyint" />
     <Property Name="ImagenPortadaUrl" Type="varchar" MaxLength="300" />
     <Property Name="Calificacion" Type="decimal" Precision="6" Scale="2" />
-  </EntityType>
-  <EntityType Name="Establecimiento">
-    <Key>
-      <PropertyRef Name="EstablecimientoId" />
-    </Key>
-    <Property Name="EstablecimientoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Direccion" Type="varchar" MaxLength="200" Nullable="false" />
-    <Property Name="DistritoId" Type="tinyint" Nullable="false" />
-    <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
-    <Property Name="UsuarioPropietarioId" Type="int" Nullable="false" />
-    <Property Name="Estado" Type="varchar" MaxLength="3" />
-  </EntityType>
-  <EntityType Name="EstablecimientoServicio">
-    <Key>
-      <PropertyRef Name="EstablecimientoId" />
-      <PropertyRef Name="ServicioId" />
-    </Key>
-    <Property Name="EstablecimientoId" Type="int" Nullable="false" />
-    <Property Name="ServicioId" Type="smallint" Nullable="false" />
-    <Property Name="Estado" Type="varchar" MaxLength="3" />
   </EntityType>
   <EntityType Name="Horario">
     <Key>
@@ -99,6 +91,15 @@
     <Property Name="Estado" Type="varchar" MaxLength="3" />
     <Property Name="HorarioCanchaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Fecha" Type="date" />
+  </EntityType>
+  <EntityType Name="ImagenCancha">
+    <Key>
+      <PropertyRef Name="ImagenCanchaId" />
+    </Key>
+    <Property Name="ImagenCanchaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CanchaId" Type="int" Nullable="false" />
+    <Property Name="FechaSubida" Type="datetime" />
+    <Property Name="ImagenUrl" Type="varchar" MaxLength="300" Nullable="false" />
   </EntityType>
   <EntityType Name="ImagenEquipo">
     <Key>
@@ -146,6 +147,7 @@
     </Key>
     <Property Name="ServicioId" Type="smallint" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ImgServicioUrl" Type="varchar" MaxLength="500" />
   </EntityType>
   <EntityType Name="Skill">
     <Key>
@@ -195,6 +197,78 @@
     <Property Name="ImagenPerfilUrl" Type="varchar" MaxLength="300" />
     <Property Name="EquipoId" Type="int" />
   </EntityType>
+  <Association Name="FK_Cancha_Distrito">
+    <End Role="Distrito" Type="Self.Distrito" Multiplicity="1" />
+    <End Role="Cancha" Type="Self.Cancha" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Distrito">
+        <PropertyRef Name="DistritoId" />
+      </Principal>
+      <Dependent Role="Cancha">
+        <PropertyRef Name="DistritoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Cancha_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Cancha" Type="Self.Cancha" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Cancha">
+        <PropertyRef Name="PropietarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CanchaServicio_Cancha">
+    <End Role="Cancha" Type="Self.Cancha" Multiplicity="1" />
+    <End Role="CanchaServicio" Type="Self.CanchaServicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cancha">
+        <PropertyRef Name="CanchaId" />
+      </Principal>
+      <Dependent Role="CanchaServicio">
+        <PropertyRef Name="CanchaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CanchaServicio_Servicio">
+    <End Role="Servicio" Type="Self.Servicio" Multiplicity="1" />
+    <End Role="CanchaServicio" Type="Self.CanchaServicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Servicio">
+        <PropertyRef Name="ServicioId" />
+      </Principal>
+      <Dependent Role="CanchaServicio">
+        <PropertyRef Name="ServicioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComentarioCancha_Cancha">
+    <End Role="Cancha" Type="Self.Cancha" Multiplicity="1" />
+    <End Role="ComentarioCancha" Type="Self.ComentarioCancha" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cancha">
+        <PropertyRef Name="CanchaId" />
+      </Principal>
+      <Dependent Role="ComentarioCancha">
+        <PropertyRef Name="CanchaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ComentarioCancha_Usuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="ComentarioCancha" Type="Self.ComentarioCancha" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="ComentarioCancha">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ComentarioEquipo_Equipo">
     <End Role="Equipo" Type="Self.Equipo" Multiplicity="1" />
     <End Role="ComentarioEquipo" Type="Self.ComentarioEquipo" Multiplicity="*" />
@@ -243,18 +317,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Equipo_Deporte">
-    <End Role="Deporte" Type="Self.Deporte" Multiplicity="1" />
-    <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Deporte">
-        <PropertyRef Name="DeporteId" />
-      </Principal>
-      <Dependent Role="Equipo">
-        <PropertyRef Name="DeporteId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_Equipo_Distrito">
     <End Role="Distrito" Type="Self.Distrito" Multiplicity="0..1" />
     <End Role="Equipo" Type="Self.Equipo" Multiplicity="*" />
@@ -279,30 +341,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_EspacioDeportivo_Deporte">
-    <End Role="Deporte" Type="Self.Deporte" Multiplicity="1" />
-    <End Role="Cancha" Type="Self.Cancha" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Deporte">
-        <PropertyRef Name="DeporteId" />
-      </Principal>
-      <Dependent Role="Cancha">
-        <PropertyRef Name="DeporteId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_EspacioDeportivo_Establecimiento">
-    <End Role="Establecimiento" Type="Self.Establecimiento" Multiplicity="1" />
-    <End Role="Cancha" Type="Self.Cancha" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Establecimiento">
-        <PropertyRef Name="EstablecimientoId" />
-      </Principal>
-      <Dependent Role="Cancha">
-        <PropertyRef Name="EstablecimientoId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="FK_EspacioDeportivo_TipoSuperficie">
     <End Role="TipoSuperficie" Type="Self.TipoSuperficie" Multiplicity="1" />
     <End Role="Cancha" Type="Self.Cancha" Multiplicity="*" />
@@ -315,51 +353,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_Establecimiento_Distrito">
-    <End Role="Distrito" Type="Self.Distrito" Multiplicity="1" />
-    <End Role="Establecimiento" Type="Self.Establecimiento" Multiplicity="*" />
+  <Association Name="FK_ImagenCancha_Cancha">
+    <End Role="Cancha" Type="Self.Cancha" Multiplicity="1" />
+    <End Role="ImagenCancha" Type="Self.ImagenCancha" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="Distrito">
-        <PropertyRef Name="DistritoId" />
+      <Principal Role="Cancha">
+        <PropertyRef Name="CanchaId" />
       </Principal>
-      <Dependent Role="Establecimiento">
-        <PropertyRef Name="DistritoId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Establecimiento_Usuario">
-    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
-    <End Role="Establecimiento" Type="Self.Establecimiento" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Usuario">
-        <PropertyRef Name="UsuarioId" />
-      </Principal>
-      <Dependent Role="Establecimiento">
-        <PropertyRef Name="UsuarioPropietarioId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_EstablecimientoServicio_Establecimiento">
-    <End Role="Establecimiento" Type="Self.Establecimiento" Multiplicity="1" />
-    <End Role="EstablecimientoServicio" Type="Self.EstablecimientoServicio" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Establecimiento">
-        <PropertyRef Name="EstablecimientoId" />
-      </Principal>
-      <Dependent Role="EstablecimientoServicio">
-        <PropertyRef Name="EstablecimientoId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_EstablecimientoServicio_Servicio">
-    <End Role="Servicio" Type="Self.Servicio" Multiplicity="1" />
-    <End Role="EstablecimientoServicio" Type="Self.EstablecimientoServicio" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Servicio">
-        <PropertyRef Name="ServicioId" />
-      </Principal>
-      <Dependent Role="EstablecimientoServicio">
-        <PropertyRef Name="ServicioId" />
+      <Dependent Role="ImagenCancha">
+        <PropertyRef Name="CanchaId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -497,15 +499,15 @@
   </Association>
   <EntityContainer Name="PichangAppDBModelStoreContainer">
     <EntitySet Name="Cancha" EntityType="Self.Cancha" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CanchaServicio" EntityType="Self.CanchaServicio" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ComentarioCancha" EntityType="Self.ComentarioCancha" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ComentarioEquipo" EntityType="Self.ComentarioEquipo" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Deporte" EntityType="Self.Deporte" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Distrito" EntityType="Self.Distrito" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Equipo" EntityType="Self.Equipo" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="Establecimiento" EntityType="Self.Establecimiento" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="EstablecimientoServicio" EntityType="Self.EstablecimientoServicio" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Horario" EntityType="Self.Horario" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="HorarioCancha" EntityType="Self.HorarioCancha" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ImagenCancha" EntityType="Self.ImagenCancha" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ImagenEquipo" EntityType="Self.ImagenEquipo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reserva" EntityType="Self.Reserva" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reto" EntityType="Self.Reto" Schema="dbo" store:Type="Tables" />
@@ -516,6 +518,30 @@
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TipoSuperficie" EntityType="Self.TipoSuperficie" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Cancha_Distrito" Association="Self.FK_Cancha_Distrito">
+      <End Role="Distrito" EntitySet="Distrito" />
+      <End Role="Cancha" EntitySet="Cancha" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Cancha_Usuario" Association="Self.FK_Cancha_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Cancha" EntitySet="Cancha" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CanchaServicio_Cancha" Association="Self.FK_CanchaServicio_Cancha">
+      <End Role="Cancha" EntitySet="Cancha" />
+      <End Role="CanchaServicio" EntitySet="CanchaServicio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CanchaServicio_Servicio" Association="Self.FK_CanchaServicio_Servicio">
+      <End Role="Servicio" EntitySet="Servicio" />
+      <End Role="CanchaServicio" EntitySet="CanchaServicio" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComentarioCancha_Cancha" Association="Self.FK_ComentarioCancha_Cancha">
+      <End Role="Cancha" EntitySet="Cancha" />
+      <End Role="ComentarioCancha" EntitySet="ComentarioCancha" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ComentarioCancha_Usuario" Association="Self.FK_ComentarioCancha_Usuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="ComentarioCancha" EntitySet="ComentarioCancha" />
+    </AssociationSet>
     <AssociationSet Name="FK_ComentarioEquipo_Equipo" Association="Self.FK_ComentarioEquipo_Equipo">
       <End Role="Equipo" EntitySet="Equipo" />
       <End Role="ComentarioEquipo" EntitySet="ComentarioEquipo" />
@@ -532,10 +558,6 @@
       <End Role="Categoria" EntitySet="Categoria" />
       <End Role="Equipo" EntitySet="Equipo" />
     </AssociationSet>
-    <AssociationSet Name="FK_Equipo_Deporte" Association="Self.FK_Equipo_Deporte">
-      <End Role="Deporte" EntitySet="Deporte" />
-      <End Role="Equipo" EntitySet="Equipo" />
-    </AssociationSet>
     <AssociationSet Name="FK_Equipo_Distrito" Association="Self.FK_Equipo_Distrito">
       <End Role="Distrito" EntitySet="Distrito" />
       <End Role="Equipo" EntitySet="Equipo" />
@@ -544,33 +566,13 @@
       <End Role="Usuario" EntitySet="Usuario" />
       <End Role="Equipo" EntitySet="Equipo" />
     </AssociationSet>
-    <AssociationSet Name="FK_EspacioDeportivo_Deporte" Association="Self.FK_EspacioDeportivo_Deporte">
-      <End Role="Deporte" EntitySet="Deporte" />
-      <End Role="Cancha" EntitySet="Cancha" />
-    </AssociationSet>
-    <AssociationSet Name="FK_EspacioDeportivo_Establecimiento" Association="Self.FK_EspacioDeportivo_Establecimiento">
-      <End Role="Establecimiento" EntitySet="Establecimiento" />
-      <End Role="Cancha" EntitySet="Cancha" />
-    </AssociationSet>
     <AssociationSet Name="FK_EspacioDeportivo_TipoSuperficie" Association="Self.FK_EspacioDeportivo_TipoSuperficie">
       <End Role="TipoSuperficie" EntitySet="TipoSuperficie" />
       <End Role="Cancha" EntitySet="Cancha" />
     </AssociationSet>
-    <AssociationSet Name="FK_Establecimiento_Distrito" Association="Self.FK_Establecimiento_Distrito">
-      <End Role="Distrito" EntitySet="Distrito" />
-      <End Role="Establecimiento" EntitySet="Establecimiento" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Establecimiento_Usuario" Association="Self.FK_Establecimiento_Usuario">
-      <End Role="Usuario" EntitySet="Usuario" />
-      <End Role="Establecimiento" EntitySet="Establecimiento" />
-    </AssociationSet>
-    <AssociationSet Name="FK_EstablecimientoServicio_Establecimiento" Association="Self.FK_EstablecimientoServicio_Establecimiento">
-      <End Role="Establecimiento" EntitySet="Establecimiento" />
-      <End Role="EstablecimientoServicio" EntitySet="EstablecimientoServicio" />
-    </AssociationSet>
-    <AssociationSet Name="FK_EstablecimientoServicio_Servicio" Association="Self.FK_EstablecimientoServicio_Servicio">
-      <End Role="Servicio" EntitySet="Servicio" />
-      <End Role="EstablecimientoServicio" EntitySet="EstablecimientoServicio" />
+    <AssociationSet Name="FK_ImagenCancha_Cancha" Association="Self.FK_ImagenCancha_Cancha">
+      <End Role="Cancha" EntitySet="Cancha" />
+      <End Role="ImagenCancha" EntitySet="ImagenCancha" />
     </AssociationSet>
     <AssociationSet Name="FK_ImagenesEquipo_Equipo" Association="Self.FK_ImagenesEquipo_Equipo">
       <End Role="Equipo" EntitySet="Equipo" />

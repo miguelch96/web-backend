@@ -15,7 +15,6 @@ namespace PichangAppService.SwaggerExamples.EquipoExamples
             {
                 Nombre = "Toribianitos",
                 Descripcion = "Equipo enfocado en Futbol 6",
-                DeporteId=1,
                 CapitanId=3,
                 DistritoId=2,
                 CategoriaId=1,

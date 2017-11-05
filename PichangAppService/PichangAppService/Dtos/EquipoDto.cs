@@ -15,7 +15,6 @@ namespace PichangAppService.Dtos
 
         public CategoriaDto Categoria { get; set; }
         public DistritoDto Distrito { get; set; }
-        public DeporteDto Deporte { get; set; }
         public String ImagenPortadaUrl { get; set; }
 
         public IEnumerable<ImagenEquipoDto> Imagenes { get; set; }

@@ -247,9 +247,7 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CanchasController.cs" />
-    <Compile Include="Controllers\DeportesController.cs" />
     <Compile Include="Controllers\EquiposController.cs" />
-    <Compile Include="Controllers\EstablecimientosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HorariosController.cs" />
     <Compile Include="Controllers\ReservasController.cs" />
@@ -262,12 +260,12 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Dtos\CanchaDto.cs" />
     <Compile Include="Dtos\CategoriaDto.cs" />
+    <Compile Include="Dtos\ComentarioCanchaDto.cs" />
     <Compile Include="Dtos\ComentarioEquipoDto.cs" />
     <Compile Include="Dtos\DistritoDto.cs" />
     <Compile Include="Dtos\EquipoDto.cs" />
-    <Compile Include="Dtos\EstablecimientoDto.cs" />
-    <Compile Include="Dtos\EstablecimientoServicioDto.cs" />
     <Compile Include="Dtos\HorarioDto.cs" />
+    <Compile Include="Dtos\ImagenCanchaDto.cs" />
     <Compile Include="Dtos\ImagenEquipoDto.cs" />
     <Compile Include="Dtos\POSTDtos\EquipoPostDto.cs" />
     <Compile Include="Dtos\POSTDtos\EquipoPutDto.cs" />
@@ -278,6 +276,7 @@
     <Compile Include="Dtos\RetoDto.cs" />
     <Compile Include="Dtos\RetosEquipoAux.cs" />
     <Compile Include="Dtos\RolDto.cs" />
+    <Compile Include="Dtos\ServicioCanchaDto.cs" />
     <Compile Include="Dtos\ServicioDto.cs" />
     <Compile Include="Dtos\SkillDto.cs" />
     <Compile Include="Dtos\SkillEquipoDto.cs" />
@@ -288,7 +287,6 @@
     </Compile>
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Dtos\DeporteDto.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />

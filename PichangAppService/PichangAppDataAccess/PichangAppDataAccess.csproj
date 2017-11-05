@@ -55,10 +55,10 @@
     <Compile Include="Categoria.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="ComentarioEquipo.cs">
+    <Compile Include="ComentarioCancha.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Deporte.cs">
+    <Compile Include="ComentarioEquipo.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Distrito.cs">
@@ -67,16 +67,13 @@
     <Compile Include="Equipo.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Establecimiento.cs">
-      <DependentUpon>PichangAppDataModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="EstablecimientoServicio.cs">
-      <DependentUpon>PichangAppDataModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Horario.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="HorarioCancha.cs">
+      <DependentUpon>PichangAppDataModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ImagenCancha.cs">
       <DependentUpon>PichangAppDataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ImagenEquipo.cs">

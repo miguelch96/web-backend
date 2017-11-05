@@ -12,13 +12,15 @@ namespace PichangAppDataAccess
     using System;
     using System.Collections.Generic;
     
-    public partial class EstablecimientoServicio
+    public partial class ComentarioCancha
     {
-        public int EstablecimientoId { get; set; }
-        public short ServicioId { get; set; }
-        public string Estado { get; set; }
+        public int ComentarioCanchaId { get; set; }
+        public int UsuarioId { get; set; }
+        public string Comentario { get; set; }
+        public decimal Calificacion { get; set; }
+        public int CanchaId { get; set; }
     
-        public virtual Establecimiento Establecimiento { get; set; }
-        public virtual Servicio Servicio { get; set; }
+        public virtual Cancha Cancha { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

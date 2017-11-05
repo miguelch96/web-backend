@@ -9,5 +9,6 @@ namespace PichangAppService.Dtos
     {
         public Int16 ServicioId { get; set; }
         public String Nombre { get; set; }
+        public String ImgServicioUrl { get; set; }
     }
 }

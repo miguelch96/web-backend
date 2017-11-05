@@ -4,10 +4,14 @@
     <EntitySetMapping Name="Cancha">
       <EntityTypeMapping TypeName="PichangAppDBModel.Cancha">
         <MappingFragment StoreEntitySet="Cancha">
+          <ScalarProperty Name="ImagenPortadaUrl" ColumnName="ImagenPortadaUrl" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+          <ScalarProperty Name="PropietarioId" ColumnName="PropietarioId" />
+          <ScalarProperty Name="DistritoId" ColumnName="DistritoId" />
+          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="TipoSuperficieId" ColumnName="TipoSuperficieId" />
-          <ScalarProperty Name="DeporteId" ColumnName="DeporteId" />
-          <ScalarProperty Name="EstablecimientoId" ColumnName="EstablecimientoId" />
           <ScalarProperty Name="Precio" ColumnName="Precio" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="CanchaId" ColumnName="CanchaId" />
@@ -23,6 +27,17 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ComentarioCancha">
+      <EntityTypeMapping TypeName="PichangAppDBModel.ComentarioCancha">
+        <MappingFragment StoreEntitySet="ComentarioCancha">
+          <ScalarProperty Name="CanchaId" ColumnName="CanchaId" />
+          <ScalarProperty Name="Calificacion" ColumnName="Calificacion" />
+          <ScalarProperty Name="Comentario" ColumnName="Comentario" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="ComentarioCanchaId" ColumnName="ComentarioCanchaId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="ComentarioEquipo">
       <EntityTypeMapping TypeName="PichangAppDBModel.ComentarioEquipo">
         <MappingFragment StoreEntitySet="ComentarioEquipo">
@@ -32,15 +47,6 @@
           <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
           <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
           <ScalarProperty Name="ComentarioEquipoId" ColumnName="ComentarioEquipoId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Deporte">
-      <EntityTypeMapping TypeName="PichangAppDBModel.Deporte">
-        <MappingFragment StoreEntitySet="Deporte">
-          <ScalarProperty Name="Codigo" ColumnName="Codigo" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-          <ScalarProperty Name="DeporteId" ColumnName="DeporteId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -61,32 +67,9 @@
           <ScalarProperty Name="DistritoId" ColumnName="DistritoId" />
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="UsuarioCapitanId" ColumnName="UsuarioCapitanId" />
-          <ScalarProperty Name="DeporteId" ColumnName="DeporteId" />
           <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="EquipoId" ColumnName="EquipoId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Establecimiento">
-      <EntityTypeMapping TypeName="PichangAppDBModel.Establecimiento">
-        <MappingFragment StoreEntitySet="Establecimiento">
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
-          <ScalarProperty Name="UsuarioPropietarioId" ColumnName="UsuarioPropietarioId" />
-          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-          <ScalarProperty Name="DistritoId" ColumnName="DistritoId" />
-          <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
-          <ScalarProperty Name="EstablecimientoId" ColumnName="EstablecimientoId" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="EstablecimientoServicio">
-      <EntityTypeMapping TypeName="PichangAppDBModel.EstablecimientoServicio">
-        <MappingFragment StoreEntitySet="EstablecimientoServicio">
-          <ScalarProperty Name="Estado" ColumnName="Estado" />
-          <ScalarProperty Name="ServicioId" ColumnName="ServicioId" />
-          <ScalarProperty Name="EstablecimientoId" ColumnName="EstablecimientoId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -107,6 +90,16 @@
           <ScalarProperty Name="Estado" ColumnName="Estado" />
           <ScalarProperty Name="CanchaId" ColumnName="CanchaId" />
           <ScalarProperty Name="HorarioId" ColumnName="HorarioId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImagenCancha">
+      <EntityTypeMapping TypeName="PichangAppDBModel.ImagenCancha">
+        <MappingFragment StoreEntitySet="ImagenCancha">
+          <ScalarProperty Name="ImagenUrl" ColumnName="ImagenUrl" />
+          <ScalarProperty Name="FechaSubida" ColumnName="FechaSubida" />
+          <ScalarProperty Name="CanchaId" ColumnName="CanchaId" />
+          <ScalarProperty Name="ImagenCanchaId" ColumnName="ImagenCanchaId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -157,6 +150,7 @@
     <EntitySetMapping Name="Servicio">
       <EntityTypeMapping TypeName="PichangAppDBModel.Servicio">
         <MappingFragment StoreEntitySet="Servicio">
+          <ScalarProperty Name="ImgServicioUrl" ColumnName="ImgServicioUrl" />
           <ScalarProperty Name="Nombre" ColumnName="Nombre" />
           <ScalarProperty Name="ServicioId" ColumnName="ServicioId" />
         </MappingFragment>
@@ -214,5 +208,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="CanchaServicio" TypeName="PichangAppDBModel.CanchaServicio" StoreEntitySet="CanchaServicio">
+      <EndProperty Name="Servicio">
+        <ScalarProperty Name="ServicioId" ColumnName="ServicioId" />
+      </EndProperty>
+      <EndProperty Name="Cancha">
+        <ScalarProperty Name="CanchaId" ColumnName="CanchaId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

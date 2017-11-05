@@ -9,8 +9,6 @@ namespace PichangAppService.Dtos
 {
     public class ComentarioEquipoDto
     {
-       
-
         public String Comentario { get; set; }
         public Decimal Calificacion { get; set; }
         public String NombreUsuario { get; set; }

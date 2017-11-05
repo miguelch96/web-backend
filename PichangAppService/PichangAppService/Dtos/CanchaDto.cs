@@ -9,16 +9,17 @@ namespace PichangAppService.Dtos
 {
     public class CanchaDto
     {
-
         public Int32 CanchaId{ get; set; }
         public String Nombre{ get; set; }
+        public String Descripcion{ get; set; }
         public Decimal Precio{ get; set; }
-        public Int32 EstablecimientoId;
-        public byte DeporteId;
-        public byte TipoSuperficieId;
-
-        public EstablecimientoDto Establecimiento { get; set; }
-        public DeporteDto Deporte { get; set; }
-        public TipoSuperficieDto TipoSuperficie { get; set; }
+        public String Direccion { get; set; }
+        public Decimal Calificacion { get; set; }
+        public String NombreTipoSuperficie { get; set; }
+        public String NombreDistrito { get; set; }
+        public String ImagenPortadaUrl { get; set; }
+        public IEnumerable<ImagenCanchaDto> Imagenes { get; set; }
+        public IEnumerable<ServicioDto> Servicios { get; set; }
+        public IEnumerable<ComentarioCanchaDto> Comentarios { get; set; }
     }
 }

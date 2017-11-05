@@ -20,12 +20,10 @@ namespace PichangAppService.App_Start
                 .ForMember(dest => dest.ImagenPerfilUrl, opts => opts.MapFrom(src => src.Usuario.ImagenPerfilUrl)).ReverseMap();
 
             CreateMap<ImagenEquipo, ImagenEquipoDto>().ReverseMap();
-         
-            CreateMap<Deporte, DeporteDto>().ReverseMap();
-            
-         
+            CreateMap<ImagenCancha, ImagenCanchaDto>().ReverseMap();
+
             CreateMap<Horario, HorarioDto>().ReverseMap();
-         CreateMap<Reserva, ReservaDto>().ReverseMap();
+            CreateMap<Reserva, ReservaDto>().ReverseMap();
 
 
             CreateMap<Rol, RolDto>().ReverseMap();
@@ -37,15 +35,17 @@ namespace PichangAppService.App_Start
                 .ForMember(dest => dest.ImagenSkillUrl, opts => opts.MapFrom(src => src.Skill.ImagenSkillUrl)).ReverseMap();
             CreateMap<TipoSuperficie, TipoSuperficieDto>().ReverseMap();
 
-            CreateMap<EstablecimientoServicio, EstablecimientoServicioDto>()
-                .ForMember(dest => dest.Nombre, opts => opts.MapFrom(src => src.Servicio.Nombre)).ReverseMap();
-
             CreateMap<Cancha, CanchaDto>()
-                .ForMember(dest => dest.Establecimiento, opts => opts.MapFrom(src => src.Establecimiento))
-                .ForMember(dest => dest.Deporte, opts => opts.MapFrom(src => src.Deporte))
-                .ForMember(dest => dest.TipoSuperficie, opts => opts.MapFrom(src => src.TipoSuperficie)).ReverseMap();
+                .ForMember(dest => dest.Servicios, opts => opts.MapFrom(src => src.Servicio))
+                .ForMember(dest => dest.NombreDistrito, opts => opts.MapFrom(src => src.Distrito.Nombre))
+                .ForMember(dest => dest.NombreTipoSuperficie, opts => opts.MapFrom(src => src.TipoSuperficie.Nombre))
+                .ForMember(dest => dest.Imagenes, opts => opts.MapFrom(src => src.ImagenCancha))
+                .ForMember(dest => dest.Comentarios, opts => opts.MapFrom(src => src.ComentarioCancha)).ReverseMap();
 
-       
+            CreateMap<ComentarioCancha,ComentarioCanchaDto>()
+                .ForMember(dest => dest.NombreUsuario, opts => opts.MapFrom(src => src.Usuario.Nombre + " " + src.Usuario.Apellido))
+                .ForMember(dest => dest.ImagenPerfilUrl, opts => opts.MapFrom(src => src.Usuario.ImagenPerfilUrl)).ReverseMap();
+
 
             CreateMap<Equipo, EquipoDto>()
                 .ForMember(dest => dest.Capitan, opts => opts.MapFrom(src => src.Usuario))  
@@ -64,17 +64,11 @@ namespace PichangAppService.App_Start
                 .ForMember(dest => dest.NombreRol, opts => opts.MapFrom(src => src.Rol.Nombre)).ReverseMap();
             CreateMap<Distrito, DistritoDto>().ReverseMap();
 
-            CreateMap<Establecimiento, EstablecimientoDto>()
-                .ForMember(dest => dest.Distrito, opts => opts.MapFrom(src => src.Distrito))
-                .ForMember(dest => dest.Propietario, opts => opts.MapFrom(src => src.Usuario))
-                .ForMember(dest => dest.Servicios, opts => opts.MapFrom(src => src.EstablecimientoServicio.Select(x=>x.Servicio)))
-                .ForMember(dest => dest.PropietarioId, opts => opts.MapFrom(src => src.UsuarioPropietarioId)).ReverseMap();
-
             CreateMap<Reto, RetoDto>()
                 .ForMember(dest => dest.Horario, opts => opts.MapFrom(src => src.Reserva.Horario.HoraInicio+"-"+ src.Reserva.Horario.HoraFin))
                 .ForMember(dest => dest.Cancha, opts => opts.MapFrom(src => src.Reserva.Cancha.Nombre))
                 .ForMember(dest => dest.CanchaId, opts => opts.MapFrom(src => src.Reserva.Cancha.CanchaId))
-                .ForMember(dest => dest.Distrito, opts => opts.MapFrom(src => src.Reserva.Cancha.Establecimiento.Distrito.Nombre))
+                .ForMember(dest => dest.Distrito, opts => opts.MapFrom(src => src.Reserva.Cancha.Distrito.Nombre))
                 .ForMember(dest => dest.EquipoRetado, opts => opts.MapFrom(src => src.Equipo1.Nombre))
                 .ForMember(dest => dest.EquipoRetadoId, opts => opts.MapFrom(src => src.Equipo1.EquipoId))
                 .ForMember(dest => dest.EquipoRetador, opts => opts.MapFrom(src => src.Equipo.Nombre))
