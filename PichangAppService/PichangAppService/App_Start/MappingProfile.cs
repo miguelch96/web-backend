@@ -23,7 +23,8 @@ namespace PichangAppService.App_Start
             CreateMap<ImagenCancha, ImagenCanchaDto>().ReverseMap();
 
             CreateMap<Horario, HorarioDto>().ReverseMap();
-            CreateMap<Reserva, ReservaDto>().ReverseMap();
+            CreateMap<Reserva, ReservaDto>()
+                .ForMember(dest => dest.Horas, opts => opts.MapFrom(src => src.Horario.HoraInicio.Hours + "-" + src.Horario.HoraFin.Hours)).ReverseMap();
 
 
             CreateMap<Rol, RolDto>().ReverseMap();
@@ -40,7 +41,42 @@ namespace PichangAppService.App_Start
                 .ForMember(dest => dest.NombreDistrito, opts => opts.MapFrom(src => src.Distrito.Nombre))
                 .ForMember(dest => dest.NombreTipoSuperficie, opts => opts.MapFrom(src => src.TipoSuperficie.Nombre))
                 .ForMember(dest => dest.Imagenes, opts => opts.MapFrom(src => src.ImagenCancha))
+                .ForMember(dest => dest.ReservasDisponibles, opts => opts.MapFrom(src => src.Reserva))
                 .ForMember(dest => dest.Comentarios, opts => opts.MapFrom(src => src.ComentarioCancha)).ReverseMap();
+
+            /*CreateMap<Cancha, ReservasCanchaAux>()
+                .ForMember(dest => dest.Lunes,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.DayOfWeek == DayOfWeek.Monday)))
+                .ForMember(dest => dest.Martes,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.DayOfWeek == DayOfWeek.Tuesday)))
+                .ForMember(dest => dest.Miercoles,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.DayOfWeek == DayOfWeek.Wednesday)))
+                .ForMember(dest => dest.Jueves,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.DayOfWeek == DayOfWeek.Thursday)))
+                .ForMember(dest => dest.Viernes,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.DayOfWeek == DayOfWeek.Friday)))
+                .ForMember(dest => dest.Sabado,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.DayOfWeek == DayOfWeek.Saturday)))
+                .ForMember(dest => dest.Domingo,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.DayOfWeek == DayOfWeek.Sunday)))
+                .ReverseMap();*/
+
+            /*CreateMap<Cancha, ReservasCanchaAux>()
+                .ForMember(dest => dest.Lunes,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.ToString("dddd", CultureInfo.CreateSpecificCulture("en-US")) == "Monday")))
+                .ForMember(dest => dest.Martes,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.ToString("dddd", CultureInfo.CreateSpecificCulture("en-US")) == "Tuesday")))
+                .ForMember(dest => dest.Miercoles,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.ToString("dddd", CultureInfo.CreateSpecificCulture("en-US")) == "Wednesday")))
+                .ForMember(dest => dest.Jueves,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.ToString("dddd", CultureInfo.CreateSpecificCulture("en-US")) == "Thursday")))
+                .ForMember(dest => dest.Viernes,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.ToString("dddd", CultureInfo.CreateSpecificCulture("en-US")) == "Friday")))
+                .ForMember(dest => dest.Sabado,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.ToString("dddd", CultureInfo.CreateSpecificCulture("en-US")) == "Saturday")))
+                .ForMember(dest => dest.Domingo,
+                    opts => opts.MapFrom(src => src.Reserva.Where(x => x.Fecha.ToString("dddd", CultureInfo.CreateSpecificCulture("en-US")) == "Sunday")))
+                .ReverseMap();*/
 
             CreateMap<ComentarioCancha,ComentarioCanchaDto>()
                 .ForMember(dest => dest.NombreUsuario, opts => opts.MapFrom(src => src.Usuario.Nombre + " " + src.Usuario.Apellido))

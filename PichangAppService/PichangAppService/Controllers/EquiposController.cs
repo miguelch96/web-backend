@@ -77,7 +77,7 @@ namespace PichangAppService.Controllers
             }
         }
 
-        [Route("~/api/equipos/{equipoId:int}/miembros")]
+        [Route("~/api/equipos/{equipoId:int}/reservas")]
         public HttpResponseMessage GetTeamMembers(Int32 equipoId)
         {
             try

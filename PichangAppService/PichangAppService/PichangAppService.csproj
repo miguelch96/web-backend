@@ -273,6 +273,7 @@
     <Compile Include="Dtos\POSTDtos\RetoPostDto.cs" />
     <Compile Include="Dtos\POSTDtos\UsuarioPostDto.cs" />
     <Compile Include="Dtos\ReservaDto.cs" />
+    <Compile Include="Dtos\ReservasCanchaAux.cs" />
     <Compile Include="Dtos\RetoDto.cs" />
     <Compile Include="Dtos\RetosEquipoAux.cs" />
     <Compile Include="Dtos\RolDto.cs" />

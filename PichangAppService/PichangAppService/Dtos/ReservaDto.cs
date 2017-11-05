@@ -9,6 +9,8 @@ namespace PichangAppService.Dtos
     {
         public Int32 ReservaId { get; set; }
         public UsuarioDto Usuario { get; set;}
+        public DateTime Fecha { get; set; }
+        public String Horas { get; set; }
         public DateTime FechaSolicitud { get; set; }
         public String Estado { get; set; }  
     }

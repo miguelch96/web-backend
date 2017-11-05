@@ -21,5 +21,8 @@ namespace PichangAppService.Dtos
         public IEnumerable<ImagenCanchaDto> Imagenes { get; set; }
         public IEnumerable<ServicioDto> Servicios { get; set; }
         public IEnumerable<ComentarioCanchaDto> Comentarios { get; set; }
+
+        public IEnumerable<ReservaDto> ReservasDisponibles { get; set; }
+        //public ReservasCanchaAux ReservasDisponibles { get; set; }
     }
 }
