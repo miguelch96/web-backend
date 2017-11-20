@@ -16,7 +16,7 @@ D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\Pichan
 D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\bin\Release\EntityFramework.SqlServer.dll
 D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\bin\Release\EntityFramework.xml
 D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\bin\Release\EntityFramework.SqlServer.xml
-D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppDataAccess.csprojResolveAssemblyReference.cache
 D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppDataAccess.csproj.CoreCompileInputs.cache
 D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppDataAccess.dll
 D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppDataAccess.pdb
+D:\REPOSITORIOS\2017-2\Aplicaciones-Moviles\web-backend\PichangAppService\PichangAppDataAccess\obj\Release\PichangAppDataAccess.csprojResolveAssemblyReference.cache

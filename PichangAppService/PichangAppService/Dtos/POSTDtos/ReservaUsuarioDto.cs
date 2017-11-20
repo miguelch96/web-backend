@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace PichangAppService.Dtos
+namespace PichangAppService.Dtos.POSTDtos
 {
-    public class ReservaDto
+    public class ReservaUsuarioDto
     {
-        public Int32 ReservaId { get; set; }
-        public UsuarioDto Usuario { get; set;}
+        public Int32 ReservaId { get; set; } 
         public DateTime Fecha { get; set; }
         public String Dia { get; set; }
         public String Horas { get; set; }

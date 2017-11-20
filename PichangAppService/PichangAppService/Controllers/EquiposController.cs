@@ -67,8 +67,11 @@ namespace PichangAppService.Controllers
                     if (equipo == null)
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Equipo no encontrado");
 
-                    return Request.CreateResponse(HttpStatusCode.OK,
-                        Mapper.Map<Equipo, EquipoDto>(equipo));
+                    return Request.CreateResponse(HttpStatusCode.OK, new
+                    {
+                        Equipo=Mapper.Map<Equipo, EquipoDto>(equipo)
+                    });
+                        
                 }
             }
             catch (HttpResponseException e)
@@ -155,7 +158,7 @@ namespace PichangAppService.Controllers
         }
 
         [Route("~/api/equipos/{equipoId:int}/retos")]
-        public HttpResponseMessage GetTeamOffs(Int32 equipoId)
+        public HttpResponseMessage GetTeamOffs(Int32 equipoId,String estado=null)
         {
             try
             {
@@ -165,15 +168,24 @@ namespace PichangAppService.Controllers
                     if (equipo == null)
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Equipo no encontrado");
 
+                    IQueryable<Reto> retosEnviados = entities.Reto.Where(x => x.EquipoRetadorId == equipoId);
+                    IQueryable<Reto> retosRecibidos = entities.Reto.Where(x => x.EquipoRetadoId == equipoId);
 
-                    var retosEnviados = entities.Reto.Where(x => x.EquipoRetadorId == equipoId).ProjectTo<RetoDto>().ToList();
-                    var retosRecibidos = entities.Reto.Where(x => x.EquipoRetadoId == equipoId).ProjectTo<RetoDto>().ToList();
+                    
+                    if (estado != null)
+                    {
+                        retosEnviados=retosEnviados.Where(x => x.Estado.Equals(estado));
+                        retosRecibidos=retosRecibidos.Where(x => x.Estado.Equals(estado));
+                    }
+
+                    var retosEnviadosDto = retosEnviados.ProjectTo<RetoDto>().ToList();
+                    var retosRecibidosDto = retosRecibidos.ProjectTo<RetoDto>().ToList();
 
                     return Request.CreateResponse(HttpStatusCode.OK, new
                     {
                         equipo.EquipoId,
-                        retosEnviados,
-                        retosRecibidos
+                        RetosEnviados= retosEnviadosDto,
+                        RetosRecibidos= retosRecibidosDto
                     });
                 }
             }

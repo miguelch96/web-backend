@@ -79,17 +79,16 @@ namespace PichangAppService.Controllers
                     using (var Transaction = new TransactionScope())
                     {
                         var reto = Mapper.Map<RetoPostDto, Reto>(retoDto);
-                        var reserva = new Reserva()
-                        {
-                            FechaSolicitud = DateTime.Now,
-                            UsuarioId = retoDto.UsuarioId,
-                            HorarioId = retoDto.HorarioId,
-                            Fecha = retoDto.FechaEncuentro,
-                            CanchaId = retoDto.CanchaId,
-                            Estado = "ACT"
-                        };
 
-                        entities.Reserva.Add(reserva);
+                        var reserva = entities.Reserva.SingleOrDefault(x => x.ReservaId == retoDto.ReservaId);
+                        if (reserva == null)
+                        {
+                            return Request.CreateResponse(HttpStatusCode.NotFound, "Reserva no encontrado");
+                        }
+
+                        reserva.UsuarioId = retoDto.UsuarioId;
+                        reserva.FechaSolicitud = DateTime.Now;
+                        reserva.Estado = "Ocupado";
                         entities.SaveChanges();
 
                         reto.ReservaId = reserva.ReservaId;

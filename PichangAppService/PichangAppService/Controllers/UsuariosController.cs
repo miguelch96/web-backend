@@ -23,9 +23,6 @@ namespace PichangAppService.Controllers
     public class UsuariosController : ApiController
     {
         [HttpGet]
-        [SwaggerResponse(HttpStatusCode.OK, Type = typeof(IEnumerable<UsuarioDto>))]
-        [SwaggerResponseExample(HttpStatusCode.OK,typeof(UsuarioDtoResponseExample))]
-        [SwaggerResponse(HttpStatusCode.BadRequest, Type = typeof(HttpResponseException))]
         public async Task<HttpResponseMessage> Get()
         {
             try
@@ -71,10 +68,6 @@ namespace PichangAppService.Controllers
         }
 
         [HttpPost]
-        [SwaggerRequestExample(typeof(UsuarioDto), typeof(UsuarioDtoRequestExample))]
-        [SwaggerResponse(HttpStatusCode.Created, Type = typeof(UsuarioDto))]
-        [SwaggerResponseExample(HttpStatusCode.Created, typeof(UsuarioDtoResponseExample))]
-        [SwaggerResponse(HttpStatusCode.BadRequest)]
         public HttpResponseMessage Post([FromBody] UsuarioPostDto usuarioDto)
         {
             try
@@ -86,8 +79,6 @@ namespace PichangAppService.Controllers
                     entities.Usuario.Add(usuario);
                     entities.SaveChanges();
                     usuarioDto.UsuarioId = usuario.UsuarioId;
-
-
 
                     var message = Request.CreateResponse(HttpStatusCode.Created, usuarioDto);
                     message.Headers.Location = new Uri(Request.RequestUri + "/" + usuario.UsuarioId);
@@ -126,9 +117,6 @@ namespace PichangAppService.Controllers
         }
 
         [HttpDelete]
-        [SwaggerResponse(HttpStatusCode.OK)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.BadRequest)]
         public HttpResponseMessage Delete(int id)
         {
             try
@@ -146,6 +134,27 @@ namespace PichangAppService.Controllers
                     return Request.CreateResponse(HttpStatusCode.OK,new
                     {
                         Message="Usuario eliminado correctamente"
+                    });
+                }
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
+
+        [Route("~/api/usuarios/{usuarioId:int}/reservas")]
+        public HttpResponseMessage GetTeamMembers(Int32 usuarioId)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var reservasRealizadas = entities.Reserva.Where(x => x.UsuarioId == usuarioId).ProjectTo<ReservaUsuarioDto>().ToList();
+                    return Request.CreateResponse(HttpStatusCode.OK, new
+                    {
+                        usuarioId,
+                        reservasRealizadas
                     });
                 }
             }

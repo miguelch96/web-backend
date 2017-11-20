@@ -8,27 +8,41 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using PichangAppDataAccess;
 using PichangAppService.Dtos;
+using PichangAppService.Dtos.POSTDtos;
 
 namespace PichangAppService.Controllers
 {
     public class ReservasController : ApiController
     {
-        public IEnumerable<ReservaDto> Get()
+        [HttpGet]
+        public HttpResponseMessage Get(String estado=null)
         {
             using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
-                return entities.Reserva.ToList().Select(Mapper.Map<Reserva, ReservaDto>);
+                IQueryable<Reserva> reservasInDb = entities.Reserva;
+                if (estado != null)
+                {
+                    reservasInDb = reservasInDb.Where(x => x.Estado.Equals(estado));
+                }
+
+                var reservasDto = reservasInDb.ProjectTo<ReservaDto>().ToList();
+                return Request.CreateResponse(HttpStatusCode.OK,new
+                {
+                   Reservas=reservasDto
+                });
             }
         }
 
-        public IHttpActionResult Get(Int32 id)
+        [HttpGet]
+        public HttpResponseMessage Get(Int32 id)
         {
             using (PichangAppDBEntities entities = new PichangAppDBEntities())
             {
-                var reserva = entities.Reserva.SingleOrDefault(x => x.ReservaId == id);
+                var reserva = entities.Reserva.ProjectTo<ReservaDto>().SingleOrDefault(x => x.ReservaId == id);
                 if (reserva == null)
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
-                return Ok(Mapper.Map<Reserva, ReservaDto>(reserva));
+                    return Request.CreateResponse(HttpStatusCode.NotFound, "No se encontro la reserva");
+              
+                return Request.CreateResponse(HttpStatusCode.OK, reserva);
             }
         }
 
@@ -70,5 +84,59 @@ namespace PichangAppService.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
             }
         }
+
+        [HttpPut]
+        public HttpResponseMessage Put(int id, [FromBody] ReservaPutDto reservaDto)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var reserva = entities.Reserva.SingleOrDefault(x => x.ReservaId == id);
+                    if (reserva == null)
+                    {
+                        return Request.CreateResponse(HttpStatusCode.NotFound, "Reserva no encontrado");
+                    }
+
+                    reserva.ReservaId = reservaDto.ReservaId;
+                    reserva.FechaSolicitud = DateTime.Now;
+                    reserva.Estado = reservaDto.Estado;
+                    entities.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK, reservaDto);
+                }
+            }
+
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
+
+        [HttpDelete]
+        public HttpResponseMessage Delete(int id)
+        {
+            try
+            {
+                using (PichangAppDBEntities entities = new PichangAppDBEntities())
+                {
+                    var reserva = entities.Reserva.SingleOrDefault(x => x.ReservaId == id);
+                    if (reserva == null)
+                    {
+                        return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Reserva no encontrada");
+                    }
+                    reserva.UsuarioId = null;
+                    reserva.FechaSolicitud = null;
+                    reserva.Estado = "Libre";
+                    entities.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK);
+
+                }
+            }
+            catch (HttpResponseException e)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, e);
+            }
+        }
     }
 }
+

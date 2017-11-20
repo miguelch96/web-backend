@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  pichangappservice:
+    image: pichangappservice
+    build:
+      context: .\PichangAppService
+      dockerfile: Dockerfile

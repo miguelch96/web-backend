@@ -15,10 +15,8 @@ namespace PichangAppService.SwaggerExamples.EquipoExamples
             {
                 EquipoRetadorId = 1,
                 EquipoRetadoId = 2,
-                HorarioId = 3,
-                UsuarioId = 2,
-                CanchaId = 1,
-                FechaEncuentro = DateTime.Now
+                ReservaId = 6,
+                UsuarioId = 2,            
             };
         }
     }

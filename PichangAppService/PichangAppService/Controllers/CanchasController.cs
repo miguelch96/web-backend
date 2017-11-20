@@ -40,13 +40,16 @@ namespace PichangAppService.Controllers
             {
                 using (PichangAppDBEntities entities = new PichangAppDBEntities())
                 {
-                    var cancha = entities.Cancha.SingleOrDefault(x => x.CanchaId == id);
+                    var cancha = entities.Cancha.ProjectTo<CanchaDto>().SingleOrDefault(x => x.CanchaId == id);
 
                     if (cancha == null)
                     {
                         return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Cancha con Id= " + id + " no encontrado");
                     }
-                    return Request.CreateResponse(HttpStatusCode.OK, Mapper.Map<Cancha, CanchaDto>(cancha));
+                    return Request.CreateResponse(HttpStatusCode.OK, new
+                    {
+                        Cancha = cancha
+                    });
                 }
             }
             catch (Exception e)
